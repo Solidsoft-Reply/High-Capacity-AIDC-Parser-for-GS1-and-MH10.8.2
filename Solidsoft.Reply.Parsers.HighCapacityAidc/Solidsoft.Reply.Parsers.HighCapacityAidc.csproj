@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Title>A parser for high-capacity ADC (Automatic Data Capture) media</Title>
+	<Copyright>©2023 Solidsoft Reply</Copyright>
+	<Description>A library for parsing high-capacity ADC (Automatic Data Capture) media such as two-dimensional barcodes used in Automatic Identification and Data Capture (AIDC). The library supports the following international standards: ISO/IEC 15418:2016 - Information technology — Automatic identification and data capture techniques — GS1 Application Identifiers and ASC MH10 Data Identifiers and maintenance; ISO/IEC 15434:2019 - Information technology — Automatic identification and data capture techniques — Syntax for high-capacity ADC media.</Description>
+	<Company>Solidsoft Reply Ltd.</Company>
+	<Authors>cnayoung</Authors>
+	<RepositoryUrl>https://github.com/Solidsoft-Reply/Solidsoft.Reply.Parsers.HighCapacityAidc</RepositoryUrl>
+	<PackageProjectUrl>https://www.reply.com/solidsoft-reply/en/</PackageProjectUrl>
+	<PackageIcon>Solidsoft Reply - LOGO Square_small.jpg</PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageTags>barcodes;parser;adc;aidc;15418;15434;gs1;ai;mh10;ansi;di</PackageTags>
+	<PackageReleaseNotes>Initial release</PackageReleaseNotes>
+	<Version>1.0.0</Version>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Solidsoft.Reply.BarcodeScanner.Symbology" Version="1.0.0" />
+    <PackageReference Include="Solidsoft.Reply.Parsers.AnsiMhDi" Version="1.0.0" />
+    <PackageReference Include="Solidsoft.Reply.Parsers.Common" Version="1.0.0" />
+    <PackageReference Include="Solidsoft.Reply.Parsers.Gs1Ai" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Include="Solidsoft Reply - LOGO Square_small.jpg">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+	<None Include="LICENSE.txt">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+	<None Include="README.md">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+  </ItemGroup>
+
+</Project>
