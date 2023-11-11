@@ -21,13 +21,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Solidsoft.Reply.BarcodeScanner.Symbology" Version="1.0.0" />
-    <PackageReference Include="Solidsoft.Reply.Parsers.AnsiMhDi" Version="1.0.0" />
-    <PackageReference Include="Solidsoft.Reply.Parsers.Common" Version="1.0.0" />
-    <PackageReference Include="Solidsoft.Reply.Parsers.Gs1Ai" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -55,6 +48,13 @@
 	  <Pack>True</Pack>
 	  <PackagePath>\</PackagePath>
 	</None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Solidsoft.Reply.BarcodeScanner.Symbology\Solidsoft.Reply.BarcodeScanner.Symbology\Solidsoft.Reply.BarcodeScanner.Symbology.csproj" />
+    <ProjectReference Include="..\..\Solidsoft.Reply.Parsers.AnsiMhDi\Solidsoft.Reply.Parsers.AnsiMhDi\Solidsoft.Reply.Parsers.AnsiMhDi.csproj" />
+    <ProjectReference Include="..\..\Solidsoft.Reply.Parsers.Common\Solidsoft.Reply.Parsers.Common\Solidsoft.Reply.Parsers.Common.csproj" />
+    <ProjectReference Include="..\..\Solidsoft.Reply.Parsers.Gs1Ai\Solidsoft.Reply.Parsers.Gs1Ai\Solidsoft.Reply.Parsers.Gs1Ai.csproj" />
   </ItemGroup>
 
 </Project>
