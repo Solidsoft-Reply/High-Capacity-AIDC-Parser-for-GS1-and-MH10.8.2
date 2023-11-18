@@ -510,9 +510,9 @@ public static partial class Parser
 
     private static string ProcessUpcOrEan13(string? input)
     {
-        if (input.Length != 8)
+        if (input?.Length != 8)
         {
-            return "01" + input.PadLeft(14, '0');
+            return "01" + input?.PadLeft(14, '0');
         }
 
         return input[6] switch
