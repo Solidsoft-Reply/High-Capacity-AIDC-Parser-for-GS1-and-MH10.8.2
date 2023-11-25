@@ -51,6 +51,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Solidsoft.Reply.BarcodeScanner.Symbology\Solidsoft.Reply.BarcodeScanner.Symbology\Solidsoft.Reply.BarcodeScanner.Symbology.csproj" />
     <ProjectReference Include="..\..\Solidsoft.Reply.Parsers.AnsiMhDi\Solidsoft.Reply.Parsers.AnsiMhDi\Solidsoft.Reply.Parsers.AnsiMhDi.csproj" />
     <ProjectReference Include="..\..\Solidsoft.Reply.Parsers.Common\Solidsoft.Reply.Parsers.Common\Solidsoft.Reply.Parsers.Common.csproj" />
