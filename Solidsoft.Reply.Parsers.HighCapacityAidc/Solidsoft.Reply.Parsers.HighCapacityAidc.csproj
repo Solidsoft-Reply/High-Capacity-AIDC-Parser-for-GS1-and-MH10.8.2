@@ -25,6 +25,7 @@
 	</Description>
 	<Version>1.0.1</Version>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

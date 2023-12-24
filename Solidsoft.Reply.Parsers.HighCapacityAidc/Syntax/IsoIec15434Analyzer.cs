@@ -30,19 +30,19 @@ using System.Text.RegularExpressions;
 /// <summary>
 ///   Performs syntactic analysis of barcode data using ISO/IEC 15434 standards.
 /// </summary>
-public class IsoIec15434Analyzer : IAnalyzer
+public partial class IsoIec15434Analyzer : IAnalyzer
 {
     /// <summary>
     ///   Regular expression that matches candidate format identifiers.
     /// </summary>
-    private static readonly Regex MatchCandidates = new(
-        @"^((01\u001d\d{2})|(02|07)|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(08\d{8})|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d)).*$");
+    [GeneratedRegex(@"^((01\u001d\d{2})|(02|07)|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(08\d{8})|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d)).*$", RegexOptions.None, "en-US")]
+    private static partial Regex MatchCandidatesRegEx();
 
     /// <summary>
     ///   Regular expression that matches the format identifier and preamble for binary data.
     /// </summary>
-    private static readonly Regex RegexBinary = new(
-        @"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*");
+    [GeneratedRegex(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.None, "en-US")]
+    private static partial Regex BinaryRegEx();
 
     /// <summary>
     ///   Analyze the syntactic format of each record in the barcode
@@ -108,12 +108,12 @@ public class IsoIec15434Analyzer : IAnalyzer
                 case FormatIndicator.Binary:
                     var offset = 3;
 
-                    if (!RegexBinary.IsMatch(record))
+                    if (!BinaryRegEx().IsMatch(record))
                     {
                         return offset;
                     }
 
-                    var groups = RegexBinary.Match(record).Groups;
+                    var groups = BinaryRegEx().Match(record).Groups;
                     offset += groups["fileName"].Value.Length + 1;
                     offset += groups["compressionTechnique"].Value.Length + 1;
                     offset += groups["numberOfBytes"].Value.Length + 1;
@@ -144,7 +144,7 @@ public class IsoIec15434Analyzer : IAnalyzer
 
         // Resolve the record format and return a format specifier
         IsoIec15434Format ResolveRecordFormat(string record, int recordIndex) =>
-            MatchCandidates.IsMatch(record)
+            MatchCandidatesRegEx().IsMatch(record)
                 ? CreateFormatSpecifier(record, recordIndex)
                 : new IsoIec15434Format(
                     string.Empty,
