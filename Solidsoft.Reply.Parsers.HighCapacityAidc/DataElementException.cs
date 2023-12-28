@@ -82,7 +82,7 @@ public class DataElementException : BarcodeException
     ///   The character position in the barcode data at which the exception occurred.
     /// </param>
     /// <param name="isFatal">
-    ///   Indicates whether the exception is fatal..
+    ///   Indicates whether the exception is fatal.
     /// </param>
     public DataElementException(int errorNumber, string message, string title, int characterPosition, bool isFatal)
         : base(errorNumber, message, isFatal)

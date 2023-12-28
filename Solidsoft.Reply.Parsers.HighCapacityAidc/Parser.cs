@@ -207,7 +207,7 @@ public static partial class Parser
                 return barcode;
             }
 
-            // There were exceptions. Add an additional barcode exception to register this.
+            // There were exceptions. Add a barcode exception to register this.
             barcode.AddException(
                 new BarcodeException(1003, Resources.Barcodes_Error_004, false),
                 !barcode.DataElements.Any() ? ParseStatus.Unrecognised : ParseStatus.Invalid);
@@ -460,7 +460,7 @@ public static partial class Parser
                             recordIndex));
                     break;
                 default:
-                    // The record format is not supported. Add an additional barcode exception to register this.
+                    // The record format is not supported. Add a barcode exception to register this.
                     barcode.AddException(
                         new BarcodeException(1006, Resources.Barcodes_Error_007, false),
                         ParseStatus.Invalid);
@@ -474,7 +474,7 @@ public static partial class Parser
             return barcode;
         }
 
-        // There were exceptions. Add an additional barcode exception to register this.
+        // There were exceptions. Add a barcode exception to register this.
         barcode.AddException(
             new BarcodeException(1003, Resources.Barcodes_Error_004, false),
             !barcode.DataElements.Any() ? ParseStatus.Unrecognised : ParseStatus.Invalid);

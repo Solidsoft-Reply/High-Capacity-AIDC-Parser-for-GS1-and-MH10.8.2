@@ -28,12 +28,12 @@ using System.Collections.Generic;
 using Common;
 
 /// <summary>
-///   Pre-processor methods for ASCII control characters characters.
+///   Pre-processor methods for ASCII control characters.
 /// </summary>
 public static class AsciiControlCharacters
 {
     /// <summary>
-    ///   Replace representation of ASCII control characters characters with literals.
+    ///   Replace representation of ASCII control characters with literals.
     /// </summary>
     /// <param name="input">The input string.</param>
     /// <param name="exceptions">Collection of exceptions.</param>

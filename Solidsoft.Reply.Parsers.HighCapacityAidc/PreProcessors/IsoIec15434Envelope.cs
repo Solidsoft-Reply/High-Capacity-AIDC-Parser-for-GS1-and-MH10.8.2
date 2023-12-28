@@ -197,7 +197,7 @@ public static partial class IsoIec15434Envelope
              * record separators. However, no such candidate error has been
              * identified and, even if this could occur, the approach taken here
              * means that the same problem would be encountered in scenarios where
-             * the barcode scanner reports Record Separators. Therefore the pack
+             * the barcode scanner reports Record Separators. Therefore, the pack
              * identifier can responsibly be submitted to the National System.
              * */
             var candidates = new List<string>();
@@ -248,7 +248,7 @@ public static partial class IsoIec15434Envelope
                     return;
                 }
 
-                // Add the candidate string to the the dictionary and set the error flags
+                // Add the candidate string to the dictionary and set the error flags
                 recordErrors.TryAdd(key, false);
 
                 if (!resolvedEntity.IsError && !resolvedEntity.Exceptions.Any())

@@ -1079,26 +1079,27 @@ public static class Dom3KeyboardEventCodes
             "Unidentified",
             (0x2094, 0x2194, 0x2294, 0x2394, 0x2494, 0x2594, 0x2694, 0x2794, 0x2888, 0x2988, 0x60BF, 0x70BF, 0x80BF,
                 0x90BF, 0xA0BF, 0xB0BF, 0xC0BF, 0xD0BF, 0xD1BF, 0xD2BF)
-        },
+        }
     };
 
     /// <summary>
     ///   A pre-processor that converts a JSON representation of HTML DOM 3 keyboard codes (scan codes) into literal characters.
     /// </summary>
     /// <param name="input">The barcode data input in JSON format.</param>
+    /// <param name="exceptions">A list of pre-processor exceptions.</param>
     /// <returns>The pre-processed barcode data input.</returns>
     // ReSharper disable once UnusedMember.Global
-    public static string? ConvertCodesToString(string? input, out IList<PreprocessorException>? exceptions)
+    public static string ConvertCodesToString(string? input, out IList<PreprocessorException>? exceptions)
     {
         Console.WriteLine(input);
-        var valuesJson = input is null ? string.Empty : input;
+        var valuesJson = input ?? string.Empty;
         valuesJson = Regex.Unescape(valuesJson).Trim('"');
-        var scannedData = JsonConvert.DeserializeObject<EventCode[]>(valuesJson);
+        var scannedData = JsonConvert.DeserializeObject<Dom3ReportedKeys[]>(valuesJson);
         var sb = new StringBuilder();
         var calledAltNumpad = false;
         var altNumpadValue = new StringBuilder();
 
-        foreach (var eventCode in scannedData ?? Array.Empty<EventCode>())
+        foreach (var eventCode in scannedData ?? Array.Empty<Dom3ReportedKeys>())
         {
             // Mask the upper bits representing NumLock, ScrollLock and Meta/OS
             var modifiers = eventCode.Modifiers & 31;
@@ -1123,25 +1124,25 @@ public static class Dom3KeyboardEventCodes
                 AppendAltNumpadValue();
                 return modifiers switch
                 {
-                    0 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].code).ToInvariantString(),
-                    1 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].shift).ToInvariantString(),
-                    2 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].ctrl).ToInvariantString(),
-                    3 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].shiftCtrl).ToInvariantString(),
-                    5 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].shiftAlt).ToInvariantString(),
-                    6 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].ctrlAlt).ToInvariantString(),
-                    7 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].shiftCtrlAlt).ToInvariantString(),
-                    8 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].altGr).ToInvariantString(),
-                    9 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].shiftAltGr).ToInvariantString(),
-                    16 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].capital).ToInvariantString(),
-                    17 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].shiftCapital).ToInvariantString(),
-                    18 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].ctrlCapital).ToInvariantString(),
-                    19 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].shiftCtrlCapital).ToInvariantString(),
-                    20 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].altCapital).ToInvariantString(),
-                    21 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].shiftAltCapital).ToInvariantString(),
-                    22 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].ctrlAltCapital).ToInvariantString(),
-                    23 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].shiftCtrlAltCapital).ToInvariantString(),
-                    24 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].altGrCapital).ToInvariantString(),
-                    25 => ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].shiftAltGrCapital).ToInvariantString(),
+                    0 => ((char)KeyCodes[eventCode.Code].code).ToInvariantString(),
+                    1 => ((char)KeyCodes[eventCode.Code].shift).ToInvariantString(),
+                    2 => ((char)KeyCodes[eventCode.Code].ctrl).ToInvariantString(),
+                    3 => ((char)KeyCodes[eventCode.Code].shiftCtrl).ToInvariantString(),
+                    5 => ((char)KeyCodes[eventCode.Code].shiftAlt).ToInvariantString(),
+                    6 => ((char)KeyCodes[eventCode.Code].ctrlAlt).ToInvariantString(),
+                    7 => ((char)KeyCodes[eventCode.Code].shiftCtrlAlt).ToInvariantString(),
+                    8 => ((char)KeyCodes[eventCode.Code].altGr).ToInvariantString(),
+                    9 => ((char)KeyCodes[eventCode.Code].shiftAltGr).ToInvariantString(),
+                    16 => ((char)KeyCodes[eventCode.Code].capital).ToInvariantString(),
+                    17 => ((char)KeyCodes[eventCode.Code].shiftCapital).ToInvariantString(),
+                    18 => ((char)KeyCodes[eventCode.Code].ctrlCapital).ToInvariantString(),
+                    19 => ((char)KeyCodes[eventCode.Code].shiftCtrlCapital).ToInvariantString(),
+                    20 => ((char)KeyCodes[eventCode.Code].altCapital).ToInvariantString(),
+                    21 => ((char)KeyCodes[eventCode.Code].shiftAltCapital).ToInvariantString(),
+                    22 => ((char)KeyCodes[eventCode.Code].ctrlAltCapital).ToInvariantString(),
+                    23 => ((char)KeyCodes[eventCode.Code].shiftCtrlAltCapital).ToInvariantString(),
+                    24 => ((char)KeyCodes[eventCode.Code].altGrCapital).ToInvariantString(),
+                    25 => ((char)KeyCodes[eventCode.Code].shiftAltGrCapital).ToInvariantString(),
                     _ => string.Empty
                 };
             }
@@ -1166,7 +1167,7 @@ public static class Dom3KeyboardEventCodes
 
                 // Alt was pressed but NumLock is off
                 AppendAltNumpadValue();
-                return ((char)Dom3KeyboardEventCodes.KeyCodes[eventCode.Code].alt).ToInvariantString();
+                return ((char)KeyCodes[eventCode.Code].alt).ToInvariantString();
 
                 // Alt was pressed and NumLock is on
                 string GetNumpad(char digit)
