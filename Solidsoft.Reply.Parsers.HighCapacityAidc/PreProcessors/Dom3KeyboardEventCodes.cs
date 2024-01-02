@@ -1091,7 +1091,6 @@ public static class Dom3KeyboardEventCodes
     // ReSharper disable once UnusedMember.Global
     public static string ConvertCodesToString(string? input, out IList<PreprocessorException>? exceptions)
     {
-        Console.WriteLine(input);
         var valuesJson = input ?? string.Empty;
         valuesJson = Regex.Unescape(valuesJson).Trim('"');
         var scannedData = JsonConvert.DeserializeObject<Dom3ReportedKeys[]>(valuesJson);
@@ -1202,6 +1201,19 @@ public static class Dom3KeyboardEventCodes
         }
 
         exceptions = new List<PreprocessorException>();
-        return sb.ToString();
+        var output = sb.ToString();
+        int idx;
+
+        for (idx = output.Length - 1; idx >= 0; idx--)
+        {
+            if (output[idx] == '\n' || output[idx] == '\r')
+            {
+                continue;
+            }
+
+            break;
+        }
+
+        return output[..(idx + 1)];
     }
 }
