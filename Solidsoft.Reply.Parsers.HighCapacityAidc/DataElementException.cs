@@ -96,6 +96,7 @@ public class DataElementException : BarcodeException
     /// </summary>
     /// <param name="info">The serialization information.</param>
     /// <param name="context">The streaming context.</param>
+    [Obsolete(DiagnosticId = "SYSLIB0051")]
     protected DataElementException(SerializationInfo info, StreamingContext context) : base(info, context)
     {
     }
