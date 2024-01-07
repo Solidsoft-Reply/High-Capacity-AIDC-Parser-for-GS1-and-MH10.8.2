@@ -35,12 +35,12 @@ public class Barcode : IBarcode
     /// <summary>
     ///   The list of data elements in the barcode.
     /// </summary>
-    private readonly List<IDataEntity> _dataElements = new();
+    private readonly List<IDataEntity> _dataElements = [];
 
     /// <summary>
     ///   The list of exceptions when parsing the barcode data.
     /// </summary>
-    private readonly List<BarcodeException> _exceptions = new();
+    private readonly List<BarcodeException> _exceptions = [];
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Barcode" /> class.

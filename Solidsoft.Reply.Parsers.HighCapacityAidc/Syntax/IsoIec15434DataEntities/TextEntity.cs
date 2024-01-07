@@ -32,7 +32,7 @@ public class TextEntity : IDataEntity
     /// <summary>
     ///   The list of exceptions when parsing the text entity.
     /// </summary>
-    private readonly List<DataElementException> _exceptions = new();
+    private readonly List<DataElementException> _exceptions = [];
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="TextEntity" /> class.

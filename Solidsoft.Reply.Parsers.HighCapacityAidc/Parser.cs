@@ -175,8 +175,8 @@ public static partial class Parser
             if (aimId.BarcodeType == BarcodeType.NoIdentifier && input.All(c => c >= 48 && c <= 57))
             {
                 var inputLength = input.Length;
-                int[] upcEanSupplementSizes = { 15, 17, 18 };
-                int[] upcEanSizes = { 13, 12, 8 };
+                int[] upcEanSupplementSizes = [15, 17, 18];
+                int[] upcEanSizes = [13, 12, 8];
 
                 string TestItf14OrUpaCWithSupplement() =>
                     inputLength == 14

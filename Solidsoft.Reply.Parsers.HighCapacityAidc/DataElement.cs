@@ -34,7 +34,7 @@ public class DataElement : IDataEntity
     /// <summary>
     ///   The list of exceptions when parsing the element data.
     /// </summary>
-    private readonly List<DataElementException> _exceptions = new();
+    private readonly List<DataElementException> _exceptions = [];
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="DataElement" /> class.
