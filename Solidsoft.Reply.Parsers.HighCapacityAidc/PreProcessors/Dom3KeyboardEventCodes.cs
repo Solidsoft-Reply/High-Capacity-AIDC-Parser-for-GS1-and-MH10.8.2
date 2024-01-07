@@ -376,8 +376,12 @@ public static class Dom3KeyboardEventCodes
                 0x9032, 0xA032, 0xB032, 0xC032, 0xD032, 0xD132, 0xD232)
         },
         {
+            // Because space characters are used as delimiters in calibration barcodes, we have to compromise here
+            // and represent some key combinations as spaces - specifically Shift-Space, Capital-Space and
+            // Capital-Shift-Space.  These are generally reported as spaces by keyboard layouts, and if we don't
+            // enforce this convention, the calibration data cannot be parsed by the Calibrator.
             "Space",
-            (0x0020, 0x0120, 0x0220, 0x0420, 0x3420, 0x0520, 0x0620, 0x0723, 0x1820, 0x0923, 0x6033, 0x7033, 0x8033,
+            (0x0020, 0x0020, 0x0220, 0x0420, 0x0020, 0x0520, 0x0620, 0x0723, 0x1820, 0x0923, 0x0020, 0x0020, 0x8033,
                 0x9033, 0xA033, 0xB033, 0xC033, 0xD033, 0xD133, 0xD233)
         },
         {
