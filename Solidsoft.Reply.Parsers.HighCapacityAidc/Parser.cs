@@ -113,7 +113,7 @@ public static partial class Parser
         }
 
         // Reorder 
-        preProcessedData = aimId.Id.Length > 0 ? "]" + aimId.Id + input : input;
+        preProcessedData = input;  ////// aimId.Id.Length > 0 ? "]" + aimId.Id + input : input;
 
         // Determine the syntax of each record
         var recordFormats = new IsoIec15434Analyzer().Analyze(input, 0, out var messageHeader);
