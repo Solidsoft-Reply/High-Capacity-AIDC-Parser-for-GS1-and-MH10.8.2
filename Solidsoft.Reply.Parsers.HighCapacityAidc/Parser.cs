@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="BarcodeParser.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2023 Solidsoft Reply Ltd. All rights reserved.
+//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // </copyright>
 // <license>
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -47,6 +47,7 @@ public delegate string? Preprocessor(string? input, out IList<PreprocessorExcept
 ///   Barcode parser for Automatic Identification and Data Capture (AIDC) barcodes,
 ///   including barcodes that conform to ISO/IEC 15434.
 /// </summary>
+#if NET7_0_OR_GREATER
 public static partial class Parser
 {
     /// <summary>
@@ -54,11 +55,23 @@ public static partial class Parser
     /// </summary>
     [GeneratedRegex(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.IgnoreCase, "en-US")]
     private static partial Regex MatchFormatIdentifierAndPreambleRegex();
-
+#else
+public static class Parser
+{
+    /// <summary>
+    ///   Code generator for regular expression that matches the format identifier and preamble for binary data.
+    /// </summary>
+    private static readonly Regex MatchFormatIdentifierAndPreambleRegex = new(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.IgnoreCase);
+#endif
+    
     /// <summary>
     ///   Regular expression that matches the format identifier and preamble for binary data.
     /// </summary>
-    private static readonly Regex RegexBinary = MatchFormatIdentifierAndPreambleRegex();
+    private static readonly Regex RegexBinary = MatchFormatIdentifierAndPreambleRegex
+#if NET7_0_OR_GREATER
+        ()
+#endif
+        ;
 
     /// <summary>
     ///   Parse the raw barcode data.
@@ -112,8 +125,7 @@ public static partial class Parser
             return unprocessableBarcode;
         }
 
-        // Reorder 
-        preProcessedData = input;  ////// aimId.Id.Length > 0 ? "]" + aimId.Id + input : input;
+        preProcessedData = input;
 
         // Determine the syntax of each record
         var recordFormats = new IsoIec15434Analyzer().Analyze(input, 0, out var messageHeader);
@@ -251,7 +263,13 @@ public static partial class Parser
                     break;
                 case FormatIndicator.Binary:
                     offset = 1;
-                    var record = input[recordFormat.StartPosition..];
+                    var record = input
+#if NET6_0_OR_GREATER
+                    [recordFormat.StartPosition..]
+#else
+                    .Substring(recordFormat.StartPosition)
+#endif
+                    ;
                     if (!RegexBinary.IsMatch(record))
                     {
                         break;
@@ -375,8 +393,20 @@ public static partial class Parser
                         description = Resources.Barcodes_010;
                     }
 
-                    var release = input[(recordFormat.StartPosition + 2)..(recordFormat.StartPosition + 5)];
-                    var subRelease = input[(recordFormat.StartPosition + 5)..(recordFormat.StartPosition + 8)];
+                    var release = input
+#if NET6_0_OR_GREATER
+                        [(recordFormat.StartPosition + 2)..(recordFormat.StartPosition + 5)]
+#else
+                        .Substring(recordFormat.StartPosition + 2, 3)
+#endif
+                        ;
+                    var subRelease = input
+#if NET6_0_OR_GREATER
+                        [(recordFormat.StartPosition + 5)..(recordFormat.StartPosition + 8)]
+#else
+                        .Substring(recordFormat.StartPosition + 5, 3)
+#endif
+                        ;
                     title = $"{title} [{release}{subRelease}]";
 
                     barcode.AddDataElement(
@@ -400,9 +430,27 @@ public static partial class Parser
                         ParseStatus.Ok);
                     break;
                 case FormatIndicator.Cii:
-                    var organisation = input[(recordFormat.StartPosition + 2)..(recordFormat.StartPosition + 6)];
-                    var subOrganisation = input[(recordFormat.StartPosition + 6)..(recordFormat.StartPosition + 8)];
-                    var edition = input[(recordFormat.StartPosition + 8)..(recordFormat.StartPosition + 10)];
+                    var organisation = input
+#if NET6_0_OR_GREATER
+                        [(recordFormat.StartPosition + 2)..(recordFormat.StartPosition + 6)]
+#else
+                        .Substring(recordFormat.StartPosition + 2, 4)
+#endif
+                        ;
+                    var subOrganisation = input
+#if NET6_0_OR_GREATER
+                        [(recordFormat.StartPosition + 6)..(recordFormat.StartPosition + 8)]
+#else
+                        .Substring(recordFormat.StartPosition + 6, 2)
+#endif
+                        ;
+                    var edition = input
+#if NET6_0_OR_GREATER
+                        [(recordFormat.StartPosition + 8)..(recordFormat.StartPosition + 10)]
+#else
+                        .Substring(recordFormat.StartPosition + 8, 2)
+#endif
+                        ;
                     title = string.Format(
                         CultureInfo.CurrentCulture,
                         Resources.Barcodes_011,
@@ -433,7 +481,13 @@ public static partial class Parser
                         ParseStatus.Ok);
                     break;
                 case FormatIndicator.Binary:
-                    var record = input[recordFormat.StartPosition..];
+                    var record = input
+#if NET6_0_OR_GREATER
+                        [recordFormat.StartPosition..]
+#else
+                        .Substring(recordFormat.StartPosition)
+#endif
+                        ;
                     if (!RegexBinary.IsMatch(record))
                     {
                         break;
@@ -485,12 +539,20 @@ public static partial class Parser
         {
             input = input.Length switch
             {
+#if NET6_0_OR_GREATER
                 18 => input[..13],
                 17 => input[..12],
                 15 => input[..13],
                 14 => input[..12],
                 13 => input[..8],
-                _  => input
+#else
+                18 => input.Substring(0, 13),
+                17 => input.Substring(0, 12),
+                15 => input.Substring(0, 13),
+                14 => input.Substring(0, 12),
+                13 => input.Substring(0, 8),
+#endif
+                _ => input
             };
 
             return input.Length == 8 ? ProcessUpcOrEan13(input) : "01" + input.PadLeft(14, '0');
@@ -515,8 +577,8 @@ public static partial class Parser
             return "01" + input?.PadLeft(14, '0');
         }
 
-        return input[6] switch
-        {
+        return input[6] switch {
+#if NET6_0_OR_GREATER
             // XXNNN0 -> 0 or 1 + XX000-00NNN + check digit
             '0' => $"01{input[0]}{input[1..3]}{new string('0', 5)}{input[3..6]}{input[7]}".PadLeft(14, '0'),
 
@@ -538,6 +600,29 @@ public static partial class Parser
             // XXXXX8 -> 0 or 1 + XXXXX-00008 + check digit
             // XXXXX9 -> 0 or 1 + XXXXX-00009 + check digit
             _ => $"01{input[0]}{input[1..6]}{new string('0', 4)}{input[6..]}".PadLeft(14, '0')
+#else
+            // XXNNN0 -> 0 or 1 + XX000-00NNN + check digit
+            '0' => $"01{input[0]}{input.Substring(1, 2)}{new string('0', 5)}{input.Substring(3, 3)}{input[7]}".PadLeft(14, '0'),
+
+            // XXNNN1 -> 0 or 1 + XX100-00NNN + check digit
+            '1' => $"01{input[0]}{input.Substring(1, 2)}1{new string('0', 4)}{input.Substring(3, 3)}{input[7]}".PadLeft(14, '0'),
+
+            // XXNNN2 -> 0 or 1 + XX200-00NNN + check digit
+            '2' => $"01{input[0]}{input.Substring(1, 2)}2{new string('0', 4)}{input.Substring(3, 3)}{input[7]}".PadLeft(14, '0'),
+
+            // XXXNN3 -> 0 or 1 + XXX00-000NN + check digit
+            '3' => $"01{input[0]}{input.Substring(1, 3)}{new string('0', 5)}{input.Substring(4, 2)}{input[7]}".PadLeft(14, '0'),
+
+            // XXXXN4 -> 0 or 1 + XXXX0-0000N + check digit
+            '4' => $"01{input[0]}{input.Substring(1, 4)}{new string('0', 5)}{input[5]}{input[7]}".PadLeft(14, '0'),
+
+            // XXXXX5 -> 0 or 1 + XXXXX-00005 + check digit
+            // XXXXX6 -> 0 or 1 + XXXXX-00006 + check digit
+            // XXXXX7 -> 0 or 1 + XXXXX-00007 + check digit
+            // XXXXX8 -> 0 or 1 + XXXXX-00008 + check digit
+            // XXXXX9 -> 0 or 1 + XXXXX-00009 + check digit
+            _ => $"01{input[0]}{input.Substring(1, 5)}{new string('0', 4)}{input.Substring(6)}".PadLeft(14, '0')
+#endif
         };
     }
 

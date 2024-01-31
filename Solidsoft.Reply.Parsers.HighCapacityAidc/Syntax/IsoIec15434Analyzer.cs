@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="IsoIec15434Analyzer.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2023 Solidsoft Reply Ltd. All rights reserved.
+//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // </copyright>
 // <license>
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,8 +30,8 @@ using System.Text.RegularExpressions;
 /// <summary>
 ///   Performs syntactic analysis of barcode data using ISO/IEC 15434 standards.
 /// </summary>
-public partial class IsoIec15434Analyzer : IAnalyzer
-{
+#if NET7_0_OR_GREATER
+public partial class IsoIec15434Analyzer : IAnalyzer {
     /// <summary>
     ///   Regular expression that matches candidate format identifiers.
     /// </summary>
@@ -43,6 +43,18 @@ public partial class IsoIec15434Analyzer : IAnalyzer
     /// </summary>
     [GeneratedRegex(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.None, "en-US")]
     private static partial Regex BinaryRegEx();
+#else
+public class IsoIec15434Analyzer : IAnalyzer {
+    /// <summary>
+    ///   Regular expression that matches candidate format identifiers.
+    /// </summary>
+    private static readonly Regex MatchCandidatesRegEx = new(@"^((01\u001d\d{2})|(02|07)|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(08\d{8})|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d)).*$", RegexOptions.None);
+
+    /// <summary>
+    ///   Regular expression that matches the format identifier and preamble for binary data.
+    /// </summary>
+    private static readonly Regex BinaryRegEx = new(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.None);
+#endif
 
     /// <summary>
     ///   Analyze the syntactic format of each record in the barcode
@@ -69,8 +81,15 @@ public partial class IsoIec15434Analyzer : IAnalyzer
 
         // Strip off the message header and footer. NB. the message footer is not always used, depending on record formats.
         var records = messageHeader && data.Length >= 6
-                          ? data[4..^TestEndCharacters()].Split((char)30)
-                          : Array.Empty<string>();
+                          ? data
+#if NET6_0_OR_GREATER
+                                [4..^TestEndCharacters()]
+#else
+                                .Substring(4, data.Length - TestEndCharacters() - 4)
+#endif
+
+                              .Split((char)30)
+                          : [];
 
         int formatIdentifierRecordLength;
 
@@ -108,12 +127,20 @@ public partial class IsoIec15434Analyzer : IAnalyzer
                 case FormatIndicator.Binary:
                     var offset = 3;
 
-                    if (!BinaryRegEx().IsMatch(record))
+                    if (!BinaryRegEx
+#if NET7_0_OR_GREATER
+                        ()
+#endif
+                    .IsMatch(record))
                     {
                         return offset;
                     }
 
-                    var groups = BinaryRegEx().Match(record).Groups;
+                    var groups = BinaryRegEx
+#if NET7_0_OR_GREATER
+                        ()
+#endif
+                        .Match(record).Groups;
                     offset += groups["fileName"].Value.Length + 1;
                     offset += groups["compressionTechnique"].Value.Length + 1;
                     offset += groups["numberOfBytes"].Value.Length + 1;
@@ -129,22 +156,43 @@ public partial class IsoIec15434Analyzer : IAnalyzer
         // Memoise the format identifier record length.
         int FormatIdentifierRecordLength(string record) =>
             formatIdentifierRecordLength =
-                GetFormatIdentifierRecordLength(record[..2], record);
+                GetFormatIdentifierRecordLength(record
+#if NET6_0_OR_GREATER
+                        [..2]
+#else
+                        .Substring(0, 2)
+#endif
+                    , record);
 
         // Create the format specifier for a valid format.
         IsoIec15434Format CreateFormatSpecifier(string record, int recordIndex) =>
             new(
-                record[..2],
+                record
+#if NET6_0_OR_GREATER
+                    [..2]
+#else
+                    .Substring(0, 2)
+#endif
+                ,
                 record.Length
                 > FormatIdentifierRecordLength(record)
-                    ? record[formatIdentifierRecordLength..]
+                    ? record
+#if NET6_0_OR_GREATER
+                        [formatIdentifierRecordLength..]
+#else
+                        .Substring(formatIdentifierRecordLength)
+#endif
                     : string.Empty,
                 recordIndex,
                 GetStartPosition(recordIndex));
 
         // Resolve the record format and return a format specifier
         IsoIec15434Format ResolveRecordFormat(string record, int recordIndex) =>
-            MatchCandidatesRegEx().IsMatch(record)
+            MatchCandidatesRegEx
+#if NET7_0_OR_GREATER
+                ()
+#endif
+            .IsMatch(record)
                 ? CreateFormatSpecifier(record, recordIndex)
                 : new IsoIec15434Format(
                     string.Empty,

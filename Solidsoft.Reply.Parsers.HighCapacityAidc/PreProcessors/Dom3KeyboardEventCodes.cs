@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Dom3KeyboardEventCodes.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2023 Solidsoft Reply Ltd. All rights reserved.
+//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // </copyright>
 // <license>
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -1218,6 +1218,12 @@ public static class Dom3KeyboardEventCodes
             break;
         }
 
-        return output[..(idx + 1)];
+        return output
+#if NET6_0_OR_GREATER
+            [..(idx + 1)]
+#else
+            .Substring(0, idx + 1)
+#endif
+            ;
     }
 }

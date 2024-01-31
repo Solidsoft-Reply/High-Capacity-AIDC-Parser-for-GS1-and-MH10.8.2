@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="IsoIec15434Envelope.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2023 Solidsoft Reply Ltd. All rights reserved.
+//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // </copyright>
 // <license>
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,8 +33,8 @@ using Syntax;
 /// <summary>
 ///   Pre-processors for ISO/IEC 1434 envelope.
 /// </summary>
-public static partial class IsoIec15434Envelope
-{
+#if NET7_0_OR_GREATER
+public static partial class IsoIec15434Envelope {
     /// <summary>
     ///   Returns a regular expression that matches candidate format identifiers.
     /// </summary>
@@ -47,6 +47,19 @@ public static partial class IsoIec15434Envelope
     /// <returns></returns>
     [GeneratedRegex(@"(?!\u001e).((01\u001d\d{2})|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d))", RegexOptions.None, "en -US")]
     private static partial Regex MatchCandidatesNoEdiTextCiiRecordsRegex();
+#else
+public static class IsoIec15434Envelope {
+    /// <summary>
+    ///   Returns a regular expression that matches candidate format identifiers.
+    /// </summary>
+    private static readonly Regex MatchCandidatesEdiTextCiiRecordsRegex = new(@"(?!\u001e).((01\u001d\d{2})|(02|07)|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(08\d{8})|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d))", RegexOptions.None);
+
+    /// <summary>
+    ///   Returns a regular expression that matches candidate format identifiers, but does not match EDI, Text or CII fields
+    /// </summary>
+    /// <returns></returns>
+    private static readonly Regex MatchCandidatesNoEdiTextCiiRecordsRegex = new(@"(?!\u001e).((01\u001d\d{2})|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d))", RegexOptions.None);
+#endif
 
     /// <summary>
     ///   A best-endeavor pre-processor that fixes missing &lt;RS&gt; and &lt;EOT&gt;
@@ -85,7 +98,11 @@ public static partial class IsoIec15434Envelope
 
         var unprocessedInput = input;
         var repeatNoTextEdi = matchCandidates is null;
-        matchCandidates ??= MatchCandidatesEdiTextCiiRecordsRegex();
+        matchCandidates ??= MatchCandidatesEdiTextCiiRecordsRegex
+#if NET7_0_OR_GREATER
+            ()
+#endif
+            ;
 
         var noRecordSeparatorDetected = false;
 
@@ -100,7 +117,13 @@ public static partial class IsoIec15434Envelope
             noRecordSeparatorDetected = true;
 
             // Correct the malformed message header
-            input = messageHeader + recordSeparator + input[messageHeader.Length..];
+            input = messageHeader + recordSeparator + input
+#if NET6_0_OR_GREATER          
+                [messageHeader.Length..]
+#else
+                .Substring(messageHeader.Length)
+#endif
+                ;
         }
         else if (input.StartsWithOrdinal(malformedMessageHeader3)
               || input.StartsWithOrdinal(malformedMessageHeader4))
@@ -108,35 +131,72 @@ public static partial class IsoIec15434Envelope
             noRecordSeparatorDetected = true;
 
             // The scanner is emitting a null character instead of a record separator.
-            input = messageHeader + recordSeparator + input[(messageHeader.Length + 1)..].Replace(
+            input = messageHeader + recordSeparator + input
+#if NET6_0_OR_GREATER
+                [(messageHeader.Length + 1)..]
+#else
+                .Substring(messageHeader.Length + 1)
+#endif
+                .Replace(
                         "\u0000",
-                        recordSeparator,
-                        StringComparison.Ordinal);
+                        recordSeparator
+#if NET2_0_OR_GREATER
+                        , StringComparison.Ordinal
+#endif
+                        );
         }
         else if (input.StartsWithOrdinal(malformedMessageHeader5)
               || input.StartsWithOrdinal(malformedMessageHeader6))
         {
             // The scanner is emitting a null character instead of a record separator, but this has been
             // converted to an ASCII 29 because ASCII 29s are also emitted as null characters.
-            input = messageHeader + recordSeparator + input[(messageHeader.Length + 1)..];
+            input = messageHeader + recordSeparator + input
+#if NET6_0_OR_GREATER
+                [(messageHeader.Length + 1)..]
+#else
+                .Substring(messageHeader.Length + 1)
+#endif
+                ;
 
             if (input.EndsWithOrdinal(groupSeparator + endOfTransmission)
              || input.EndsWithOrdinal(groupSeparator))
             {
                 input =
+#if NET6_0_OR_GREATER
                     $"{input[..input.LastIndexOf(groupSeparator, StringComparison.Ordinal)]}{recordSeparator}{endOfTransmission}";
+#else
+                    $"{input.Substring(0, input.LastIndexOf(groupSeparator, StringComparison.Ordinal))}{recordSeparator}{endOfTransmission}";
+#endif
             }
 
             input = input.Replace(
                 $"{groupSeparator}05{groupSeparator}",
-                $"{recordSeparator}05{groupSeparator}",
-                StringComparison.Ordinal);
+                $"{recordSeparator}05{groupSeparator}"
+#if NET2_0_OR_GREATER
+                , StringComparison.Ordinal
+#endif
+                );
             input = input.Replace(
                 $"{groupSeparator}06{groupSeparator}",
-                $"{recordSeparator}06{groupSeparator}",
-                StringComparison.Ordinal);
+                $"{recordSeparator}06{groupSeparator}"
+#if NET2_0_OR_GREATER
+                , StringComparison.Ordinal
+#endif
+                );
         }
-        else if (input[4..7] == $"05{groupSeparator}" || input[4..7] == $"06{groupSeparator}")
+        else if (input
+#if NET6_0_OR_GREATER
+                    [4..7]
+#else
+                    .Substring(4, 3)
+#endif
+                 == $"05{groupSeparator}" || input
+#if NET6_0_OR_GREATER
+                    [4..7]
+#else
+                    .Substring(4, 3)
+#endif
+                 == $"06{groupSeparator}")
         {
             var ascii30Character = input[3];
 
@@ -144,23 +204,40 @@ public static partial class IsoIec15434Envelope
             if (ascii30Character != '\x001e')
             {
                 // ASCII 30 is mapped to another character
-                input = messageHeader + recordSeparator + input[(messageHeader.Length + 1)..];
+                input = messageHeader + recordSeparator + input
+#if NET6_0_OR_GREATER
+                    [(messageHeader.Length + 1)..]
+#else
+                    .Substring(messageHeader.Length + 1)
+#endif
+                    ;
 
                 if (input.EndsWithOrdinal(ascii30Character + endOfTransmission)
                  || input.EndsWithOrdinal(groupSeparator))
                 {
                     var lastElementCharPos = input.LastIndexOf(ascii30Character);
-                    input = $"{input[..lastElementCharPos]}{groupSeparator}{recordSeparator}{endOfTransmission}";
+                    input =
+#if NET6_0_OR_GREATER
+                        $"{input[..lastElementCharPos]}{groupSeparator}{recordSeparator}{endOfTransmission}";
+#else
+                        $"{input.Substring(0, lastElementCharPos)}{groupSeparator}{recordSeparator}{endOfTransmission}";
+#endif
                 }
 
                 input = input.Replace(
                     $"{ascii30Character}05{groupSeparator}",
-                    $"{recordSeparator}05{groupSeparator}",
-                    StringComparison.Ordinal);
+                    $"{recordSeparator}05{groupSeparator}"
+#if NET2_0_OR_GREATER
+                , StringComparison.Ordinal
+#endif
+                );
                 input = input.Replace(
                     $"{ascii30Character}06{groupSeparator}",
-                    $"{recordSeparator}06{groupSeparator}",
-                    StringComparison.Ordinal);
+                    $"{recordSeparator}06{groupSeparator}"
+#if NET2_0_OR_GREATER
+                , StringComparison.Ordinal
+#endif
+                );
             }
         }
 
@@ -170,7 +247,13 @@ public static partial class IsoIec15434Envelope
             {
                 if (input.EndsWithOrdinal("\u0000"))
                 {
-                    input = input[..^1];
+                    input = input
+#if NET6_0_OR_GREATER
+                        [..^1]
+#else
+                        .Substring(0, input.Length - 1)
+#endif
+                        ;
                 }
 
                 // Add a format trailer
@@ -182,7 +265,12 @@ public static partial class IsoIec15434Envelope
         }
         else if (!input.EndsWithOrdinal(recordSeparator + endOfTransmission))
         {
-            input = $"{input[..^endOfTransmission.Length]}{recordSeparator}{endOfTransmission}";
+            input =
+#if NET6_0_OR_GREATER
+                $"{input[..^endOfTransmission.Length]}{recordSeparator}{endOfTransmission}";
+#else
+                $"{input.Substring(0, endOfTransmission.Length)}{recordSeparator}{endOfTransmission}";
+#endif
         }
 
         if (noRecordSeparatorDetected)
@@ -206,13 +294,28 @@ public static partial class IsoIec15434Envelope
             var sections = new List<string>();
             var currentPos = 0;
 
-            foreach (var index in matchCandidates.Matches(input).Select(match => match.Index))
-            {
-                sections.Add(input[currentPos..(index + 1)]);
+            foreach (var index in matchCandidates.Matches(input)
+#if !NET6_0_OR_GREATER                  
+                        .Cast<Match>()
+#endif
+                        .Select(match => match.Index)) {
+                sections.Add(input
+#if NET6_0_OR_GREATER
+                    [currentPos..(index + 1)]
+#else
+                    .Substring(currentPos, index + 1 - currentPos)
+#endif
+                );
                 currentPos = index + 1;
             }
 
-            sections.Add(input[currentPos..]);
+            sections.Add(input
+#if NET5_0_OR_GREATER
+                [currentPos..]
+#else
+                .Substring(currentPos)
+#endif
+            );
 
             void IdentifyCandidates(int pos, string preamble)
             {
@@ -249,7 +352,18 @@ public static partial class IsoIec15434Envelope
                 }
 
                 // Add the candidate string to the dictionary and set the error flags
+#if NET2_0_OR_GREATER
                 recordErrors.TryAdd(key, false);
+#else
+                try
+                {
+                    recordErrors.Add(key, false);
+                }
+                catch (Exception)
+                {
+                    // Do nothing
+                }
+#endif
 
                 if (!resolvedEntity.IsError && !resolvedEntity.Exceptions.Any())
                 {
@@ -338,7 +452,11 @@ public static partial class IsoIec15434Envelope
             // If we failed, try again, but without taking into account the EDI, text or CII
             // fields which don't use ASCII 29 delimiters after the format indicator.
             input = string.IsNullOrWhiteSpace(input) && repeatNoTextEdi
-                        ? DoFixMissingControlCharacters(unprocessedInput, MatchCandidatesNoEdiTextCiiRecordsRegex())
+                        ? DoFixMissingControlCharacters(unprocessedInput, MatchCandidatesNoEdiTextCiiRecordsRegex
+#if NET7_0_OR_GREATER
+                            ()
+#endif
+                            )
                         : input;
         }
 
@@ -352,13 +470,23 @@ public static partial class IsoIec15434Envelope
                 case "03":
                 case "04":
                     var indexOfGroupSeparator = recordFormat.StartPosition + 8;
-                    var threeCharacters = input[indexOfGroupSeparator..(indexOfGroupSeparator + 3)];
+                    var threeCharacters = input
+#if NET5_0_OR_GREATER
+                        [indexOfGroupSeparator..(indexOfGroupSeparator + 3)]
+#else
+                        .Substring(indexOfGroupSeparator, 3)
+#endif
+                        ;
                     var lastChar =
                         threeCharacters.LastOrDefault(c => c is '\u001c' or '\u001d' or '\u001f');
                     var indexOfStartOfValue =
                         indexOfGroupSeparator + threeCharacters.LastIndexOf(lastChar) + 1;
                     input =
+#if NET5_0_OR_GREATER
                         $"{input[..indexOfGroupSeparator]}\u001c\u001d\u001f{input[indexOfStartOfValue..]}";
+#else
+                        $"{input.Substring(0, indexOfGroupSeparator)}\u001c\u001d\u001f{input.Substring(indexOfStartOfValue)}";
+#endif
                     break;
 
                 // ReSharper disable once RedundantEmptySwitchSection
