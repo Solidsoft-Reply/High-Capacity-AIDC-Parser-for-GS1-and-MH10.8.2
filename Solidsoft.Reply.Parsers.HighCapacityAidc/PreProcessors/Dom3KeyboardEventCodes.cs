@@ -1101,7 +1101,7 @@ public static class Dom3KeyboardEventCodes
         var sb = new StringBuilder();
         var calledAltNumpad = false;
         var altNumpadValue = new StringBuilder();
-
+        
         foreach (var eventCode in scannedData ?? Array.Empty<Dom3ReportedKeys>())
         {
             // Mask the upper bits representing NumLock, ScrollLock and Meta/OS
@@ -1110,14 +1110,15 @@ public static class Dom3KeyboardEventCodes
             sb.Append(modifiers switch
             {
                 4 => HandleAltNumericKeypad(),
+                20 => HandleAltNumericKeypad(),
                 _ => HandleKeyCode()
             });
 
-#pragma warning disable S3626
 #pragma warning disable S1751
+#pragma warning disable S3626
             continue;
-#pragma warning restore S1751
 #pragma warning restore S3626
+#pragma warning restore S1751
 
             // The tuple uses nesting internally (see the .Rest property of ValueTuple<T1..T7,TRest).  There are two levels of
             // nesting in the tuple type.  Due to a Resharper issue, the second level of nesting may case Resharper to indicate
