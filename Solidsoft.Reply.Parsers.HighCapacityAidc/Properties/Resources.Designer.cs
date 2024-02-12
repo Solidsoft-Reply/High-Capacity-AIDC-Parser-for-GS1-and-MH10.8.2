@@ -61,7 +61,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text.
+        ///   Looks up a localized string similar to Szöveg.
         /// </summary>
         internal static string Barcodes_001 {
             get {
@@ -70,7 +70,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Free form text..
+        ///   Looks up a localized string similar to Szabad formátumú szöveg..
         /// </summary>
         internal static string Barcodes_002 {
             get {
@@ -88,7 +88,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Complete EDI message / transaction..
+        ///   Looks up a localized string similar to Teljes EDI üzenet/tranzakció..
         /// </summary>
         internal static string Barcodes_004 {
             get {
@@ -97,7 +97,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Structured data.
+        ///   Looks up a localized string similar to Strukturált adatok.
         /// </summary>
         internal static string Barcodes_005 {
             get {
@@ -106,7 +106,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Structured data following the Text Element Identifier rules..
+        ///   Looks up a localized string similar to Szövegelem azonosító szabályai szerinti strukturált adatok..
         /// </summary>
         internal static string Barcodes_006 {
             get {
@@ -124,7 +124,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Structured data using ANSI ASC X12 Segments..
+        ///   Looks up a localized string similar to ANSI ASC X12 szegmensekkel rendelkező strukturált adatok..
         /// </summary>
         internal static string Barcodes_008 {
             get {
@@ -142,7 +142,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Structured data using UN/EDIFACT Segments..
+        ///   Looks up a localized string similar to UN/EDIFACT szegmensekkel rendelkező strukturált adatok..
         /// </summary>
         internal static string Barcodes_010 {
             get {
@@ -160,7 +160,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Structured data using CII syntax rules..
+        ///   Looks up a localized string similar to CII szintaktikai szabályokkal rendelkező strukturált adatok..
         /// </summary>
         internal static string Barcodes_012 {
             get {
@@ -169,7 +169,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Binary data [{0}; {1}; {2} bytes].
+        ///   Looks up a localized string similar to Bináris adatok [{0}; {1}; {2} bájt].
         /// </summary>
         internal static string Barcodes_013 {
             get {
@@ -178,7 +178,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Binary data (file type) (compression technique) (number of bytes)..
+        ///   Looks up a localized string similar to Bináris adatok (fájltípus) (tömörítési technika) (bájtok száma)..
         /// </summary>
         internal static string Barcodes_014 {
             get {
@@ -187,7 +187,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No barcode data provided..
+        ///   Looks up a localized string similar to Nincsenek vonalkód adatok..
         /// </summary>
         internal static string Barcodes_Error_001 {
             get {
@@ -196,7 +196,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pre-processing the barcode data failed..
+        ///   Looks up a localized string similar to A vonalkód adatok előfeldolgozása sikertelen..
         /// </summary>
         internal static string Barcodes_Error_002 {
             get {
@@ -205,7 +205,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The barcode encoding is not supported..
+        ///   Looks up a localized string similar to A vonalkód kódolása nem támogatott..
         /// </summary>
         internal static string Barcodes_Error_003 {
             get {
@@ -214,7 +214,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The barcode contains invalid or unrecognised data..
+        ///   Looks up a localized string similar to A vonalkód érvénytelen vagy fel nem ismert adatokat tartalmaz..
         /// </summary>
         internal static string Barcodes_Error_004 {
             get {
@@ -223,7 +223,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The barcode contains an invalid data record..
+        ///   Looks up a localized string similar to A vonalkód érvénytelen adatbejegyzést tartalmaz..
         /// </summary>
         internal static string Barcodes_Error_005 {
             get {
@@ -232,7 +232,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The parser does not support the syntax and semantics of the {0} record..
+        ///   Looks up a localized string similar to Az elemző nem támogatja a {0} bejegyzés szintaktikáját és szemantikáját..
         /// </summary>
         internal static string Barcodes_Error_006 {
             get {
@@ -241,7 +241,7 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The format of a data record in the barcode is unrecognised..
+        ///   Looks up a localized string similar to A vonalkódban lévő adatbejegyzés formátuma fel nem ismert..
         /// </summary>
         internal static string Barcodes_Error_007 {
             get {

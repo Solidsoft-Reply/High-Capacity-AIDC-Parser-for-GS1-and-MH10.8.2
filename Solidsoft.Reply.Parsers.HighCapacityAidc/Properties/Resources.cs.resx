@@ -119,86 +119,65 @@
   </resheader>
   <data name="Barcodes_001" xml:space="preserve">
     <value>Text</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_002" xml:space="preserve">
-    <value>Free form text.</value>
-    <comment>Text</comment>
+    <value>Volný text.</value>
   </data>
   <data name="Barcodes_003" xml:space="preserve">
     <value>EDI</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_004" xml:space="preserve">
-    <value>Complete EDI message / transaction.</value>
-    <comment>Text</comment>
+    <value>Kompletní EDI zpráva / transakce.</value>
   </data>
   <data name="Barcodes_005" xml:space="preserve">
-    <value>Structured data</value>
-    <comment>Text</comment>
+    <value>Strukturovaná data</value>
   </data>
   <data name="Barcodes_006" xml:space="preserve">
-    <value>Structured data following the Text Element Identifier rules.</value>
-    <comment>Text</comment>
+    <value>Strukturovaná data následující pravidla identifikátoru textových prvků.</value>
   </data>
   <data name="Barcodes_007" xml:space="preserve">
     <value>ASC X12</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_008" xml:space="preserve">
-    <value>Structured data using ANSI ASC X12 Segments.</value>
-    <comment>Text</comment>
+    <value>Strukturovaná data používající segmenty ANSI ASC X12.</value>
   </data>
   <data name="Barcodes_009" xml:space="preserve">
     <value>UN EDIFACT</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_010" xml:space="preserve">
-    <value>Structured data using UN/EDIFACT Segments.</value>
-    <comment>Text</comment>
+    <value>Strukturovaná data používající segmenty UN/EDIFACT.</value>
   </data>
   <data name="Barcodes_011" xml:space="preserve">
     <value>CII [{0}{1}{2}]</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_012" xml:space="preserve">
-    <value>Structured data using CII syntax rules.</value>
-    <comment>Text</comment>
+    <value>Strukturovaná data používající syntaxi CII.</value>
   </data>
   <data name="Barcodes_013" xml:space="preserve">
-    <value>Binary data [{0}; {1}; {2} bytes]</value>
-    <comment>Text</comment>
+    <value>Binární data [{0}; {1}; {2} bajtů]</value>
   </data>
   <data name="Barcodes_014" xml:space="preserve">
-    <value>Binary data (file type) (compression technique) (number of bytes).</value>
-    <comment>Text</comment>
+    <value>Binární data (typ souboru) (technika komprese) (počet bajtů).</value>
   </data>
   <data name="Barcodes_Error_001" xml:space="preserve">
-    <value>No barcode data provided.</value>
-    <comment>Error</comment>
+    <value>Nebyla poskytnuta žádná data čárového kódu.</value>
   </data>
   <data name="Barcodes_Error_002" xml:space="preserve">
-    <value>Pre-processing the barcode data failed.</value>
-    <comment>Error</comment>
+    <value>Předzpracování dat čárového kódu se nezdařilo.</value>
   </data>
   <data name="Barcodes_Error_003" xml:space="preserve">
-    <value>The barcode encoding is not supported.</value>
-    <comment>Error</comment>
+    <value>Kódování čárového kódu není podporováno.</value>
   </data>
   <data name="Barcodes_Error_004" xml:space="preserve">
-    <value>The barcode contains invalid or unrecognised data.</value>
-    <comment>Error</comment>
+    <value>Čárový kód obsahuje neplatná nebo nerozpoznaná data.</value>
   </data>
   <data name="Barcodes_Error_005" xml:space="preserve">
-    <value>The barcode contains an invalid data record.</value>
-    <comment>Error</comment>
+    <value>Čárový kód obsahuje neplatný záznam dat.</value>
   </data>
   <data name="Barcodes_Error_006" xml:space="preserve">
-    <value>The parser does not support the syntax and semantics of the {0} record.</value>
-    <comment>Error</comment>
+    <value>Parser nepodporuje syntaxi a sémantiku záznamu {0}.</value>
   </data>
   <data name="Barcodes_Error_007" xml:space="preserve">
-    <value>The format of a data record in the barcode is unrecognised.</value>
-    <comment>Error</comment>
+    <value>Formát záznamu dat v čárovém kódu není rozpoznán.</value>
   </data>
 </root>
