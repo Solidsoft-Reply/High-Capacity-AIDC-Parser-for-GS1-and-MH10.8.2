@@ -118,87 +118,66 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Barcodes_001" xml:space="preserve">
-    <value>Text</value>
-    <comment>Text</comment>
+    <value>Texti</value>
   </data>
   <data name="Barcodes_002" xml:space="preserve">
-    <value>Free form text.</value>
-    <comment>Text</comment>
+    <value>Frjáls form texti.</value>
   </data>
   <data name="Barcodes_003" xml:space="preserve">
     <value>EDI</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_004" xml:space="preserve">
-    <value>Complete EDI message / transaction.</value>
-    <comment>Text</comment>
+    <value>Fullkomið EDI skilaboð / viðskipti.</value>
   </data>
   <data name="Barcodes_005" xml:space="preserve">
-    <value>Structured data</value>
-    <comment>Text</comment>
+    <value>Skipulögð gögn</value>
   </data>
   <data name="Barcodes_006" xml:space="preserve">
-    <value>Structured data following the Text Element Identifier rules.</value>
-    <comment>Text</comment>
+    <value>Skipulögð gögn sem fylgja reglum Text Element Identifier.</value>
   </data>
   <data name="Barcodes_007" xml:space="preserve">
     <value>ASC X12</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_008" xml:space="preserve">
-    <value>Structured data using ANSI ASC X12 Segments.</value>
-    <comment>Text</comment>
+    <value>Skipulögð gögn sem nota ANSI ASC X12 Segment.</value>
   </data>
   <data name="Barcodes_009" xml:space="preserve">
     <value>UN EDIFACT</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_010" xml:space="preserve">
-    <value>Structured data using UN/EDIFACT Segments.</value>
-    <comment>Text</comment>
+    <value>Skipulögð gögn sem nota UN/EDIFACT Segment.</value>
   </data>
   <data name="Barcodes_011" xml:space="preserve">
     <value>CII [{0}{1}{2}]</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_012" xml:space="preserve">
-    <value>Structured data using CII syntax rules.</value>
-    <comment>Text</comment>
+    <value>Skipulögð gögn sem nota CII málfræðireglur.</value>
   </data>
   <data name="Barcodes_013" xml:space="preserve">
-    <value>Binary data [{0}; {1}; {2} bytes]</value>
-    <comment>Text</comment>
+    <value>Tvíundargögn [{0}; {1}; {2} bæti]</value>
   </data>
   <data name="Barcodes_014" xml:space="preserve">
-    <value>Binary data (file type) (compression technique) (number of bytes).</value>
-    <comment>Text</comment>
+    <value>Tvíundargögn (skráartegund) (þjöppunartækni) (fjöldi bæta).</value>
   </data>
   <data name="Barcodes_Error_001" xml:space="preserve">
-    <value>No barcode data provided.</value>
-    <comment>Error</comment>
+    <value>Engin gögn um strikamerki veitt.</value>
   </data>
   <data name="Barcodes_Error_002" xml:space="preserve">
-    <value>Pre-processing the barcode data failed.</value>
-    <comment>Error</comment>
+    <value>Forsköpun gagna strikamerkis mistókst.</value>
   </data>
   <data name="Barcodes_Error_003" xml:space="preserve">
-    <value>The barcode encoding is not supported.</value>
-    <comment>Error</comment>
+    <value>Kóðun strikamerkisins er ekki studd.</value>
   </data>
   <data name="Barcodes_Error_004" xml:space="preserve">
-    <value>The barcode contains invalid or unrecognised data.</value>
-    <comment>Error</comment>
+    <value>Strikamerkið inniheldur ógild eða óþekkt gögn.</value>
   </data>
   <data name="Barcodes_Error_005" xml:space="preserve">
-    <value>The barcode contains an invalid data record.</value>
-    <comment>Error</comment>
+    <value>Strikamerkið inniheldur ógilt gagnaskrá.</value>
   </data>
   <data name="Barcodes_Error_006" xml:space="preserve">
-    <value>The parser does not support the syntax and semantics of the {0} record.</value>
-    <comment>Error</comment>
+    <value>Þátturinn styður ekki málfræði og merkingarfræði skráarinnar {0}.</value>
   </data>
   <data name="Barcodes_Error_007" xml:space="preserve">
-    <value>The format of a data record in the barcode is unrecognised.</value>
-    <comment>Error</comment>
+    <value>Snið gagnaskrár í strikamerkinu er óþekkt.</value>
   </data>
 </root>

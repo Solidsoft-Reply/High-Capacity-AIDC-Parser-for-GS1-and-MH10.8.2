@@ -118,87 +118,66 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Barcodes_001" xml:space="preserve">
-    <value>Text</value>
-    <comment>Text</comment>
+    <value>Test</value>
   </data>
   <data name="Barcodes_002" xml:space="preserve">
-    <value>Free form text.</value>
-    <comment>Text</comment>
+    <value>Test liberu.</value>
   </data>
   <data name="Barcodes_003" xml:space="preserve">
     <value>EDI</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_004" xml:space="preserve">
-    <value>Complete EDI message / transaction.</value>
-    <comment>Text</comment>
+    <value>Messaġġ EDI / tranżazzjoni kompleta.</value>
   </data>
   <data name="Barcodes_005" xml:space="preserve">
-    <value>Structured data</value>
-    <comment>Text</comment>
+    <value>Data strutturata</value>
   </data>
   <data name="Barcodes_006" xml:space="preserve">
-    <value>Structured data following the Text Element Identifier rules.</value>
-    <comment>Text</comment>
+    <value>Data strutturata skont ir-regoli tal-Identifikatur tal-Element tat-Test.</value>
   </data>
   <data name="Barcodes_007" xml:space="preserve">
     <value>ASC X12</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_008" xml:space="preserve">
-    <value>Structured data using ANSI ASC X12 Segments.</value>
-    <comment>Text</comment>
+    <value>Data strutturata bl-użu tas-Segmenti ANSI ASC X12.</value>
   </data>
   <data name="Barcodes_009" xml:space="preserve">
     <value>UN EDIFACT</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_010" xml:space="preserve">
-    <value>Structured data using UN/EDIFACT Segments.</value>
-    <comment>Text</comment>
+    <value>Data strutturata bl-użu tas-Segmenti UN/EDIFACT.</value>
   </data>
   <data name="Barcodes_011" xml:space="preserve">
     <value>CII [{0}{1}{2}]</value>
-    <comment>Text</comment>
   </data>
   <data name="Barcodes_012" xml:space="preserve">
-    <value>Structured data using CII syntax rules.</value>
-    <comment>Text</comment>
+    <value>Data strutturata bl-użu tar-regoli tas-sintassi CII.</value>
   </data>
   <data name="Barcodes_013" xml:space="preserve">
-    <value>Binary data [{0}; {1}; {2} bytes]</value>
-    <comment>Text</comment>
+    <value>Data binarju [{0}; {1}; {2} bytes]</value>
   </data>
   <data name="Barcodes_014" xml:space="preserve">
-    <value>Binary data (file type) (compression technique) (number of bytes).</value>
-    <comment>Text</comment>
+    <value>Data binarju (tip ta' fajl) (teknika ta' kompressjoni) (numru ta' bytes).</value>
   </data>
   <data name="Barcodes_Error_001" xml:space="preserve">
-    <value>No barcode data provided.</value>
-    <comment>Error</comment>
+    <value>M'hemmx data tal-barcode pprovduta.</value>
   </data>
   <data name="Barcodes_Error_002" xml:space="preserve">
-    <value>Pre-processing the barcode data failed.</value>
-    <comment>Error</comment>
+    <value>Il-ipproċessar tal-data tal-barcode naqas.</value>
   </data>
   <data name="Barcodes_Error_003" xml:space="preserve">
-    <value>The barcode encoding is not supported.</value>
-    <comment>Error</comment>
+    <value>Il-kodifikazzjoni tal-barcode mhix appoġġjata.</value>
   </data>
   <data name="Barcodes_Error_004" xml:space="preserve">
-    <value>The barcode contains invalid or unrecognised data.</value>
-    <comment>Error</comment>
+    <value>Il-barcode fih data invalida jew mhux rikonoxxuta.</value>
   </data>
   <data name="Barcodes_Error_005" xml:space="preserve">
-    <value>The barcode contains an invalid data record.</value>
-    <comment>Error</comment>
+    <value>Il-barcode fih rekord tad-data invalidu.</value>
   </data>
   <data name="Barcodes_Error_006" xml:space="preserve">
-    <value>The parser does not support the syntax and semantics of the {0} record.</value>
-    <comment>Error</comment>
+    <value>Il-parser ma jappoġġjax is-sintassi u s-semantika tar-rekord {0}.</value>
   </data>
   <data name="Barcodes_Error_007" xml:space="preserve">
-    <value>The format of a data record in the barcode is unrecognised.</value>
-    <comment>Error</comment>
+    <value>Il-format tar-rekord tad-data fil-barcode mhux rikonoxxut.</value>
   </data>
 </root>
