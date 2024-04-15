@@ -1,8 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BarcodeParser.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
-// </copyright>
-// <license>
+// <copyright file="Parser.cs" company="Solidsoft Reply Ltd">
+// Copyright (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -14,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </license>
+// </copyright>
 // <summary>
 // Barcode parser for Automatic Identification and Data Capture (AIDC) barcodes,
 // including barcodes that conform to ISO/IEC 15434.
@@ -22,6 +20,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 [assembly: CLSCompliant(true)]
+
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc;
 
 using System.Diagnostics.CodeAnalysis;
@@ -48,30 +47,26 @@ public delegate string? Preprocessor(string? input, out IList<PreprocessorExcept
 ///   including barcodes that conform to ISO/IEC 15434.
 /// </summary>
 #if NET7_0_OR_GREATER
-public static partial class Parser
-{
-    /// <summary>
-    ///   Code generator for regular expression that matches the format identifier and preamble for binary data.
-    /// </summary>
-    [GeneratedRegex(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.IgnoreCase, "en-US")]
-    private static partial Regex MatchFormatIdentifierAndPreambleRegex();
+public static partial class Parser {
 #else
-public static class Parser
-{
+public static class Parser {
+#endif
+#if NET7_0_OR_GREATER
+    /// <summary>
+    ///   Regular expression that matches the format identifier and preamble for binary data.
+    /// </summary>
+    private static readonly Regex? RegexBinary = MatchFormatIdentifierAndPreambleRegex();
+#else
     /// <summary>
     ///   Code generator for regular expression that matches the format identifier and preamble for binary data.
     /// </summary>
     private static readonly Regex MatchFormatIdentifierAndPreambleRegex = new(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.IgnoreCase);
-#endif
-    
+
     /// <summary>
     ///   Regular expression that matches the format identifier and preamble for binary data.
     /// </summary>
-    private static readonly Regex RegexBinary = MatchFormatIdentifierAndPreambleRegex
-#if NET7_0_OR_GREATER
-        ()
+    private static readonly Regex? RegexBinary = MatchFormatIdentifierAndPreambleRegex;
 #endif
-        ;
 
     /// <summary>
     ///   Parse the raw barcode data.
@@ -81,13 +76,11 @@ public static class Parser
     /// <param name="preProcessors">The pre-processor functions, provided as a delegate.</param>
     /// <returns>A pack identifier.</returns>
     [SuppressMessage("ReSharper", "CommentTypo")]
-    public static IBarcode Parse(string data, out string preProcessedData, Preprocessor? preProcessors = null)
-    {
+    public static IBarcode Parse(string data, out string preProcessedData, Preprocessor? preProcessors = null) {
         preProcessedData = data;
 
         // Is any data present?
-        if (string.IsNullOrWhiteSpace(data))
-        {
+        if (string.IsNullOrWhiteSpace(data)) {
             var noDataBarcode = new Barcode(BarcodeType.NoIdentifier);
             noDataBarcode.AddException(
                 new BarcodeException(1001, Resources.Barcodes_Error_001, true),
@@ -100,10 +93,11 @@ public static class Parser
         // Aggregate the results of each pre-processor.
         var input = preProcessors?.GetInvocationList().Aggregate(
             data,
-            (current, preProcessor) =>
-            {
+            (current, preProcessor) => {
                 var processedData = ((Preprocessor)preProcessor).Invoke(current, out var exceptions)?.ToString() ?? string.Empty;
+#pragma warning disable IDE0028 // Simplify collection initialization
                 preprocessorExceptions.AddRange(exceptions ?? new List<PreprocessorException>());
+#pragma warning restore IDE0028 // Simplify collection initialization
                 return processedData;
             });
 
@@ -115,8 +109,7 @@ public static class Parser
         // Discard any AIM identifier.
         input = aimId.BarcodeData;
 
-        if (string.IsNullOrWhiteSpace(input))
-        {
+        if (string.IsNullOrWhiteSpace(input)) {
             // ReSharper disable once IdentifierTypo
             var unprocessableBarcode = new Barcode(aimId.BarcodeType, aimId.Modifier, barcodeExceptions);
             unprocessableBarcode.AddException(
@@ -131,25 +124,20 @@ public static class Parser
         var recordFormats = new IsoIec15434Analyzer().Analyze(input, 0, out var messageHeader);
 
         // Convert UPC-E barcode data to a GTIN-14.
-
-        if (!messageHeader)
-        {
+        if (!messageHeader) {
             // There is no ISO/IEC envelope, so check to see if the barcode symbology, if known, is supported by GS1 for AIs.
             if (aimId.BarcodeType != BarcodeType.NoIdentifier && aimId.BarcodeType != BarcodeType.Code128
                                                               && aimId.BarcodeType != BarcodeType.Gs1DataBar
                                                               && aimId.BarcodeType != BarcodeType.DataMatrix
                                                               && aimId.BarcodeType != BarcodeType.QrCode
-                                                              && aimId.BarcodeType != BarcodeType.DotCode)
-            {
+                                                              && aimId.BarcodeType != BarcodeType.DotCode) {
                 // Is this another GS1-supported barcode symbology used for GTINs?
-                if (aimId.BarcodeType != BarcodeType.Interleaved2Of5 && aimId.BarcodeType != BarcodeType.UpcEan)
-                {
+                if (aimId.BarcodeType != BarcodeType.Interleaved2Of5 && aimId.BarcodeType != BarcodeType.UpcEan) {
                     // If not, return with error.
                     return GetUnsupportedBarcode();
                 }
 
-                if (aimId.Modifier == '4')
-                {
+                if (aimId.Modifier == '4') {
                     // EAN-8 cannot carry GTIN-13/GTIN-14 compatible product codes, so is unsupported.
                     // Return with error.
                     return GetUnsupportedBarcode();
@@ -171,21 +159,19 @@ public static class Parser
                             ? TestForItf14()
 
                             // otherwise, if the barcode symbology is EAN-13, UPC-A, or UPC-E 13 digits without a supplement,
-                            : aimId.Modifier switch
-                              {
-                                  // process the barcode data and return the product code,
-                                  '0' => ProcessUpcOrEan13(input),
+                            : aimId.Modifier switch {
+                                // process the barcode data and return the product code,
+                                '0' => ProcessUpcOrEan13(input),
 
-                                  // process the barcode data, strip off the supplement and return the product code,
-                                  '3' => ProcessUpcOrEan13WithSupplement(),
+                                // process the barcode data, strip off the supplement and return the product code,
+                                '3' => ProcessUpcOrEan13WithSupplement(),
 
-                                  // otherwise, return the input as-is
-                                  _ => input
-                              };
+                                // otherwise, return the input as-is
+                                _ => input
+                            };
             }
 
-            if (aimId.BarcodeType == BarcodeType.NoIdentifier && input.All(c => c >= 48 && c <= 57))
-            {
+            if (aimId.BarcodeType == BarcodeType.NoIdentifier && input.All(c => c >= 48 && c <= 57)) {
                 var inputLength = input.Length;
                 int[] upcEanSupplementSizes = [15, 17, 18];
                 int[] upcEanSizes = [13, 12, 8];
@@ -213,8 +199,7 @@ public static class Parser
 
             Gs1Ai.Parser.Parse(input, ResolveGs1Entity, aimId.Id.Length > 0 ? 3 : 0);
 
-            if (!barcode.Exceptions.Any())
-            {
+            if (!barcode.Exceptions.Any()) {
                 // There were no exceptions
                 return barcode;
             }
@@ -225,23 +210,20 @@ public static class Parser
                 !barcode.DataElements.Any() ? ParseStatus.Unrecognised : ParseStatus.Invalid);
             return barcode;
 
-            void ResolveGs1Entity(IResolvedEntity resolvedIdentity)
-            {
+            void ResolveGs1Entity(IResolvedEntity resolvedIdentity) {
                 ProcessResolvedGs1Entity(resolvedIdentity, barcode, 0);
             }
         }
 
         // Enumerate each record in the ISO/IEC 15434 envelope
-        for (var recordIndex = 0; recordIndex < recordFormats.Count; recordIndex++)
-        {
+        for (var recordIndex = 0; recordIndex < recordFormats.Count; recordIndex++) {
             var recordFormat = recordFormats[recordIndex];
             if (string.IsNullOrWhiteSpace(recordFormat.BarcodeData)) break;
 
             var offset = 0;
 
             // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (((IsoIec15434Format)recordFormat).Format)
-            {
+            switch (((IsoIec15434Format)recordFormat).Format) {
                 case FormatIndicator.Transportation:
                     offset = 3;
                     break;
@@ -263,22 +245,22 @@ public static class Parser
                     break;
                 case FormatIndicator.Binary:
                     offset = 1;
-                    var record = input
 #if NET6_0_OR_GREATER
-                    [recordFormat.StartPosition..]
+                    var record = input[recordFormat.StartPosition..]
 #else
-                    .Substring(recordFormat.StartPosition)
+                    var record = input.Substring(recordFormat.StartPosition)
 #endif
                     ;
-                    if (!RegexBinary.IsMatch(record))
-                    {
-                        break;
-                    }
+                    if (RegexBinary is not null) {
+                        if (!RegexBinary.IsMatch(record)) {
+                            break;
+                        }
 
-                    var groups = RegexBinary.Match(record).Groups;
-                    offset += groups["fileName"].Value.Length + 1;
-                    offset += groups["compressionTechnique"].Value.Length + 1;
-                    offset += groups["numberOfBytes"].Value.Length + 1;
+                        var groups = RegexBinary.Match(record).Groups;
+                        offset += groups["fileName"].Value.Length + 1;
+                        offset += groups["compressionTechnique"].Value.Length + 1;
+                        offset += groups["numberOfBytes"].Value.Length + 1;
+                    }
 
                     break;
 
@@ -291,8 +273,7 @@ public static class Parser
                                 + (aimId.Id.Length > 0 ? 3 : 0);
 
             if (recordFormat.Envelope != EnvelopeType.IsoIec15434
-             || recordFormat.FormatScheme != FormatScheme.IsoIec15434)
-            {
+             || recordFormat.FormatScheme != FormatScheme.IsoIec15434) {
                 // The record is invalid. Add a barcode exception to register this.
                 barcode.AddException(
                     new BarcodeException(1004, Resources.Barcodes_Error_005, false),
@@ -304,38 +285,35 @@ public static class Parser
             var description = string.Empty;
 
             // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (((IsoIec15434Format)recordFormat).Format)
-            {
+            switch (((IsoIec15434Format)recordFormat).Format) {
                 case FormatIndicator.AscMh10Di:
 
                     AnsiMhDi.Parser.Parse(recordFormat.BarcodeData, ResolveAscEntity, initialPosition);
                     break;
 
                     // Format 06 IFA-encoded (German pack)
-                    void ResolveAscEntity(IResolvedEntity resolvedIdentity)
-                    {
+                    void ResolveAscEntity(IResolvedEntity resolvedIdentity) {
+                        // ReSharper disable once AccessToModifiedClosure
                         ProcessResolvedAscEntity(
                             resolvedIdentity,
                             barcode,
-
-                            // ReSharper disable once AccessToModifiedClosure
                             recordIndex);
                     }
+
                 case FormatIndicator.Gs1Ai:
 
                     Gs1Ai.Parser.Parse(recordFormat.BarcodeData, ResolveGs1Entity, initialPosition);
                     break;
 
                     // Format 05 GS1-encoded
-                    void ResolveGs1Entity(IResolvedEntity resolvedIdentity)
-                    {
+                    void ResolveGs1Entity(IResolvedEntity resolvedIdentity) {
+                        // ReSharper disable once AccessToModifiedClosure
                         ProcessResolvedGs1Entity(
                             resolvedIdentity,
                             barcode,
-
-                            // ReSharper disable once AccessToModifiedClosure
                             recordIndex);
                     }
+
                 case FormatIndicator.Text:
                     barcode.AddDataElement(
                         new TextEntity(
@@ -353,8 +331,7 @@ public static class Parser
                     goto case FormatIndicator.StructuredData;
 #pragma warning restore S907
                 case FormatIndicator.StructuredData:
-                    if (string.IsNullOrWhiteSpace(title))
-                    {
+                    if (string.IsNullOrWhiteSpace(title)) {
                         title = Resources.Barcodes_005;
                         description = Resources.Barcodes_006;
                     }
@@ -384,8 +361,7 @@ public static class Parser
                     goto case FormatIndicator.UnEdifact;
 #pragma warning restore S907
                 case FormatIndicator.UnEdifact:
-                    if (string.IsNullOrWhiteSpace(title))
-                    {
+                    if (string.IsNullOrWhiteSpace(title)) {
                         // ReSharper disable once StringLiteralTypo
                         title = Resources.Barcodes_009;
 
@@ -393,18 +369,16 @@ public static class Parser
                         description = Resources.Barcodes_010;
                     }
 
-                    var release = input
 #if NET6_0_OR_GREATER
-                        [(recordFormat.StartPosition + 2)..(recordFormat.StartPosition + 5)]
+                    var release = input[(recordFormat.StartPosition + 2) .. (recordFormat.StartPosition + 5)]
 #else
-                        .Substring(recordFormat.StartPosition + 2, 3)
+                    var release = input.Substring(recordFormat.StartPosition + 2, 3)
 #endif
                         ;
-                    var subRelease = input
 #if NET6_0_OR_GREATER
-                        [(recordFormat.StartPosition + 5)..(recordFormat.StartPosition + 8)]
+                    var subRelease = input[(recordFormat.StartPosition + 5) .. (recordFormat.StartPosition + 8)]
 #else
-                        .Substring(recordFormat.StartPosition + 5, 3)
+                    var subRelease = input.Substring(recordFormat.StartPosition + 5, 3)
 #endif
                         ;
                     title = $"{title} [{release}{subRelease}]";
@@ -430,27 +404,24 @@ public static class Parser
                         ParseStatus.Ok);
                     break;
                 case FormatIndicator.Cii:
-                    var organisation = input
+
 #if NET6_0_OR_GREATER
-                        [(recordFormat.StartPosition + 2)..(recordFormat.StartPosition + 6)]
+                    var organisation = input[(recordFormat.StartPosition + 2) .. (recordFormat.StartPosition + 6)];
 #else
-                        .Substring(recordFormat.StartPosition + 2, 4)
+                    var organisation = input.Substring(recordFormat.StartPosition + 2, 4);
 #endif
-                        ;
-                    var subOrganisation = input
+
 #if NET6_0_OR_GREATER
-                        [(recordFormat.StartPosition + 6)..(recordFormat.StartPosition + 8)]
+                    var subOrganisation = input[(recordFormat.StartPosition + 6) .. (recordFormat.StartPosition + 8)];
 #else
-                        .Substring(recordFormat.StartPosition + 6, 2)
+                    var subOrganisation = input.Substring(recordFormat.StartPosition + 6, 2);
 #endif
-                        ;
-                    var edition = input
+
 #if NET6_0_OR_GREATER
-                        [(recordFormat.StartPosition + 8)..(recordFormat.StartPosition + 10)]
+                    var edition = input[(recordFormat.StartPosition + 8) .. (recordFormat.StartPosition + 10)];
 #else
-                        .Substring(recordFormat.StartPosition + 8, 2)
+                    var edition = input.Substring(recordFormat.StartPosition + 8, 2);
 #endif
-                        ;
                     title = string.Format(
                         CultureInfo.CurrentCulture,
                         Resources.Barcodes_011,
@@ -481,32 +452,31 @@ public static class Parser
                         ParseStatus.Ok);
                     break;
                 case FormatIndicator.Binary:
-                    var record = input
+
 #if NET6_0_OR_GREATER
-                        [recordFormat.StartPosition..]
+                    var record = input[recordFormat.StartPosition..];
 #else
-                        .Substring(recordFormat.StartPosition)
+                    var record = input.Substring(recordFormat.StartPosition);
 #endif
-                        ;
-                    if (!RegexBinary.IsMatch(record))
-                    {
+
+                    if (RegexBinary is not null && !RegexBinary.IsMatch(record)) {
                         break;
                     }
 
-                    var groups = RegexBinary.Match(record).Groups;
+                    var groups = RegexBinary?.Match(record).Groups;
                     title = string.Format(
                         CultureInfo.CurrentCulture,
                         Resources.Barcodes_013,
-                        groups["fileName"].Value,
-                        groups["compressionTechnique"].Value,
-                        groups["numberOfBytes"].Value);
+                        groups?["fileName"].Value,
+                        groups?["compressionTechnique"].Value,
+                        groups?["numberOfBytes"].Value);
                     description = Resources.Barcodes_014;
                     barcode.AddDataElement(
                         new BinaryEntity(
                             ((IsoIec15434Format)recordFormat).Format,
-                            groups["fileName"].Value,
-                            groups["compressionTechnique"].Value,
-                            int.TryParse(groups["numberOfBytes"].Value, out var numberOfBytes) ? numberOfBytes : 0,
+                            groups?["fileName"].Value ?? string.Empty,
+                            groups?["compressionTechnique"].Value ?? string.Empty,
+                            int.TryParse(groups?["numberOfBytes"].Value, out var numberOfBytes) ? numberOfBytes : 0,
                             recordFormat.BarcodeData,
                             title,
                             description,
@@ -522,8 +492,7 @@ public static class Parser
             }
         }
 
-        if (!barcode.Exceptions.Any())
-        {
+        if (!barcode.Exceptions.Any()) {
             // There were no exceptions
             return barcode;
         }
@@ -535,10 +504,8 @@ public static class Parser
         return barcode;
 
         // Convert UPC-E barcode data to a GTIN-14.
-        string ProcessUpcOrEan13WithSupplement()
-        {
-            input = input.Length switch
-            {
+        string ProcessUpcOrEan13WithSupplement() {
+            input = input.Length switch {
 #if NET6_0_OR_GREATER
                 18 => input[..13],
                 17 => input[..12],
@@ -558,8 +525,7 @@ public static class Parser
             return input.Length == 8 ? ProcessUpcOrEan13(input) : "01" + input.PadLeft(14, '0');
         }
 
-        IBarcode GetUnsupportedBarcode()
-        {
+        IBarcode GetUnsupportedBarcode() {
             // The barcode is not a recognised carrier of GS1 Application Identifiers or GTINs. This version of the
             // parser does not support the data format used in this barcode.
             var unsupportedBarcode = new Barcode(aimId.BarcodeType, aimId.Modifier);
@@ -570,10 +536,16 @@ public static class Parser
         }
     }
 
-    private static string ProcessUpcOrEan13(string? input)
-    {
-        if (input?.Length != 8)
-        {
+#if NET7_0_OR_GREATER
+    /// <summary>
+    ///   Code generator for regular expression that matches the format identifier and preamble for binary data.
+    /// </summary>
+    [GeneratedRegex(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.IgnoreCase, "en-US")]
+    private static partial Regex MatchFormatIdentifierAndPreambleRegex();
+#endif
+
+    private static string ProcessUpcOrEan13(string? input) {
+        if (input?.Length != 8) {
             return "01" + input?.PadLeft(14, '0');
         }
 
@@ -632,10 +604,8 @@ public static class Parser
     /// <param name="resolvedIdentity">The resolved ASC entity.</param>
     /// <param name="barcode">The barcode.</param>
     /// <param name="record">The index of the record.</param>
-    private static void ProcessResolvedAscEntity(IResolvedEntity resolvedIdentity, IBarcode? barcode, int record)
-    {
-        if (barcode is null)
-        {
+    private static void ProcessResolvedAscEntity(IResolvedEntity resolvedIdentity, IBarcode? barcode, int record) {
+        if (barcode is null) {
             return;
         }
 
@@ -649,10 +619,8 @@ public static class Parser
             resolvedIdentity.CharacterPosition,
             record);
 
-        if (resolvedIdentity.IsError)
-        {
-            foreach (var exception in resolvedIdentity.Exceptions)
-            {
+        if (resolvedIdentity.IsError) {
+            foreach (var exception in resolvedIdentity.Exceptions) {
                 var dataElementException = new DataElementException(
                     exception.ErrorNumber,
                     exception.Message,
@@ -674,10 +642,8 @@ public static class Parser
     /// <param name="resolvedIdentity">The resolved GS1 entity.</param>
     /// <param name="barcode">The barcode.</param>
     /// <param name="record">The index of the record.</param>
-    private static void ProcessResolvedGs1Entity(IResolvedEntity resolvedIdentity, IBarcode? barcode, int record)
-    {
-        if (barcode is null)
-        {
+    private static void ProcessResolvedGs1Entity(IResolvedEntity resolvedIdentity, IBarcode? barcode, int record) {
+        if (barcode is null) {
             return;
         }
 
@@ -691,10 +657,8 @@ public static class Parser
             resolvedIdentity.CharacterPosition,
             record);
 
-        if (resolvedIdentity.IsError)
-        {
-            foreach (var exception in resolvedIdentity.Exceptions)
-            {
+        if (resolvedIdentity.IsError) {
+            foreach (var exception in resolvedIdentity.Exceptions) {
                 var dataElementException = new DataElementException(
                     exception.ErrorNumber,
                     exception.Message,

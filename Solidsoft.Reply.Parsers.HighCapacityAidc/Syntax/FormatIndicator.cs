@@ -1,8 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FormatIndicator.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
-// </copyright>
-// <license>
+// <copyright file="FormatIndicator.cs" company="Solidsoft Reply Ltd">
+// Copyright (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -14,14 +12,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </license>
+// </copyright>
 // <summary>
 // ISO/IEC 15434 Format indicators.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 // ReSharper disable CommentTypo
-
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Syntax;
 
 using System.Diagnostics.CodeAnalysis;
@@ -29,8 +26,7 @@ using System.Diagnostics.CodeAnalysis;
 /// <summary>
 ///   ISO/IEC 15434 Format indicators.
 /// </summary>
-public enum FormatIndicator
-{
+public enum FormatIndicator {
     /// <summary>
     ///   No format indicator was provided.
     /// </summary>
@@ -111,5 +107,5 @@ public enum FormatIndicator
     /// <summary>
     ///   An Unknown format indicator was provided.
     /// </summary>
-    Unknown = int.MaxValue
+    Unknown = int.MaxValue,
 }

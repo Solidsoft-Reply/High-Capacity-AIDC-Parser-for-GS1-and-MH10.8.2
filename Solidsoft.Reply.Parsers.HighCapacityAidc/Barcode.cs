@@ -1,8 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Barcode.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
-// </copyright>
-// <license>
+// <copyright file="Barcode.cs" company="Solidsoft Reply Ltd">
+// Copyright (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -14,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </license>
+// </copyright>
 // <summary>
 // The barcode and list of data elements.
 // </summary>
@@ -30,8 +28,7 @@ using BarcodeScanner.Symbology;
 /// <summary>
 ///   The barcode and list of data elements.
 /// </summary>
-public class Barcode : IBarcode
-{
+public class Barcode : IBarcode {
     /// <summary>
     ///   The list of data elements in the barcode.
     /// </summary>
@@ -48,8 +45,7 @@ public class Barcode : IBarcode
     /// <param name="barcodeType">The barcode type.</param>
     /// <param name="modifier">The barcode type modifier, if any.</param>
     /// <param name="exceptions">A list of exceptions.</param>
-    public Barcode(BarcodeType barcodeType, char? modifier = null, IList<BarcodeException>? exceptions = null)
-    {
+    public Barcode(BarcodeType barcodeType, char? modifier = null, IList<BarcodeException>? exceptions = null) {
         BarcodeType = barcodeType;
         BarcodeTypeModifier = modifier ?? char.MinValue;
         IsValid = true;
@@ -57,8 +53,7 @@ public class Barcode : IBarcode
 
         if (exceptions == null) return;
 
-        foreach (var exception in exceptions)
-        {
+        foreach (var exception in exceptions) {
             _exceptions.Add(exception);
         }
     }
@@ -102,8 +97,7 @@ public class Barcode : IBarcode
     ///   Adds a data element to the list.
     /// </summary>
     /// <param name="entity">The data element.</param>
-    public void AddDataElement(IDataEntity entity)
-    {
+    public void AddDataElement(IDataEntity entity) {
         _dataElements.Add(entity);
     }
 
@@ -112,18 +106,15 @@ public class Barcode : IBarcode
     /// </summary>
     /// <param name="exception">The exception.</param>
     /// <param name="parseStatus">The parse status of the barcode, based on this exception.</param>
-    public void AddException(BarcodeException exception, ParseStatus parseStatus)
-    {
+    public void AddException(BarcodeException exception, ParseStatus parseStatus) {
         _exceptions.Add(exception);
 
-        if (parseStatus == ParseStatus.Invalid)
-        {
+        if (parseStatus == ParseStatus.Invalid) {
             IsValid = false;
             return;
         }
 
-        if (parseStatus != ParseStatus.Unrecognised)
-        {
+        if (parseStatus != ParseStatus.Unrecognised) {
             return;
         }
 

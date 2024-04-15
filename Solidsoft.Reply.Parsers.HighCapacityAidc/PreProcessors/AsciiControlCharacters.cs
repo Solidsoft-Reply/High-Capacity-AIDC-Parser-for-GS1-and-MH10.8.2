@@ -1,8 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AsciiControlCharacters.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
-// </copyright>
-// <license>
+// <copyright file="AsciiControlCharacters.cs" company="Solidsoft Reply Ltd">
+// Copyright (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -14,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </license>
+// </copyright>
 // <summary>
 // Pre-processor methods for ASCII control characters characters.
 // </summary>
@@ -30,8 +28,7 @@ using Common;
 /// <summary>
 ///   Pre-processor methods for ASCII control characters.
 /// </summary>
-public static class AsciiControlCharacters
-{
+public static class AsciiControlCharacters {
     /// <summary>
     ///   Replace representation of ASCII control characters with literals.
     /// </summary>
@@ -53,14 +50,13 @@ public static class AsciiControlCharacters
     }
 
     /// <summary>
-    ///   Replaces one substring with another. The search is case-insensitive
+    ///   Replaces one substring with another. The search is case-insensitive.
     /// </summary>
     /// <param name="input">The string to be searched.</param>
     /// <param name="oldValue">The string to be replaced.</param>
     /// <param name="newValue">The replacement string.</param>
     /// <returns>The input with all replacements made.</returns>
-    private static string ReplaceIgnoreCase(this string input, string oldValue, string newValue)
-    {
+    private static string ReplaceIgnoreCase(this string input, string oldValue, string newValue) {
         return Regex.Replace(input, oldValue, newValue, RegexOptions.IgnoreCase);
     }
 }

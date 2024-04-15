@@ -1,8 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IBarcode.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
-// </copyright>
-// <license>
+// <copyright file="IBarcode.cs" company="Solidsoft Reply Ltd">
+// Copyright (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -14,26 +12,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </license>
+// </copyright>
 // <summary>
 // Represents a barcode and its content.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 // ReSharper disable UnusedMemberInSuper.Global
-
 
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc;
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+
 using BarcodeScanner.Symbology;
 
 /// <summary>
 ///   Represents a barcode and its content.
 /// </summary>
-public interface IBarcode
-{
+public interface IBarcode {
     /// <summary>
     ///   Gets the barcode type.
     /// </summary>

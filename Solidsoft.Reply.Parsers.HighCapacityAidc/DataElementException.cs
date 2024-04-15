@@ -1,8 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DataElementException.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
-// </copyright>
-// <license>
+// <copyright file="DataElementException.cs" company="Solidsoft Reply Ltd">
+// Copyright (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -14,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </license>
+// </copyright>
 // <summary>
 // A data element exception.
 // </summary>
@@ -29,14 +27,12 @@ using System.Runtime.Serialization;
 ///   A data element exception.
 /// </summary>
 [Serializable]
-public class DataElementException : BarcodeException
-{
+public class DataElementException : BarcodeException {
     /// <summary>
     ///   Initializes a new instance of the <see cref="DataElementException" /> class.
     /// </summary>
     // ReSharper disable once UnusedMember.Global
-    public DataElementException()
-    {
+    public DataElementException() {
     }
 
     /// <summary>
@@ -47,8 +43,7 @@ public class DataElementException : BarcodeException
     /// </param>
     // ReSharper disable once UnusedMember.Global
     public DataElementException(string message)
-        : base(message)
-    {
+        : base(message) {
     }
 
     /// <summary>
@@ -62,8 +57,7 @@ public class DataElementException : BarcodeException
     /// </param>
     // ReSharper disable once UnusedMember.Global
     public DataElementException(string message, Exception innerException)
-        : base(message, innerException)
-    {
+        : base(message, innerException) {
     }
 
     /// <summary>
@@ -85,8 +79,7 @@ public class DataElementException : BarcodeException
     ///   Indicates whether the exception is fatal.
     /// </param>
     public DataElementException(int errorNumber, string message, string title, int characterPosition, bool isFatal)
-        : base(errorNumber, message, isFatal)
-    {
+        : base(errorNumber, message, isFatal) {
         Title = title;
         CharacterPosition = characterPosition;
     }
@@ -97,10 +90,12 @@ public class DataElementException : BarcodeException
     /// <param name="info">The serialization information.</param>
     /// <param name="context">The streaming context.</param>
 #if NET5_0_OR_GREATER
+#pragma warning disable S1133 // Deprecated code should be removed
     [Obsolete("Formatter serialisation has been deprecated in .NET.", DiagnosticId = "SYSLIB0051")]
+#pragma warning restore S1133 // Deprecated code should be removed
 #endif
-    protected DataElementException(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
+    protected DataElementException(SerializationInfo info, StreamingContext context)
+        : base(info, context) {
     }
 
     /// <summary>

@@ -118,66 +118,66 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Barcodes_001" xml:space="preserve">
-    <value>Szöveg</value>
+    <value>Text</value>
   </data>
   <data name="Barcodes_002" xml:space="preserve">
-    <value>Szabad formátumú szöveg.</value>
+    <value>Free form text.</value>
   </data>
   <data name="Barcodes_003" xml:space="preserve">
     <value>EDI</value>
   </data>
   <data name="Barcodes_004" xml:space="preserve">
-    <value>Teljes EDI üzenet/tranzakció.</value>
+    <value>Complete EDI message / transaction.</value>
   </data>
   <data name="Barcodes_005" xml:space="preserve">
-    <value>Strukturált adatok</value>
+    <value>Structured data</value>
   </data>
   <data name="Barcodes_006" xml:space="preserve">
-    <value>Szövegelem azonosító szabályai szerinti strukturált adatok.</value>
+    <value>Structured data following the Text Element Identifier rules.</value>
   </data>
   <data name="Barcodes_007" xml:space="preserve">
     <value>ASC X12</value>
   </data>
   <data name="Barcodes_008" xml:space="preserve">
-    <value>ANSI ASC X12 szegmensekkel rendelkező strukturált adatok.</value>
+    <value>Structured data using ANSI ASC X12 Segments.</value>
   </data>
   <data name="Barcodes_009" xml:space="preserve">
     <value>UN EDIFACT</value>
   </data>
   <data name="Barcodes_010" xml:space="preserve">
-    <value>UN/EDIFACT szegmensekkel rendelkező strukturált adatok.</value>
+    <value>Structured data using UN/EDIFACT Segments.</value>
   </data>
   <data name="Barcodes_011" xml:space="preserve">
     <value>CII [{0}{1}{2}]</value>
   </data>
   <data name="Barcodes_012" xml:space="preserve">
-    <value>CII szintaktikai szabályokkal rendelkező strukturált adatok.</value>
+    <value>Structured data using CII syntax rules.</value>
   </data>
   <data name="Barcodes_013" xml:space="preserve">
-    <value>Bináris adatok [{0}; {1}; {2} bájt]</value>
+    <value>Binary data [{0}; {1}; {2} bytes]</value>
   </data>
   <data name="Barcodes_014" xml:space="preserve">
-    <value>Bináris adatok (fájltípus) (tömörítési technika) (bájtok száma).</value>
+    <value>Binary data (file type) (compression technique) (number of bytes).</value>
   </data>
   <data name="Barcodes_Error_001" xml:space="preserve">
-    <value>Nincsenek vonalkód adatok.</value>
+    <value>No barcode data provided.</value>
   </data>
   <data name="Barcodes_Error_002" xml:space="preserve">
-    <value>A vonalkód adatok előfeldolgozása sikertelen.</value>
+    <value>Pre-processing the barcode data failed.</value>
   </data>
   <data name="Barcodes_Error_003" xml:space="preserve">
-    <value>A vonalkód kódolása nem támogatott.</value>
+    <value>The barcode encoding is not supported.</value>
   </data>
   <data name="Barcodes_Error_004" xml:space="preserve">
-    <value>A vonalkód érvénytelen vagy fel nem ismert adatokat tartalmaz.</value>
+    <value>The barcode contains invalid or unrecognised data.</value>
   </data>
   <data name="Barcodes_Error_005" xml:space="preserve">
-    <value>A vonalkód érvénytelen adatbejegyzést tartalmaz.</value>
+    <value>The barcode contains an invalid data record.</value>
   </data>
   <data name="Barcodes_Error_006" xml:space="preserve">
-    <value>Az elemző nem támogatja a {0} bejegyzés szintaktikáját és szemantikáját.</value>
+    <value>The parser does not support the syntax and semantics of the {0} record.</value>
   </data>
   <data name="Barcodes_Error_007" xml:space="preserve">
-    <value>A vonalkódban lévő adatbejegyzés formátuma fel nem ismert.</value>
+    <value>The format of a data record in the barcode is unrecognised.</value>
   </data>
 </root>

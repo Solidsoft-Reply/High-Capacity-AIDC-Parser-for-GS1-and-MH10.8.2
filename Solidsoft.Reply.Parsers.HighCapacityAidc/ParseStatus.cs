@@ -1,8 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ParseStatus.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
-// </copyright>
-// <license>
+// <copyright file="ParseStatus.cs" company="Solidsoft Reply Ltd">
+// Copyright (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -14,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </license>
+// </copyright>
 // <summary>
 // The parse status of the barcode.
 // </summary>
@@ -27,8 +25,7 @@ using System.Diagnostics.CodeAnalysis;
 /// <summary>
 ///   The parse status of the barcode.
 /// </summary>
-public enum ParseStatus
-{
+public enum ParseStatus {
     /// <summary>
     ///   No issues have been detected.
     /// </summary>
@@ -47,5 +44,5 @@ public enum ParseStatus
         "StyleCop.CSharp.DocumentationRules",
         "SA1650:ElementDocumentationMustBeSpelledCorrectly",
         Justification = "Reviewed. Suppression is OK here.")]
-    Unrecognised
+    Unrecognised,
 }

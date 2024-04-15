@@ -1,8 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ResolverException.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
-// </copyright>
-// <license>
+// <copyright file="ResolverException.cs" company="Solidsoft Reply Ltd">
+// Copyright (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -14,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </license>
+// </copyright>
 // <summary>
 // An exception raised at the entity resolution stage.
 // </summary>
@@ -29,14 +27,12 @@ using System.Runtime.Serialization;
 ///   An exception raised at the entity resolution stage.
 /// </summary>
 [Serializable]
-public class ResolverException : Exception
-{
+public class ResolverException : Exception {
     /// <summary>
     ///   Initializes a new instance of the <see cref="ResolverException" /> class.
     /// </summary>
     // ReSharper disable once UnusedMember.Global
-    public ResolverException()
-    {
+    public ResolverException() {
     }
 
     /// <summary>
@@ -45,8 +41,7 @@ public class ResolverException : Exception
     /// <param name="message">The exception message.</param>
     // ReSharper disable once UnusedMember.Global
     public ResolverException(string message)
-        : base(message)
-    {
+        : base(message) {
     }
 
     /// <summary>
@@ -56,8 +51,7 @@ public class ResolverException : Exception
     /// <param name="innerException">The inner exception.</param>
     // ReSharper disable once UnusedMember.Global
     public ResolverException(string message, Exception innerException)
-        : base(message, innerException)
-    {
+        : base(message, innerException) {
     }
 
     /// <summary>
@@ -69,8 +63,7 @@ public class ResolverException : Exception
     /// <param name="offset">The character position of the exception.</param>
     // ReSharper disable once StyleCop.SA1642
     public ResolverException(int errorNumber, string message, bool isFatal, int offset = 0)
-        : base(message)
-    {
+        : base(message) {
         ErrorNumber = errorNumber;
         IsFatal = isFatal;
         Offset = offset;
@@ -82,10 +75,12 @@ public class ResolverException : Exception
     /// <param name="info">The serialization information.</param>
     /// <param name="context">The streaming context.</param>
 #if NET5_0_OR_GREATER
+#pragma warning disable S1133 // Deprecated code should be removed
     [Obsolete("Formatter serialisation has been deprecated in .NET.", DiagnosticId = "SYSLIB0051")]
+#pragma warning restore S1133 // Deprecated code should be removed
 #endif
-    protected ResolverException(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
+    protected ResolverException(SerializationInfo info, StreamingContext context)
+        : base(info, context) {
     }
 
     /// <summary>

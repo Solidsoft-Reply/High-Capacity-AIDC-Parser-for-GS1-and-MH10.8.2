@@ -1,8 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Dom3KeyboardEventCodes.cs" company="Solidsoft Reply Ltd.">
-//   (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
-// </copyright>
-// <license>
+// <copyright file="Dom3KeyboardEventCodes.cs" company="Solidsoft Reply Ltd">
+// Copyright (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -14,30 +12,32 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// </license>
+// </copyright>
 // <summary>
 // Pre-processor methods for DOM3 KeyboardEvent Code property values.
 // </summary>
 // -------------------------------------------------------------------------------------------------------------------
 
-using Newtonsoft.Json;
-using System.Text.RegularExpressions;
-using System.Text;
-using Solidsoft.Reply.Parsers.Common;
-
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc.PreProcessors;
+
+using System.Text;
+using System.Text.RegularExpressions;
+
+using Newtonsoft.Json;
+
+using Common;
 
 /// <summary>
 ///   Pre-processor methods for DOM3 KeyboardEvent Code property values.
 /// </summary>
 // ReSharper disable once UnusedMember.Global
 // ReSharper disable once UnusedType.Global
-public static class Dom3KeyboardEventCodes
-{
+public static class Dom3KeyboardEventCodes {
     /// <summary>
-    ///   A dictionary of mappings from textual codes to numeric code values.
+    ///   Gets a dictionary of mappings from textual codes to numeric code values.
     /// </summary>
     public static IReadOnlyDictionary<string, (
+
             // The unmodified character.
             int code,
 
@@ -117,8 +117,7 @@ public static class Dom3KeyboardEventCodes
         int altGrCapital,
         int shiftAltGrCapital,
         int shiftCtrlAltCapital,
-        int ctrlAltCapital
-        )>
+        int ctrlAltCapital)>
     {
         {
             "Escape",
@@ -1083,7 +1082,7 @@ public static class Dom3KeyboardEventCodes
             "Unidentified",
             (0x2094, 0x2194, 0x2294, 0x2394, 0x2494, 0x2594, 0x2694, 0x2794, 0x2888, 0x2988, 0x60BF, 0x70BF, 0x80BF,
                 0x90BF, 0xA0BF, 0xB0BF, 0xC0BF, 0xD0BF, 0xD1BF, 0xD2BF)
-        }
+        },
     };
 
     /// <summary>
@@ -1093,22 +1092,20 @@ public static class Dom3KeyboardEventCodes
     /// <param name="exceptions">A list of pre-processor exceptions.</param>
     /// <returns>The pre-processed barcode data input.</returns>
     // ReSharper disable once UnusedMember.Global
-    public static string ConvertCodesToString(string? input, out IList<PreprocessorException>? exceptions)
-    {
+    public static string ConvertCodesToString(string? input, out IList<PreprocessorException>? exceptions) {
         var valuesJson = input ?? string.Empty;
         valuesJson = Regex.Unescape(valuesJson).Trim('"');
         var scannedData = JsonConvert.DeserializeObject<Dom3ReportedKeys[]>(valuesJson);
         var sb = new StringBuilder();
         var calledAltNumpad = false;
         var altNumpadValue = new StringBuilder();
-        
-        foreach (var eventCode in scannedData ?? Array.Empty<Dom3ReportedKeys>())
-        {
+
+#pragma warning disable SA1010 // Opening square brackets should be spaced correctly
+        foreach (var eventCode in scannedData ?? []) {
             // Mask the upper bits representing NumLock, ScrollLock and Meta/OS
             var modifiers = eventCode.Modifiers & 31;
 
-            sb.Append(modifiers switch
-            {
+            sb.Append(modifiers switch {
                 4 => HandleAltNumericKeypad(),
                 20 => HandleAltNumericKeypad(),
                 _ => HandleKeyCode()
@@ -1123,11 +1120,9 @@ public static class Dom3KeyboardEventCodes
             // The tuple uses nesting internally (see the .Rest property of ValueTuple<T1..T7,TRest).  There are two levels of
             // nesting in the tuple type.  Due to a Resharper issue, the second level of nesting may case Resharper to indicate
             // a cast error, but this is not the case, and the code compiles OK.
-            string HandleKeyCode()
-            {
+            string HandleKeyCode() {
                 AppendAltNumpadValue();
-                return modifiers switch
-                {
+                return modifiers switch {
                     0 => ((char)KeyCodes[eventCode.Code].code).ToInvariantString(),
                     1 => ((char)KeyCodes[eventCode.Code].shift).ToInvariantString(),
                     2 => ((char)KeyCodes[eventCode.Code].ctrl).ToInvariantString(),
@@ -1151,11 +1146,9 @@ public static class Dom3KeyboardEventCodes
                 };
             }
 
-            string HandleAltNumericKeypad()
-            {
-                if ((eventCode.Modifiers & 32) == 32)
-                    return eventCode.Code switch
-                    {
+            string HandleAltNumericKeypad() {
+                if ((eventCode.Modifiers & 32) == 32) {
+                    return eventCode.Code switch {
                         "Numpad0" => GetNumpad((char)0x0030),
                         "Numpad1" => GetNumpad((char)0x0031),
                         "Numpad2" => GetNumpad((char)0x0032),
@@ -1168,21 +1161,20 @@ public static class Dom3KeyboardEventCodes
                         "Numpad9" => GetNumpad((char)0x0039),
                         _ => GetNonNumpad()
                     };
+                }
 
                 // Alt was pressed but NumLock is off
                 AppendAltNumpadValue();
                 return ((char)KeyCodes[eventCode.Code].alt).ToInvariantString();
 
                 // Alt was pressed and NumLock is on
-                string GetNumpad(char digit)
-                {
+                string GetNumpad(char digit) {
                     calledAltNumpad = true;
                     altNumpadValue.Append(digit);
                     return string.Empty;
                 }
 
-                string GetNonNumpad()
-                {
+                string GetNonNumpad() {
                     AppendAltNumpadValue();
 
                     AppendAltNumpadValue();
@@ -1190,13 +1182,11 @@ public static class Dom3KeyboardEventCodes
                 }
             }
 
-            void AppendAltNumpadValue()
-            {
+            void AppendAltNumpadValue() {
                 if (!calledAltNumpad) return;
                 calledAltNumpad = false;
 
-                if (eventCode.Code == "AltLeft" && altNumpadValue.Length > 0)
-                {
+                if (eventCode.Code == "AltLeft" && altNumpadValue.Length > 0) {
                     sb.Append((char)(int.Parse(altNumpadValue.ToString()) + 0x4E00));
                     modifiers = -1;
                 }
@@ -1204,27 +1194,26 @@ public static class Dom3KeyboardEventCodes
                 altNumpadValue.Clear();
             }
         }
+#pragma warning restore SA1010 // Opening square brackets should be spaced correctly
 
+#pragma warning disable IDE0028 // Simplify collection initialization
         exceptions = new List<PreprocessorException>();
+#pragma warning restore IDE0028 // Simplify collection initialization
         var output = sb.ToString();
         int idx;
 
-        for (idx = output.Length - 1; idx >= 0; idx--)
-        {
-            if (output[idx] == '\n' || output[idx] == '\r')
-            {
+        for (idx = output.Length - 1; idx >= 0; idx--) {
+            if (output[idx] == '\n' || output[idx] == '\r') {
                 continue;
             }
 
             break;
         }
 
-        return output
 #if NET6_0_OR_GREATER
-            [..(idx + 1)]
+        return output[.. (idx + 1)];
 #else
-            .Substring(0, idx + 1)
+        return output.Substring(0, idx + 1);
 #endif
-            ;
     }
 }
