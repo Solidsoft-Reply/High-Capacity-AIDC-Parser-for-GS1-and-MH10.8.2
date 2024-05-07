@@ -21,8 +21,6 @@
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc;
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-
 using BarcodeScanner.Symbology;
 
 /// <summary>
@@ -82,10 +80,6 @@ public class Barcode : IBarcode {
     ///   Gets a value indicating whether the barcode is recognised.
     /// </summary>
     // ReSharper disable once IdentifierTypo
-    [SuppressMessage(
-        "StyleCop.CSharp.DocumentationRules",
-        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
-        Justification = "Reviewed. Suppression is OK here.")]
     public bool IsRecognised { get; private set; }
 
     /// <summary>

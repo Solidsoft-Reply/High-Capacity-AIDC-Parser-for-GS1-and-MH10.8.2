@@ -35,10 +35,7 @@ public static class AsciiControlCharacters {
     /// <param name="input">The input string.</param>
     /// <param name="exceptions">Collection of exceptions.</param>
     /// <returns>The processed string.</returns>
-#pragma warning disable IDE0060
-    public static string? ReplaceAngleBracketRepresentation(string? input, out IList<PreprocessorException>? exceptions)
-#pragma warning restore IDE0060
-    {
+    public static string? ReplaceAngleBracketRepresentation(string? input, out IList<PreprocessorException>? exceptions) {
         exceptions = null;
 
         // Replace ASCII control characters represented as '<xx[x]>'

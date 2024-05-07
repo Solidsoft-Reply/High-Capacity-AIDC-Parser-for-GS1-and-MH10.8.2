@@ -35,12 +35,12 @@ public class IsoIec15434Analyzer : IAnalyzer {
     /// <summary>
     ///   Regular expression that matches candidate format identifiers.
     /// </summary>
-    private static readonly Regex MatchCandidatesRegEx = new(@"^((01\u001d\d{2})|(02|07)|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(08\d{8})|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d)).*$", RegexOptions.None);
+    private static readonly Regex MatchCandidatesRegEx = new (@"^((01\u001d\d{2})|(02|07)|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(08\d{8})|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d)).*$", RegexOptions.None);
 
     /// <summary>
     ///   Regular expression that matches the format identifier and preamble for binary data.
     /// </summary>
-    private static readonly Regex BinaryRegEx = new(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.None);
+    private static readonly Regex BinaryRegEx = new (@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.None);
 #endif
 
     /// <summary>
@@ -67,20 +67,15 @@ public class IsoIec15434Analyzer : IAnalyzer {
         characterPosition += messageHeaderIncrement;
 
         // Strip off the message header and footer. NB. the message footer is not always used, depending on record formats.
-#pragma warning disable SA1110 // Opening parenthesis or bracket should be on declaration line
 #pragma warning disable SA1010 // Opening square brackets should be spaced correctly
         var records = messageHeader && data.Length >= 6
-                          ? data
 #if NET6_0_OR_GREATER
-                                [4..^TestEndCharacters()]
+                          ? data[4..^TestEndCharacters()].Split((char)30)
 #else
-                                .Substring(4, data.Length - TestEndCharacters() - 4)
+                          ? data.Substring(4, data.Length - TestEndCharacters() - 4).Split((char)30)
 #endif
-
-                              .Split((char)30)
                           : [];
 #pragma warning restore SA1010 // Opening square brackets should be spaced correctly
-#pragma warning restore SA1110 // Opening parenthesis or bracket should be on declaration line
 
         int formatIdentifierRecordLength;
 
@@ -115,24 +110,19 @@ public class IsoIec15434Analyzer : IAnalyzer {
                     return 10;
                 case FormatIndicator.Binary:
                     var offset = 3;
-
-#pragma warning disable SA1008 // Opening parenthesis should be spaced correctly
-#pragma warning disable SA1110 // Opening parenthesis or bracket should be on declaration line
-                    if (!BinaryRegEx
 #if NET7_0_OR_GREATER
-                            ()
+                    if (!BinaryRegEx().IsMatch(record)) {
+#else
+                    if (!BinaryRegEx.IsMatch(record)) {
 #endif
-                            .IsMatch(record)) {
                         return offset;
                     }
 
-                    var groups = BinaryRegEx
 #if NET7_0_OR_GREATER
-                        ()
+                    var groups = BinaryRegEx().Match(record).Groups;
+#else
+                    var groups = BinaryRegEx.Match(record).Groups;
 #endif
-                        .Match(record).Groups;
-#pragma warning restore SA1110 // Opening parenthesis or bracket should be on declaration line
-#pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
                     offset += groups["fileName"].Value.Length + 1;
                     offset += groups["compressionTechnique"].Value.Length + 1;
                     offset += groups["numberOfBytes"].Value.Length + 1;
@@ -146,41 +136,33 @@ public class IsoIec15434Analyzer : IAnalyzer {
         int TestEndCharacters() => data.EndsWithOrdinal("\u001e\u0004") ? 2 : 0;
 
         // Memoise the format identifier record length.
-#pragma warning disable SA1110 // Opening parenthesis or bracket should be on declaration line
 #pragma warning disable SA1113 // Comma should be on the same line as previous parameter
 #pragma warning disable SA1115 // Parameter should follow comma
 #pragma warning disable SA1001 // Commas should be spaced correctly
         int FormatIdentifierRecordLength(string record) =>
             formatIdentifierRecordLength =
-                GetFormatIdentifierRecordLength(
-                    record
 #if NET6_0_OR_GREATER
-                        [..2]
+                GetFormatIdentifierRecordLength(record[..2], record);
 #else
-                        .Substring(0, 2)
+                GetFormatIdentifierRecordLength(record.Substring(0, 2), record);
 #endif
-                    ,
-                    record);
+
 #pragma warning restore SA1115 // Parameter should follow comma
 #pragma warning restore SA1113 // Comma should be on the same line as previous parameter
 
         // Create the format specifier for a valid format.
 #pragma warning disable SA1118 // Parameter should not span multiple lines
         IsoIec15434Format CreateFormatSpecifier(string record, int recordIndex) =>
-            new (
-                record
+
 #if NET6_0_OR_GREATER
-                    [..2]
+                new (record[..2], record.Length > FormatIdentifierRecordLength(record)
 #else
-                    .Substring(0, 2)
+                new (record.Substring(0, 2), record.Length > FormatIdentifierRecordLength(record)
 #endif
-                ,
-                record.Length > FormatIdentifierRecordLength(record)
-                    ? record
 #if NET6_0_OR_GREATER
-                        [formatIdentifierRecordLength..]
+                    ? record[formatIdentifierRecordLength..]
 #else
-                        .Substring(formatIdentifierRecordLength)
+                    ? record.Substring(formatIdentifierRecordLength)
 #endif
                     : string.Empty,
                 recordIndex,
@@ -189,11 +171,11 @@ public class IsoIec15434Analyzer : IAnalyzer {
 #pragma warning restore SA1001 // Commas should be spaced correctly
 
         // Resolve the record format and return a format specifier
-#pragma warning disable SA1008 // Opening parenthesis should be spaced correctly
         IsoIec15434Format ResolveRecordFormat(string record, int recordIndex) =>
-            MatchCandidatesRegEx
 #if NET7_0_OR_GREATER
-                ()
+            MatchCandidatesRegEx()
+#else
+            MatchCandidatesRegEx
 #endif
             .IsMatch(record)
                 ? CreateFormatSpecifier(record, recordIndex)
@@ -202,8 +184,6 @@ public class IsoIec15434Analyzer : IAnalyzer {
                     string.Empty,
                     recordIndex,
                     GetStartPosition(recordIndex));
-#pragma warning restore SA1110 // Opening parenthesis or bracket should be on declaration line
-#pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
 
         // Get the start position for the record.
         int GetStartPosition(int recordIndex) =>

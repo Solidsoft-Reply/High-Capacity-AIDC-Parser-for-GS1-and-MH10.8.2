@@ -21,8 +21,6 @@
 // ReSharper disable CommentTypo
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Syntax;
 
-using System.Diagnostics.CodeAnalysis;
-
 /// <summary>
 ///   ISO/IEC 15434 Format indicators.
 /// </summary>
@@ -35,10 +33,6 @@ public enum FormatIndicator {
     /// <summary>
     ///   Transportation: &lt;GS&gt;dd
     /// </summary>
-    [SuppressMessage(
-        "StyleCop.CSharp.DocumentationRules",
-        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
-        Justification = "Reviewed. Suppression is OK here.")]
     Transportation = 1,
 
     /// <summary>
@@ -49,20 +43,11 @@ public enum FormatIndicator {
     /// <summary>
     ///   ASC 12: 03nnnnnn&lt;FS&gt;&gt;&lt;GS&gt;&lt;US&gt;
     /// </summary>
-    [SuppressMessage(
-        "StyleCop.CSharp.DocumentationRules",
-        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
-        Justification = "Reviewed. Suppression is OK here.")]
     AscX12 = 3,
 
     /// <summary>
     ///   UN/EDIFACT: 04nnnnnn&lt;FS&gt;&lt;GS&gt;&lt;US&gt;
     /// </summary>
-    [SuppressMessage(
-        "StyleCop.CSharp.DocumentationRules",
-        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
-        Justification = "Reviewed. Suppression is OK here.")]
-
     // ReSharper disable once IdentifierTypo
     UnEdifact = 4,
 
@@ -84,19 +69,11 @@ public enum FormatIndicator {
     /// <summary>
     ///   CII - Center for Informatization of Industry - Japan: 08nnnnnnnn
     /// </summary>
-    [SuppressMessage(
-        "StyleCop.CSharp.DocumentationRules",
-        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
-        Justification = "Reviewed. Suppression is OK here.")]
     Cii = 8,
 
     /// <summary>
     ///   Binary: 09&lt;GS&gt;x1..30&lt;GS&gt;x1..30&lt;GS&gt;b1..15&lt;GS&gt;
     /// </summary>
-    [SuppressMessage(
-        "StyleCop.CSharp.DocumentationRules",
-        "SA1631:DocumentationMustMeetCharacterPercentage",
-        Justification = "Reviewed. Suppression is OK here.")]
     Binary = 9,
 
     /// <summary>

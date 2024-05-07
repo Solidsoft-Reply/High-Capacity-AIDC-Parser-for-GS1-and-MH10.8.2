@@ -1112,9 +1112,7 @@ public static class Dom3KeyboardEventCodes {
             });
 
 #pragma warning disable S1751
-#pragma warning disable S3626
             continue;
-#pragma warning restore S3626
 #pragma warning restore S1751
 
             // The tuple uses nesting internally (see the .Rest property of ValueTuple<T1..T7,TRest).  There are two levels of
@@ -1122,26 +1120,46 @@ public static class Dom3KeyboardEventCodes {
             // a cast error, but this is not the case, and the code compiles OK.
             string HandleKeyCode() {
                 AppendAltNumpadValue();
+                var (code,
+                    shift,
+                    ctrl,
+                    _,
+                    shiftCtrl,
+                    shiftAlt,
+                    altGr,
+                    shiftAltGr,
+                    shiftCtrlAlt,
+                    ctrlAlt,
+                    capital,
+                    shiftCapital,
+                    ctrlCapital,
+                    altCapital,
+                    shiftCtrlCapital,
+                    shiftAltCapital,
+                    altGrCapital,
+                    shiftAltGrCapital,
+                    shiftCtrlAltCapital,
+                    ctrlAltCapital) = KeyCodes[eventCode.Code];
                 return modifiers switch {
-                    0 => ((char)KeyCodes[eventCode.Code].code).ToInvariantString(),
-                    1 => ((char)KeyCodes[eventCode.Code].shift).ToInvariantString(),
-                    2 => ((char)KeyCodes[eventCode.Code].ctrl).ToInvariantString(),
-                    3 => ((char)KeyCodes[eventCode.Code].shiftCtrl).ToInvariantString(),
-                    5 => ((char)KeyCodes[eventCode.Code].shiftAlt).ToInvariantString(),
-                    6 => ((char)KeyCodes[eventCode.Code].ctrlAlt).ToInvariantString(),
-                    7 => ((char)KeyCodes[eventCode.Code].shiftCtrlAlt).ToInvariantString(),
-                    8 => ((char)KeyCodes[eventCode.Code].altGr).ToInvariantString(),
-                    9 => ((char)KeyCodes[eventCode.Code].shiftAltGr).ToInvariantString(),
-                    16 => ((char)KeyCodes[eventCode.Code].capital).ToInvariantString(),
-                    17 => ((char)KeyCodes[eventCode.Code].shiftCapital).ToInvariantString(),
-                    18 => ((char)KeyCodes[eventCode.Code].ctrlCapital).ToInvariantString(),
-                    19 => ((char)KeyCodes[eventCode.Code].shiftCtrlCapital).ToInvariantString(),
-                    20 => ((char)KeyCodes[eventCode.Code].altCapital).ToInvariantString(),
-                    21 => ((char)KeyCodes[eventCode.Code].shiftAltCapital).ToInvariantString(),
-                    22 => ((char)KeyCodes[eventCode.Code].ctrlAltCapital).ToInvariantString(),
-                    23 => ((char)KeyCodes[eventCode.Code].shiftCtrlAltCapital).ToInvariantString(),
-                    24 => ((char)KeyCodes[eventCode.Code].altGrCapital).ToInvariantString(),
-                    25 => ((char)KeyCodes[eventCode.Code].shiftAltGrCapital).ToInvariantString(),
+                    0 => ((char)code).ToInvariantString(),
+                    1 => ((char)shift).ToInvariantString(),
+                    2 => ((char)ctrl).ToInvariantString(),
+                    3 => ((char)shiftCtrl).ToInvariantString(),
+                    5 => ((char)shiftAlt).ToInvariantString(),
+                    6 => ((char)ctrlAlt).ToInvariantString(),
+                    7 => ((char)shiftCtrlAlt).ToInvariantString(),
+                    8 => ((char)altGr).ToInvariantString(),
+                    9 => ((char)shiftAltGr).ToInvariantString(),
+                    16 => ((char)capital).ToInvariantString(),
+                    17 => ((char)shiftCapital).ToInvariantString(),
+                    18 => ((char)ctrlCapital).ToInvariantString(),
+                    19 => ((char)shiftCtrlCapital).ToInvariantString(),
+                    20 => ((char)altCapital).ToInvariantString(),
+                    21 => ((char)shiftAltCapital).ToInvariantString(),
+                    22 => ((char)ctrlAltCapital).ToInvariantString(),
+                    23 => ((char)shiftCtrlAltCapital).ToInvariantString(),
+                    24 => ((char)altGrCapital).ToInvariantString(),
+                    25 => ((char)shiftAltGrCapital).ToInvariantString(),
                     _ => string.Empty
                 };
             }

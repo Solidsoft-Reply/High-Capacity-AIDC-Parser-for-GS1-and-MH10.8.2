@@ -20,8 +20,6 @@
 
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc;
 
-using System.Diagnostics.CodeAnalysis;
-
 /// <summary>
 ///   The parse status of the barcode.
 /// </summary>
@@ -40,9 +38,5 @@ public enum ParseStatus {
     /// <summary>
     ///   The barcode format is not recognised by this parser.
     /// </summary>
-    [SuppressMessage(
-        "StyleCop.CSharp.DocumentationRules",
-        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
-        Justification = "Reviewed. Suppression is OK here.")]
     Unrecognised,
 }

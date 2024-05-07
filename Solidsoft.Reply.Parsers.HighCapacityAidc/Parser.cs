@@ -23,7 +23,6 @@
 
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc;
 
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -60,7 +59,7 @@ public static class Parser {
     /// <summary>
     ///   Code generator for regular expression that matches the format identifier and preamble for binary data.
     /// </summary>
-    private static readonly Regex MatchFormatIdentifierAndPreambleRegex = new(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.IgnoreCase);
+    private static readonly Regex MatchFormatIdentifierAndPreambleRegex = new (@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.IgnoreCase);
 
     /// <summary>
     ///   Regular expression that matches the format identifier and preamble for binary data.
@@ -75,7 +74,6 @@ public static class Parser {
     /// <param name="preProcessedData">The pre-processed data.</param>
     /// <param name="preProcessors">The pre-processor functions, provided as a delegate.</param>
     /// <returns>A pack identifier.</returns>
-    [SuppressMessage("ReSharper", "CommentTypo")]
     public static IBarcode Parse(string data, out string preProcessedData, Preprocessor? preProcessors = null) {
         preProcessedData = data;
 

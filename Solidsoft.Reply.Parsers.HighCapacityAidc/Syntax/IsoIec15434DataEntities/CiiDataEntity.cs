@@ -88,11 +88,6 @@ public class CiiDataEntity(
     /// <summary>
     ///   Gets the code for the organisation managing the standard used in the barcode.
     /// </summary>
-    [SuppressMessage(
-        "StyleCop.CSharp.DocumentationRules",
-        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
-        Justification = "Reviewed. Suppression is OK here.")]
-
     // ReSharper disable once MemberCanBePrivate.Global
     // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public int Organisation { get; } = int.TryParse(organisation, out var organisationInt) ? organisationInt : 0;
