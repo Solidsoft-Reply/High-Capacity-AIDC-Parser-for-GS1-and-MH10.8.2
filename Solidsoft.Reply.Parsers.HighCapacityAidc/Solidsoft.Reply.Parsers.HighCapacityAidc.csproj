@@ -159,11 +159,4 @@
 	  </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Solidsoft.Reply.BarcodeScanner.Symbology\Solidsoft.Reply.BarcodeScanner.Symbology\Solidsoft.Reply.BarcodeScanner.Symbology.csproj" />
-    <ProjectReference Include="..\..\Solidsoft.Reply.Parsers.AnsiMhDi\Solidsoft.Reply.Parsers.AnsiMhDi\Solidsoft.Reply.Parsers.AnsiMhDi.csproj" />
-    <ProjectReference Include="..\..\Solidsoft.Reply.Parsers.Common\Solidsoft.Reply.Parsers.Common\Solidsoft.Reply.Parsers.Common.csproj" />
-    <ProjectReference Include="..\..\Solidsoft.Reply.Parsers.Gs1Ai\Solidsoft.Reply.Parsers.Gs1Ai\Solidsoft.Reply.Parsers.Gs1Ai.csproj" />
-  </ItemGroup>
-
 </Project>
