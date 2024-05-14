@@ -185,15 +185,19 @@ public static class Dom3KeyboardEventCodes {
                 0x900C, 0xA00C, 0xB00C, 0xC00C, 0xD00C, 0xD10C, 0xD20C)
         },
         {
+            // Because the Backspace key is universally used to enter backspace control characters, we have to compromise 
+            // here and represent some key combinations as backspaces - specifically Shift-Backspace, Capital-Backspace and
+            // Capital-Shift-Backspace.  These are generally reported as backspaces by keyboard layouts, and if we
+            // don't enforce this convention, the calibration data cannot be parsed by the Calibrator.
             "Backspace",
             (0x0008, 0x0108, 0x0218, 0x0418, 0x0228, 0x0518, 0x0628, 0x0718, 0x1828, 0x0918, 0x600D, 0x700D, 0x800D,
                 0x900D, 0xA00D, 0xB00D, 0xC00D, 0xD00D, 0xD10D, 0xD20D)
         },
         {
             // Because the Tab key is universally used to enter tab characters, we have to compromise here
-            // and represent some key combinations as carriage returns - specifically Shift-Tab, Capital-Tab and
-            // Capital-Shift-Tab.  These are generally reported as carriage returns by keyboard layouts, and if we
-            //  don't enforce this convention, the calibration data cannot be parsed by the Calibrator.
+            // and represent some key combinations as tabs - specifically Shift-Tab, Capital-Tab and
+            // Capital-Shift-Tab.  These are generally reported as tabs by keyboard layouts, and if we
+            // don't enforce this convention, the calibration data cannot be parsed by the Calibrator.
             "Tab",
             (0x0009, 0x0009, 0x0219, 0x0419, 0x0229, 0x0519, 0x0629, 0x0719, 0x1829, 0x0919, 0x0009, 0x0009, 0x800E,
                 0x900E, 0xA00E, 0xB00E, 0xC00E, 0xD00E, 0xD10E, 0xD20E)
@@ -262,7 +266,7 @@ public static class Dom3KeyboardEventCodes {
             // Because the Enter key is universally used to enter carriage returns, we have to compromise here
             // and represent some key combinations as carriage returns - specifically Shift-Enter, Capital-Enter and
             // Capital-Shift-Enter.  These are generally reported as carriage returns by keyboard layouts, and if we
-            //  don't enforce this convention, the calibration data cannot be parsed by the Calibrator.
+            // don't enforce this convention, the calibration data cannot be parsed by the Calibrator.
             "Enter",
             (0x000D, 0x000D, 0x020D, 0x040D, 0x130D, 0x050D, 0x060D, 0x070D, 0x380D, 0x090D, 0x000D, 0x000D, 0x801B,
                 0x901B, 0xA01B, 0xB01B, 0xC01B, 0xD01B, 0xD11B, 0xD21B)
