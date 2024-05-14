@@ -255,8 +255,12 @@ public static class Dom3KeyboardEventCodes {
                 0x901A, 0xA01A, 0xB01A, 0xC01A, 0xD01A, 0xD11A, 0xD21A)
         },
         {
+            // Because the Enter key is universally used to enter carriage returns, we have to compromise here
+            // and represent some key combinations as carriage returns - specifically Shift-Enter, Capital-Enter and
+            // Capital-Shift-Enter.  These are generally reported as carriage returns by keyboard layouts, and if we
+            //  don't enforce this convention, the calibration data cannot be parsed by the Calibrator.
             "Enter",
-            (0x000D, 0x010D, 0x020D, 0x040D, 0x130D, 0x050D, 0x060D, 0x070D, 0x380D, 0x090D, 0x601B, 0x701B, 0x801B,
+            (0x000D, 0x000D, 0x020D, 0x040D, 0x130D, 0x050D, 0x060D, 0x070D, 0x380D, 0x090D, 0x000D, 0x000D, 0x801B,
                 0x901B, 0xA01B, 0xB01B, 0xC01B, 0xD01B, 0xD11B, 0xD21B)
         },
         {
