@@ -190,8 +190,12 @@ public static class Dom3KeyboardEventCodes {
                 0x900D, 0xA00D, 0xB00D, 0xC00D, 0xD00D, 0xD10D, 0xD20D)
         },
         {
+            // Because the Tab key is universally used to enter tab characters, we have to compromise here
+            // and represent some key combinations as carriage returns - specifically Shift-Tab, Capital-Tab and
+            // Capital-Shift-Tab.  These are generally reported as carriage returns by keyboard layouts, and if we
+            //  don't enforce this convention, the calibration data cannot be parsed by the Calibrator.
             "Tab",
-            (0x0009, 0x0109, 0x0219, 0x0419, 0x0229, 0x0519, 0x0629, 0x0719, 0x1829, 0x0919, 0x600E, 0x700E, 0x800E,
+            (0x0009, 0x0009, 0x0219, 0x0419, 0x0229, 0x0519, 0x0629, 0x0719, 0x1829, 0x0919, 0x0009, 0x0009, 0x800E,
                 0x900E, 0xA00E, 0xB00E, 0xC00E, 0xD00E, 0xD10E, 0xD20E)
         },
         {
