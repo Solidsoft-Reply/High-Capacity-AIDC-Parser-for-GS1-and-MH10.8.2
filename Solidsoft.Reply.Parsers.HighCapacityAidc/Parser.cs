@@ -32,6 +32,7 @@ using Syntax;
 using Syntax.IsoIec15434DataEntities;
 using System.Collections.Generic;
 using Common;
+using System;
 
 /// <summary>
 ///   Delegate for pre-processor functions.
@@ -86,7 +87,7 @@ public static class Parser {
             return noDataBarcode;
         }
 
-        var preprocessorExceptions = new List<PreprocessorException>();
+        List<PreprocessorException>? preprocessorExceptions = new List<PreprocessorException>();
 
         // Aggregate the results of each pre-processor.
         var input = preProcessors?.GetInvocationList().Aggregate(

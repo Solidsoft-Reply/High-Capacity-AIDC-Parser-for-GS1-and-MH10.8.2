@@ -1105,8 +1105,7 @@ public static class Dom3KeyboardEventCodes
     /// <param name="exceptions">A list of pre-processor exceptions.</param>
     /// <returns>The pre-processed barcode data input.</returns>
     // ReSharper disable once UnusedMember.Global
-    public static string ConvertCodesToString(string? input, out IList<PreprocessorException>? exceptions)
-    {
+    public static string? ConvertCodesToString(string? input, out IList<PreprocessorException>? exceptions) {
         var valuesJson = input ?? string.Empty;
         valuesJson = Regex.Unescape(valuesJson).Trim('"');
         var scannedData = JsonConvert.DeserializeObject<Dom3ReportedKeys[]>(valuesJson);
