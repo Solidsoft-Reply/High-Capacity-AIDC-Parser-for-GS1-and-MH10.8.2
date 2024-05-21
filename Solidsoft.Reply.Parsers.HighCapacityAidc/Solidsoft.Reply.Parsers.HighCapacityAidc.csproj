@@ -153,6 +153,9 @@
   <ItemGroup>
 	  <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <PackageReference Include="Solidsoft.Reply.BarcodeScanner.Symbology" Version="1.0.1" />
+	  <PackageReference Include="Solidsoft.Reply.Parsers.AnsiMhDi" Version="1.0.4" />
+	  <PackageReference Include="Solidsoft.Reply.Parsers.Gs1Ai" Version="1.0.4" />
 	  <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
