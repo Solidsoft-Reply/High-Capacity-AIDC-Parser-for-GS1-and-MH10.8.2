@@ -129,7 +129,7 @@ public static class IsoIec15434Envelope
 
             // The scanner is emitting a null character instead of a record separator.
 #if NET6_0_OR_GREATER
-            input = messageHeader + recordSeparator + input[(messageHeader.Length + 1) ..]
+            input = messageHeader + recordSeparator + input[(messageHeader.Length + 1)..]
 #else
             input = messageHeader + recordSeparator + input.Substring(messageHeader.Length + 1)
 #endif
@@ -150,7 +150,7 @@ public static class IsoIec15434Envelope
             // The scanner is emitting a null character instead of a record separator, but this has been
             // converted to an ASCII 29 because ASCII 29s are also emitted as null characters.
 #if NET6_0_OR_GREATER
-            input = messageHeader + recordSeparator + input[(messageHeader.Length + 1) ..];
+            input = messageHeader + recordSeparator + input[(messageHeader.Length + 1)..];
 #else
             input = messageHeader + recordSeparator + input.Substring(messageHeader.Length + 1);
 #endif
@@ -195,7 +195,7 @@ public static class IsoIec15434Envelope
             if (ascii30Character != '\x001e') {
                 // ASCII 30 is mapped to another character
 #if NET6_0_OR_GREATER
-                input = messageHeader + recordSeparator + input[(messageHeader.Length + 1) ..];
+                input = messageHeader + recordSeparator + input[(messageHeader.Length + 1)..];
 #else
                 input = messageHeader + recordSeparator + input.Substring(messageHeader.Length + 1);
 #endif
@@ -285,7 +285,7 @@ public static class IsoIec15434Envelope
 #endif
                         .Select(match => match.Index)) {
 #if NET6_0_OR_GREATER
-                sections.Add(input[currentPos.. (index + 1)]);
+                sections.Add(input[currentPos..(index + 1)]);
 #else
                 sections.Add(input.Substring(currentPos, index + 1 - currentPos));
 #endif
@@ -442,7 +442,7 @@ public static class IsoIec15434Envelope
                 case "04":
                     var indexOfGroupSeparator = recordFormat.StartPosition + 8;
 #if NET5_0_OR_GREATER
-                    var threeCharacters = input[indexOfGroupSeparator.. (indexOfGroupSeparator + 3)];
+                    var threeCharacters = input[indexOfGroupSeparator..(indexOfGroupSeparator + 3)];
 #else
                     var threeCharacters = input.Substring(indexOfGroupSeparator, 3);
 #endif

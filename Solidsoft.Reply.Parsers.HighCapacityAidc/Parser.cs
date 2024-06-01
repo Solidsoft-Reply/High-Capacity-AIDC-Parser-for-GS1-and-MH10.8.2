@@ -60,7 +60,7 @@ public static class Parser {
     /// <summary>
     ///   Code generator for regular expression that matches the format identifier and preamble for binary data.
     /// </summary>
-    private static readonly Regex MatchFormatIdentifierAndPreambleRegex = new (@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.IgnoreCase);
+    private static readonly Regex MatchFormatIdentifierAndPreambleRegex = new(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.IgnoreCase);
 
     /// <summary>
     ///   Regular expression that matches the format identifier and preamble for binary data.
@@ -369,13 +369,13 @@ public static class Parser {
                     }
 
 #if NET6_0_OR_GREATER
-                    var release = input[(recordFormat.StartPosition + 2) .. (recordFormat.StartPosition + 5)]
+                    var release = input[(recordFormat.StartPosition + 2)..(recordFormat.StartPosition + 5)]
 #else
                     var release = input.Substring(recordFormat.StartPosition + 2, 3)
 #endif
                         ;
 #if NET6_0_OR_GREATER
-                    var subRelease = input[(recordFormat.StartPosition + 5) .. (recordFormat.StartPosition + 8)]
+                    var subRelease = input[(recordFormat.StartPosition + 5)..(recordFormat.StartPosition + 8)]
 #else
                     var subRelease = input.Substring(recordFormat.StartPosition + 5, 3)
 #endif
@@ -405,19 +405,19 @@ public static class Parser {
                 case FormatIndicator.Cii:
 
 #if NET6_0_OR_GREATER
-                    var organisation = input[(recordFormat.StartPosition + 2) .. (recordFormat.StartPosition + 6)];
+                    var organisation = input[(recordFormat.StartPosition + 2)..(recordFormat.StartPosition + 6)];
 #else
                     var organisation = input.Substring(recordFormat.StartPosition + 2, 4);
 #endif
 
 #if NET6_0_OR_GREATER
-                    var subOrganisation = input[(recordFormat.StartPosition + 6) .. (recordFormat.StartPosition + 8)];
+                    var subOrganisation = input[(recordFormat.StartPosition + 6)..(recordFormat.StartPosition + 8)];
 #else
                     var subOrganisation = input.Substring(recordFormat.StartPosition + 6, 2);
 #endif
 
 #if NET6_0_OR_GREATER
-                    var edition = input[(recordFormat.StartPosition + 8) .. (recordFormat.StartPosition + 10)];
+                    var edition = input[(recordFormat.StartPosition + 8)..(recordFormat.StartPosition + 10)];
 #else
                     var edition = input.Substring(recordFormat.StartPosition + 8, 2);
 #endif

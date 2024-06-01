@@ -21,6 +21,7 @@
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc;
 
 using System.Collections.Generic;
+
 using BarcodeScanner.Symbology;
 
 /// <summary>

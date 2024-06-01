@@ -32,8 +32,7 @@ using Common;
 /// </summary>
 // ReSharper disable once UnusedMember.Global
 // ReSharper disable once UnusedType.Global
-public static class Dom3KeyboardEventCodes
-{
+public static class Dom3KeyboardEventCodes {
     /// <summary>
     ///   Gets a dictionary of mappings from textual codes to numeric code values.
     /// </summary>
@@ -1114,13 +1113,11 @@ public static class Dom3KeyboardEventCodes
         var altNumpadValue = new StringBuilder();
 
 #pragma warning disable SA1010 // Opening square brackets should be spaced correctly
-        foreach (var eventCode in scannedData ?? [])
-        {
+        foreach (var eventCode in scannedData ?? []) {
             // Mask the upper bits representing NumLock, ScrollLock and Meta/OS
             var modifiers = eventCode.Modifiers & 31;
 
-            sb.Append(modifiers switch
-            {
+            sb.Append(modifiers switch {
                 4 => HandleAltNumericKeypad(),
                 20 => HandleAltNumericKeypad(),
                 _ => HandleKeyCode()
@@ -1133,8 +1130,7 @@ public static class Dom3KeyboardEventCodes
             // The tuple uses nesting internally (see the .Rest property of ValueTuple<T1..T7,TRest).  There are two levels of
             // nesting in the tuple type.  Due to a Resharper issue, the second level of nesting may case Resharper to indicate
             // a cast error, but this is not the case, and the code compiles OK.
-            string HandleKeyCode()
-            {
+            string HandleKeyCode() {
                 AppendAltNumpadValue();
                 var (code,
                     shift,
@@ -1156,8 +1152,7 @@ public static class Dom3KeyboardEventCodes
                     shiftAltGrCapital,
                     shiftCtrlAltCapital,
                     ctrlAltCapital) = KeyCodes[eventCode.Code];
-                return modifiers switch
-                {
+                return modifiers switch {
                     0 => ((char)code).ToInvariantString(),
                     1 => ((char)shift).ToInvariantString(),
                     2 => ((char)ctrl).ToInvariantString(),
@@ -1181,12 +1176,9 @@ public static class Dom3KeyboardEventCodes
                 };
             }
 
-            string HandleAltNumericKeypad()
-            {
-                if ((eventCode.Modifiers & 32) == 32)
-                {
-                    return eventCode.Code switch
-                    {
+            string HandleAltNumericKeypad() {
+                if ((eventCode.Modifiers & 32) == 32) {
+                    return eventCode.Code switch {
                         "Numpad0" => GetNumpad((char)0x0030),
                         "Numpad1" => GetNumpad((char)0x0031),
                         "Numpad2" => GetNumpad((char)0x0032),
@@ -1206,15 +1198,13 @@ public static class Dom3KeyboardEventCodes
                 return ((char)KeyCodes[eventCode.Code].alt).ToInvariantString();
 
                 // Alt was pressed and NumLock is on
-                string GetNumpad(char digit)
-                {
+                string GetNumpad(char digit) {
                     calledAltNumpad = true;
                     altNumpadValue.Append(digit);
                     return string.Empty;
                 }
 
-                string GetNonNumpad()
-                {
+                string GetNonNumpad() {
                     AppendAltNumpadValue();
 
                     AppendAltNumpadValue();
@@ -1222,13 +1212,11 @@ public static class Dom3KeyboardEventCodes
                 }
             }
 
-            void AppendAltNumpadValue()
-            {
+            void AppendAltNumpadValue() {
                 if (!calledAltNumpad) return;
                 calledAltNumpad = false;
 
-                if (eventCode.Code == "AltLeft" && altNumpadValue.Length > 0)
-                {
+                if (eventCode.Code == "AltLeft" && altNumpadValue.Length > 0) {
                     sb.Append((char)(int.Parse(altNumpadValue.ToString()) + 0x4E00));
                     modifiers = -1;
                 }
@@ -1244,10 +1232,8 @@ public static class Dom3KeyboardEventCodes
         var output = sb.ToString();
         int idx;
 
-        for (idx = output.Length - 1; idx >= 0; idx--)
-        {
-            if (output[idx] == '\n' || output[idx] == '\r')
-            {
+        for (idx = output.Length - 1; idx >= 0; idx--) {
+            if (output[idx] == '\n' || output[idx] == '\r') {
                 continue;
             }
 
@@ -1255,7 +1241,7 @@ public static class Dom3KeyboardEventCodes
         }
 
 #if NET6_0_OR_GREATER
-        return output[.. (idx + 1)];
+        return output[..(idx + 1)];
 #else
         return output.Substring(0, idx + 1);
 #endif
