@@ -1104,7 +1104,7 @@ public static class Dom3KeyboardEventCodes {
     /// <param name="exceptions">A list of pre-processor exceptions.</param>
     /// <returns>The pre-processed barcode data input.</returns>
     // ReSharper disable once UnusedMember.Global
-    public static string? ConvertCodesToString(string? input, out IList<PreprocessorException>? exceptions) {
+    public static string ConvertCodesToString(string? input, out IList<PreprocessorException>? exceptions) {
         var valuesJson = input ?? string.Empty;
         valuesJson = Regex.Unescape(valuesJson).Trim('"');
         var scannedData = JsonConvert.DeserializeObject<Dom3ReportedKeys[]>(valuesJson);
@@ -1127,9 +1127,6 @@ public static class Dom3KeyboardEventCodes {
             continue;
 #pragma warning restore S1751
 
-            // The tuple uses nesting internally (see the .Rest property of ValueTuple<T1..T7,TRest).  There are two levels of
-            // nesting in the tuple type.  Due to a Resharper issue, the second level of nesting may case Resharper to indicate
-            // a cast error, but this is not the case, and the code compiles OK.
             string HandleKeyCode() {
                 AppendAltNumpadValue();
                 var (code,
