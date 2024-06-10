@@ -1114,6 +1114,7 @@ public static class Dom3KeyboardEventCodes {
 
 #pragma warning disable SA1010 // Opening square brackets should be spaced correctly
         foreach (var eventCode in scannedData ?? []) {
+
             // Mask the upper bits representing NumLock, ScrollLock and Meta/OS
             var modifiers = eventCode.Modifiers & 31;
 
@@ -1214,7 +1215,18 @@ public static class Dom3KeyboardEventCodes {
                 calledAltNumpad = false;
 
                 if (eventCode.Code == "AltLeft" && altNumpadValue.Length > 0) {
-                    sb.Append((char)(int.Parse(altNumpadValue.ToString()) + 0x4E00));
+                    var numpadValue = int.Parse(altNumpadValue.ToString());
+
+                    // Spaces are given special handling here because of their special role
+                    // as delimiters in calibration barcodes. These need to be represented as
+                    // spaces when analysing calibration data.
+                    if (numpadValue == 32) {
+                        sb.Append((char)numpadValue);
+                    }
+                    else {
+                        sb.Append((char)(numpadValue + 0x4E00));
+                    }
+
                     modifiers = -1;
                 }
 
