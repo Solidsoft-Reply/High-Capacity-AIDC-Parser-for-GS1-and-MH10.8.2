@@ -46,6 +46,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="..\DEVELOPER-NOTICE.txt" Link="LicenseAndNotices\DEVELOPER-NOTICE.txt" />
+    <Content Include="..\LICENSE.txt" Link="LicenseAndNotices\LICENSE.txt" />
+    <Content Include="..\NOTICE.txt" Link="LicenseAndNotices\NOTICE.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -136,15 +142,8 @@
   </ItemGroup>
 
   <ItemGroup>
+	<None Include="..\README.md" Link="LicenseAndNotices\README.md" />
 	<None Include="Solidsoft Reply - LOGO Square_small.jpg">
-	  <Pack>True</Pack>
-	  <PackagePath>\</PackagePath>
-	</None>
-	<None Include="LICENSE.txt">
-	  <Pack>True</Pack>
-	  <PackagePath>\</PackagePath>
-	</None>
-	<None Include="README.md">
 	  <Pack>True</Pack>
 	  <PackagePath>\</PackagePath>
 	</None>
@@ -163,6 +162,10 @@
     <ProjectReference Include="..\..\Solidsoft.Reply.BarcodeScanner.Symbology\Solidsoft.Reply.BarcodeScanner.Symbology\Solidsoft.Reply.BarcodeScanner.Symbology.csproj" />
     <ProjectReference Include="..\..\Solidsoft.Reply.Parsers.AnsiMhDi\Solidsoft.Reply.Parsers.AnsiMhDi\Solidsoft.Reply.Parsers.AnsiMhDi.csproj" />
     <ProjectReference Include="..\..\Solidsoft.Reply.Parsers.Gs1Ai\Solidsoft.Reply.Parsers.Gs1Ai\Solidsoft.Reply.Parsers.Gs1Ai.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="LicenseAndNotices\" />
   </ItemGroup>
 
 </Project>
