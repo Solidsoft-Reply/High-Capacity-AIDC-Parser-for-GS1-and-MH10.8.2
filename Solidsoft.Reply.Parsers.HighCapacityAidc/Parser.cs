@@ -72,6 +72,15 @@ public static class Parser {
     ///   Parse the raw barcode data.
     /// </summary>
     /// <param name="data">The raw barcode data.</param>
+    /// <param name="preProcessors">The pre-processor functions, provided as a delegate.</param>
+    /// <returns>A pack identifier.</returns>
+    public static IBarcode Parse(string data, Preprocessor? preProcessors = null) =>
+        Parse(data, out _, preProcessors);
+
+    /// <summary>
+    ///   Parse the raw barcode data.
+    /// </summary>
+    /// <param name="data">The raw barcode data.</param>
     /// <param name="preProcessedData">The pre-processed data.</param>
     /// <param name="preProcessors">The pre-processor functions, provided as a delegate.</param>
     /// <returns>A pack identifier.</returns>
@@ -98,7 +107,7 @@ public static class Parser {
                 preprocessorExceptions.AddRange(exceptions ?? new List<PreprocessorException>());
 #pragma warning restore IDE0028 // Simplify collection initialization
                 return processedData;
-            });
+            }) ?? data;
 
         // Determine the symbology and create the barcode record.
         var aimId = new AimDetector().Detect(input ?? string.Empty);
