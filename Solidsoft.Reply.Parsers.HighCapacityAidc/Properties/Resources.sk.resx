@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Formát záznamu údajov v čiarovom kóde nie je rozpoznaný.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Nebol poskytnutý identifikátor AIM.</value>
+  </data>
 </root>

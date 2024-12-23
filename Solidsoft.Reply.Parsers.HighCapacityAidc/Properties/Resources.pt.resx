@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>O formato de um registro de dados no código de barras é desconhecido.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Não foi fornecido identificador AIM.</value>
+  </data>
 </root>

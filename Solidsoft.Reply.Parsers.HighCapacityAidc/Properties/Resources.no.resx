@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Formatet på en datateknikk i strekkoden er ukjent.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Ingen AIM-identifikator oppgitt.</value>
+  </data>
 </root>

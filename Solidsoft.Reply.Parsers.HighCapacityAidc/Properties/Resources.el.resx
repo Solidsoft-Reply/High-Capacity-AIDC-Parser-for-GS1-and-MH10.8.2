@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Η μορφή μιας εγγραφής δεδομένων στο barcode είναι αναγνωρίσιμη.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Δεν παρέχεται αναγνωριστικό AIM.</value>
+  </data>
 </root>

@@ -33,6 +33,7 @@ using Syntax.IsoIec15434DataEntities;
 using System.Collections.Generic;
 using Common;
 using System;
+using System.Text;
 
 /// <summary>
 ///   Delegate for pre-processor functions.
@@ -73,9 +74,15 @@ public static class Parser {
     /// </summary>
     /// <param name="data">The raw barcode data.</param>
     /// <param name="preProcessors">The pre-processor functions, provided as a delegate.</param>
+    /// <param name="mode">The mode of the parser.</param>
     /// <returns>A pack identifier.</returns>
-    public static IBarcode Parse(string data, Preprocessor? preProcessors = null) =>
-        Parse(data, out _, preProcessors);
+    /// <remarks>
+    /// If the mode is set to ExtendedIsoIec15418 (the default) and no AIM identifier is provided, the parser first attempts to
+    /// parse the data in accordance with ISO/IEC 15418 identifiers (GS1 AIs or MH10.8.2 DIs).  If this fails, it attemots to
+    /// interpret the data as a GS1 GTIN.
+    /// </remarks>
+    public static IBarcode Parse(string data, Preprocessor? preProcessors = null, Mode mode = Mode.ExtendedIsoIec15418) =>
+        Parse(data, out _, preProcessors, mode);
 
     /// <summary>
     ///   Parse the raw barcode data.
@@ -83,8 +90,14 @@ public static class Parser {
     /// <param name="data">The raw barcode data.</param>
     /// <param name="preProcessedData">The pre-processed data.</param>
     /// <param name="preProcessors">The pre-processor functions, provided as a delegate.</param>
+    /// <param name="mode">The mode of the parser.</param>
     /// <returns>A pack identifier.</returns>
-    public static IBarcode Parse(string data, out string preProcessedData, Preprocessor? preProcessors = null) {
+    /// <remarks>
+    /// If the mode is set to ExtendedIsoIec15418 (the default) and no AIM identifier is provided, the parser first attempts to
+    /// parse the data in accordance with ISO/IEC 15418 identifiers (GS1 AIs or MH10.8.2 DIs).  If this fails, it attemots to
+    /// interpret the data as a GS1 GTIN.
+    /// </remarks>
+    public static IBarcode Parse(string data, out string preProcessedData, Preprocessor? preProcessors = null, Mode mode = Mode.ExtendedIsoIec15418) {
         preProcessedData = data;
 
         // Is any data present?
@@ -113,6 +126,14 @@ public static class Parser {
         var aimId = new AimDetector().Detect(input ?? string.Empty);
         var barcodeExceptions = preprocessorExceptions.ConvertToBarcodeExceptions();
         var barcode = new Barcode(aimId.BarcodeType, aimId.Modifier, barcodeExceptions);
+
+        if (mode == Mode.AimIdentifer && aimId.BarcodeType == BarcodeType.NoIdentifier) {
+            // No AIM identifier was provided, so return the barcode with an exception.
+            barcode.AddException(
+                new BarcodeException(1008, Resources.Barcodes_Error_008, false),
+                ParseStatus.Unrecognised);
+            return barcode;
+        }
 
         // Discard any AIM identifier.
         input = aimId.BarcodeData;
@@ -169,40 +190,14 @@ public static class Parser {
                             // otherwise, if the barcode symbology is EAN-13, UPC-A, or UPC-E 13 digits without a supplement,
                             : aimId.Modifier switch {
                                 // process the barcode data and return the product code,
-                                '0' => ProcessUpcOrEan13(input),
+                                '0' => ProcessUpcOrEan(input),
 
                                 // process the barcode data, strip off the supplement and return the product code,
-                                '3' => ProcessUpcOrEan13WithSupplement(),
+                                '3' => ProcessUpcOrEanWithSupplement(),
 
                                 // otherwise, return the input as-is
                                 _ => input
                             };
-            }
-
-            if (aimId.BarcodeType == BarcodeType.NoIdentifier && input.All(c => c >= 48 && c <= 57)) {
-                var inputLength = input.Length;
-                int[] upcEanSupplementSizes = [15, 17, 18];
-                int[] upcEanSizes = [13, 12, 8];
-
-                string TestItf14OrUpaCWithSupplement() =>
-                    inputLength == 14
-
-                        // Assume this is an ITF-14. However, it could be a UPC-A with 2 digit supplement.
-                        ? "01" + input
-                        : input;
-
-                string TestUpcOrEan13WithSupplement() =>
-                    upcEanSupplementSizes.Contains(inputLength)
-
-                        // UPC-A with 2-digit supplement or EAN 13 with 2 or 5-digit supplement.
-                        ? ProcessUpcOrEan13WithSupplement()
-                        : TestItf14OrUpaCWithSupplement();
-
-                input = upcEanSizes.Contains(inputLength)
-
-                            // UPC-A, UPC-E or EAN 13. NB. we assume UPC-8 rather than EAN 8. EAN 8 cannot be transformed to GTIN-14
-                            ? ProcessUpcOrEan13(input)
-                            : TestUpcOrEan13WithSupplement();
             }
 
             Gs1Ai.Parser.Parse(input, ResolveGs1Entity, aimId.Id.Length > 0 ? 3 : 0);
@@ -212,7 +207,47 @@ public static class Parser {
                 return barcode;
             }
 
-            // There were exceptions. Add a barcode exception to register this.
+            // There were exceptions. If no AIM identifier was provided, and the parser is in extended mode, we will make a
+            // best-endeavours attempt to interpret the input as a GTIN (EAN, UPC or ITF-14).
+            if (aimId.BarcodeType == BarcodeType.NoIdentifier &&
+                mode == Mode.ExtendedIsoIec15418 &&
+                input.All(c => c >= 48 && c <= 57)) {
+                var candidateGtinInput = input;
+                var inputLength = input.Length;
+                int[] upcEanSupplementSizes = [15, 17, 18];
+
+                // For UPC, the '12' implies limited support for UPC-D which is rarely used. '8' cannot be transformed to GTIN-14.
+                int[] upcEanSizes = [13, 12, 8];
+
+                string TestItf14OrUpaCWithSupplement() =>
+                    inputLength == 14
+
+                        // Assume this is an ITF-14. However, it could be a UPC-A with 2 digit supplement.
+                        ? "01" + candidateGtinInput
+                        : candidateGtinInput;
+
+                string TestUpcOrEan13WithSupplement() =>
+                    upcEanSupplementSizes.Contains(inputLength)
+
+                        // UPC-A with 2-digit supplement or EAN 13 with 2 or 5-digit supplement.
+                        ? ProcessUpcOrEanWithSupplement()
+                        : TestItf14OrUpaCWithSupplement();
+
+                candidateGtinInput = upcEanSizes.Contains(inputLength)
+
+                            // UPC-A, UPC-E or EAN 13. NB. we assume UPC-8 rather than EAN 8. EAN 8 cannot be transformed to GTIN-14
+                            ? ProcessUpcOrEan(input)
+                            : TestUpcOrEan13WithSupplement();
+
+                Gs1Ai.Parser.Parse(candidateGtinInput, ResolveGs1Entity, aimId.Id.Length > 0 ? 3 : 0);
+
+                if (!barcode.Exceptions.Any()) {
+                    // There were no exceptions
+                    return barcode;
+                }
+            }
+
+            // Add a barcode exception to register this.
             barcode.AddException(
                 new BarcodeException(1003, Resources.Barcodes_Error_004, false),
                 !barcode.DataElements.Any() ? ParseStatus.Unrecognised : ParseStatus.Invalid);
@@ -512,7 +547,7 @@ public static class Parser {
         return barcode;
 
         // Convert UPC-E barcode data to a GTIN-14.
-        string ProcessUpcOrEan13WithSupplement() {
+        string ProcessUpcOrEanWithSupplement() {
             input = input.Length switch {
 #if NET6_0_OR_GREATER
                 18 => input[..13],
@@ -530,7 +565,7 @@ public static class Parser {
                 _ => input
             };
 
-            return input.Length == 8 ? ProcessUpcOrEan13(input) : "01" + input.PadLeft(14, '0');
+            return input.Length == 8 ? ProcessUpcOrEan(input) : "01" + input.PadLeft(14, '0');
         }
 
         IBarcode GetUnsupportedBarcode() {
@@ -552,58 +587,21 @@ public static class Parser {
     private static partial Regex MatchFormatIdentifierAndPreambleRegex();
 #endif
 
-    private static string ProcessUpcOrEan13(string? input) {
-        if (input?.Length != 8) {
+    /// <summary>
+    /// Tranform to an element string for GTIN-14.  Thius method assumes that the length of the input is
+    /// one of the recognised UPC or EAN lengths.  This code supports UPC-A but does not support UPC-B or UPC-C.  It has limited 
+    /// support for UPC-D. EAN-8 cannot be transformed into a GTIN-14.  Neither can UPC-E, here, becaus the algorith depends on
+    /// the encoding of digits in the barcode, which is not reported by the barcode scanner.  The scanner should expand a UPC-E
+    /// barcode to a GTIN-12 before reporting it.
+    /// </summary>
+    /// <param name="input">The input.</param>
+    /// <returns>A processsed UPC or EAN string</returns>
+    private static string ProcessUpcOrEan(string? input) {
+        if (input?.Length > 8) {
             return "01" + input?.PadLeft(14, '0');
         }
 
-        return input[6] switch {
-#if NET6_0_OR_GREATER
-            // XXNNN0 -> 0 or 1 + XX000-00NNN + check digit
-            '0' => $"01{input[0]}{input[1..3]}{new string('0', 5)}{input[3..6]}{input[7]}".PadLeft(14, '0'),
-
-            // XXNNN1 -> 0 or 1 + XX100-00NNN + check digit
-            '1' => $"01{input[0]}{input[1..3]}1{new string('0', 4)}{input[3..6]}{input[7]}".PadLeft(14, '0'),
-
-            // XXNNN2 -> 0 or 1 + XX200-00NNN + check digit
-            '2' => $"01{input[0]}{input[1..3]}2{new string('0', 4)}{input[3..6]}{input[7]}".PadLeft(14, '0'),
-
-            // XXXNN3 -> 0 or 1 + XXX00-000NN + check digit
-            '3' => $"01{input[0]}{input[1..4]}{new string('0', 5)}{input[4..6]}{input[7]}".PadLeft(14, '0'),
-
-            // XXXXN4 -> 0 or 1 + XXXX0-0000N + check digit
-            '4' => $"01{input[0]}{input[1..5]}{new string('0', 5)}{input[5]}{input[7]}".PadLeft(14, '0'),
-
-            // XXXXX5 -> 0 or 1 + XXXXX-00005 + check digit
-            // XXXXX6 -> 0 or 1 + XXXXX-00006 + check digit
-            // XXXXX7 -> 0 or 1 + XXXXX-00007 + check digit
-            // XXXXX8 -> 0 or 1 + XXXXX-00008 + check digit
-            // XXXXX9 -> 0 or 1 + XXXXX-00009 + check digit
-            _ => $"01{input[0]}{input[1..6]}{new string('0', 4)}{input[6..]}".PadLeft(14, '0')
-#else
-            // XXNNN0 -> 0 or 1 + XX000-00NNN + check digit
-            '0' => $"01{input[0]}{input.Substring(1, 2)}{new string('0', 5)}{input.Substring(3, 3)}{input[7]}".PadLeft(14, '0'),
-
-            // XXNNN1 -> 0 or 1 + XX100-00NNN + check digit
-            '1' => $"01{input[0]}{input.Substring(1, 2)}1{new string('0', 4)}{input.Substring(3, 3)}{input[7]}".PadLeft(14, '0'),
-
-            // XXNNN2 -> 0 or 1 + XX200-00NNN + check digit
-            '2' => $"01{input[0]}{input.Substring(1, 2)}2{new string('0', 4)}{input.Substring(3, 3)}{input[7]}".PadLeft(14, '0'),
-
-            // XXXNN3 -> 0 or 1 + XXX00-000NN + check digit
-            '3' => $"01{input[0]}{input.Substring(1, 3)}{new string('0', 5)}{input.Substring(4, 2)}{input[7]}".PadLeft(14, '0'),
-
-            // XXXXN4 -> 0 or 1 + XXXX0-0000N + check digit
-            '4' => $"01{input[0]}{input.Substring(1, 4)}{new string('0', 5)}{input[5]}{input[7]}".PadLeft(14, '0'),
-
-            // XXXXX5 -> 0 or 1 + XXXXX-00005 + check digit
-            // XXXXX6 -> 0 or 1 + XXXXX-00006 + check digit
-            // XXXXX7 -> 0 or 1 + XXXXX-00007 + check digit
-            // XXXXX8 -> 0 or 1 + XXXXX-00008 + check digit
-            // XXXXX9 -> 0 or 1 + XXXXX-00009 + check digit
-            _ => $"01{input[0]}{input.Substring(1, 5)}{new string('0', 4)}{input.Substring(6)}".PadLeft(14, '0')
-#endif
-        };
+        return input;
     }
 
     /// <summary>
@@ -658,7 +656,7 @@ public static class Parser {
         var dataElement = new DataElement(
             FormatIndicator.Gs1Ai,
             resolvedIdentity.Entity,
-            resolvedIdentity.InverseExponent <= 0 ? resolvedIdentity.Identifier : resolvedIdentity.Identifier + resolvedIdentity.InverseExponent,
+            resolvedIdentity.Identifier,
             resolvedIdentity.Value,
             resolvedIdentity.DataTitle,
             resolvedIdentity.Description,

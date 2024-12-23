@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Svītrkodā esoša datu ieraksta formāts nav atpazīstams.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Nepateiktas AIM identifikatorius.</value>
+  </data>
 </root>

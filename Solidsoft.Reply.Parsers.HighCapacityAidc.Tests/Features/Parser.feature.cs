@@ -92,17 +92,27 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Tests.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Parse a valid input")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Parse valid GS1 element strings - 3 AIs")]
         [Xunit.TraitAttribute("FeatureTitle", "Parser")]
-        [Xunit.TraitAttribute("Description", "Parse a valid input")]
-        [Xunit.TraitAttribute("Category", "tag1")]
-        public async System.Threading.Tasks.Task ParseAValidInput()
+        [Xunit.TraitAttribute("Description", "Parse valid GS1 element strings - 3 AIs")]
+        [Xunit.InlineDataAttribute("010541234500001310ABC123<GS>17290331", "01", "05412345000013", "10", "ABC123", "17", "290331", "", "", new string[0])]
+        [Xunit.InlineDataAttribute("31030001890105412345000013<GS>10XYZ", "3103", "000189", "01", "05412345000013", "10", "XYZ", "", "", new string[0])]
+        [Xunit.InlineDataAttribute("800304965031954585<GS>17290331<GS>10XYZ", "8003", "04965031954585", "17", "290331", "10", "XYZ", "", "", new string[0])]
+        public async System.Threading.Tasks.Task ParseValidGS1ElementStrings_3AIs(string elementString, string aI1, string value1, string aI2, string value2, string aI3, string value3, string aI4, string value4, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
-                    "tag1"};
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Parse a valid input", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 6
+            argumentsOfScenario.Add("elementString", elementString);
+            argumentsOfScenario.Add("AI1", aI1);
+            argumentsOfScenario.Add("Value1", value1);
+            argumentsOfScenario.Add("AI2", aI2);
+            argumentsOfScenario.Add("Value2", value2);
+            argumentsOfScenario.Add("AI3", aI3);
+            argumentsOfScenario.Add("Value3", value3);
+            argumentsOfScenario.Add("AI4", aI4);
+            argumentsOfScenario.Add("Value4", value4);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Parse valid GS1 element strings - 3 AIs", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -112,14 +122,315 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+#line 6
+    await testRunner.GivenAsync(string.Format("I have a GS1 element string \"{0}\"", elementString), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
 #line 7
- await testRunner.GivenAsync("an input of 010541234500001310ABC123", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+    await testRunner.WhenAsync("I extract AIs and values", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
+                global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
+                            "AI",
+                            "Value"});
+                table1.AddRow(new string[] {
+                            string.Format("{0}", aI1),
+                            string.Format("{0}", value1)});
+                table1.AddRow(new string[] {
+                            string.Format("{0}", aI2),
+                            string.Format("{0}", value2)});
+                table1.AddRow(new string[] {
+                            string.Format("{0}", aI3),
+                            string.Format("{0}", value3)});
 #line 8
- await testRunner.WhenAsync("the input is parsed", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.ThenAsync("the result should contain:", ((string)(null)), table1, "Then ");
 #line hidden
-#line 9
- await testRunner.ThenAsync("the output is valid", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="Parse valid GS1 element strings - 1 AI")]
+        [Xunit.TraitAttribute("FeatureTitle", "Parser")]
+        [Xunit.TraitAttribute("Description", "Parse valid GS1 element strings - 1 AI")]
+        [Xunit.InlineDataAttribute("800304965031954585", "8003", "04965031954585", new string[0])]
+        public async System.Threading.Tasks.Task ParseValidGS1ElementStrings_1AI(string elementString, string aI1, string value1, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("elementString", elementString);
+            argumentsOfScenario.Add("AI1", aI1);
+            argumentsOfScenario.Add("Value1", value1);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Parse valid GS1 element strings - 1 AI", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 20
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 21
+    await testRunner.GivenAsync(string.Format("I have a GS1 element string \"{0}\"", elementString), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 22
+    await testRunner.WhenAsync("I extract AIs and values", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
+                            "AI",
+                            "Value"});
+                table2.AddRow(new string[] {
+                            string.Format("{0}", aI1),
+                            string.Format("{0}", value1)});
+#line 23
+    await testRunner.ThenAsync("the result should contain:", ((string)(null)), table2, "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="Parse valid GS1 element strings - 4 AIs")]
+        [Xunit.TraitAttribute("FeatureTitle", "Parser")]
+        [Xunit.TraitAttribute("Description", "Parse valid GS1 element strings - 4 AIs")]
+        [Xunit.InlineDataAttribute("0105412345000013310300018939232172<GS>10ABC123", "01", "05412345000013", "3103", "000189", "3923", "2172", "10", "ABC123", new string[0])]
+        public async System.Threading.Tasks.Task ParseValidGS1ElementStrings_4AIs(string elementString, string aI1, string value1, string aI2, string value2, string aI3, string value3, string aI4, string value4, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("elementString", elementString);
+            argumentsOfScenario.Add("AI1", aI1);
+            argumentsOfScenario.Add("Value1", value1);
+            argumentsOfScenario.Add("AI2", aI2);
+            argumentsOfScenario.Add("Value2", value2);
+            argumentsOfScenario.Add("AI3", aI3);
+            argumentsOfScenario.Add("Value3", value3);
+            argumentsOfScenario.Add("AI4", aI4);
+            argumentsOfScenario.Add("Value4", value4);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Parse valid GS1 element strings - 4 AIs", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 31
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 32
+    await testRunner.GivenAsync(string.Format("I have a GS1 element string \"{0}\"", elementString), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 33
+    await testRunner.WhenAsync("I extract AIs and values", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
+                            "AI",
+                            "Value"});
+                table3.AddRow(new string[] {
+                            string.Format("{0}", aI1),
+                            string.Format("{0}", value1)});
+                table3.AddRow(new string[] {
+                            string.Format("{0}", aI2),
+                            string.Format("{0}", value2)});
+                table3.AddRow(new string[] {
+                            string.Format("{0}", aI3),
+                            string.Format("{0}", value3)});
+                table3.AddRow(new string[] {
+                            string.Format("{0}", aI4),
+                            string.Format("{0}", value4)});
+#line 34
+    await testRunner.ThenAsync("the result should contain:", ((string)(null)), table3, "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="Parse valid MH10.8.2 element strings - 3 DIs")]
+        [Xunit.TraitAttribute("FeatureTitle", "Parser")]
+        [Xunit.TraitAttribute("Description", "Parse valid MH10.8.2 element strings - 3 DIs")]
+        [Xunit.InlineDataAttribute("[)><RS>06<GS>9N112097776020<GS>1TABC123<GS>D290331<RS><EOT>", "9N", "112097776020", "1T", "ABC123", "D", "290331", new string[0])]
+        public async System.Threading.Tasks.Task ParseValidMH10_8_2ElementStrings_3DIs(string elementString, string dI1, string value1, string dI2, string value2, string dI3, string value3, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("elementString", elementString);
+            argumentsOfScenario.Add("DI1", dI1);
+            argumentsOfScenario.Add("Value1", value1);
+            argumentsOfScenario.Add("DI2", dI2);
+            argumentsOfScenario.Add("Value2", value2);
+            argumentsOfScenario.Add("DI3", dI3);
+            argumentsOfScenario.Add("Value3", value3);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Parse valid MH10.8.2 element strings - 3 DIs", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 46
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 47
+    await testRunner.GivenAsync(string.Format("I have an MH10.8.2 element string \"{0}\"", elementString), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 48
+    await testRunner.WhenAsync("I extract DIs and values", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
+                            "DI",
+                            "Value"});
+                table4.AddRow(new string[] {
+                            string.Format("{0}", dI1),
+                            string.Format("{0}", value1)});
+                table4.AddRow(new string[] {
+                            string.Format("{0}", dI2),
+                            string.Format("{0}", value2)});
+                table4.AddRow(new string[] {
+                            string.Format("{0}", dI3),
+                            string.Format("{0}", value3)});
+#line 49
+    await testRunner.ThenAsync("the MH10.8.2 result should contain:", ((string)(null)), table4, "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="Parse valid MH10.8.2 element strings - 4 DIs")]
+        [Xunit.TraitAttribute("FeatureTitle", "Parser")]
+        [Xunit.TraitAttribute("Description", "Parse valid MH10.8.2 element strings - 4 DIs")]
+        [Xunit.InlineDataAttribute("[)><RS>06<GS>9N112097776020<GS>S496320471563<GS>1TABC123<GS>D290331<RS><EOT>", "9N", "112097776020", "S", "496320471563", "1T", "ABC123", "D", "290331", new string[0])]
+        public async System.Threading.Tasks.Task ParseValidMH10_8_2ElementStrings_4DIs(string elementString, string dI1, string value1, string dI2, string value2, string dI3, string value3, string dI4, string value4, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("elementString", elementString);
+            argumentsOfScenario.Add("DI1", dI1);
+            argumentsOfScenario.Add("Value1", value1);
+            argumentsOfScenario.Add("DI2", dI2);
+            argumentsOfScenario.Add("Value2", value2);
+            argumentsOfScenario.Add("DI3", dI3);
+            argumentsOfScenario.Add("Value3", value3);
+            argumentsOfScenario.Add("DI4", dI4);
+            argumentsOfScenario.Add("Value4", value4);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Parse valid MH10.8.2 element strings - 4 DIs", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 59
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 60
+    await testRunner.GivenAsync(string.Format("I have an MH10.8.2 element string \"{0}\"", elementString), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 61
+    await testRunner.WhenAsync("I extract DIs and values", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
+                            "DI",
+                            "Value"});
+                table5.AddRow(new string[] {
+                            string.Format("{0}", dI1),
+                            string.Format("{0}", value1)});
+                table5.AddRow(new string[] {
+                            string.Format("{0}", dI2),
+                            string.Format("{0}", value2)});
+                table5.AddRow(new string[] {
+                            string.Format("{0}", dI3),
+                            string.Format("{0}", value3)});
+                table5.AddRow(new string[] {
+                            string.Format("{0}", dI4),
+                            string.Format("{0}", value4)});
+#line 62
+    await testRunner.ThenAsync("the MH10.8.2 result should contain:", ((string)(null)), table5, "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="Parse valid EAN element strings")]
+        [Xunit.TraitAttribute("FeatureTitle", "Parser")]
+        [Xunit.TraitAttribute("Description", "Parse valid EAN element strings")]
+        [Xunit.InlineDataAttribute("5412345000013", "01", "05412345000013", new string[0])]
+        [Xunit.InlineDataAttribute("541234500015", "01", "00541234500015", new string[0])]
+        [Xunit.InlineDataAttribute("541234500001301", "01", "05412345000013", new string[0])]
+        [Xunit.InlineDataAttribute("541234500001300995", "01", "05412345000013", new string[0])]
+        public async System.Threading.Tasks.Task ParseValidEANElementStrings(string elementString, string aI1, string value1, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("elementString", elementString);
+            argumentsOfScenario.Add("AI1", aI1);
+            argumentsOfScenario.Add("Value1", value1);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Parse valid EAN element strings", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 74
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 75
+    await testRunner.GivenAsync(string.Format("I have an EAN element string \"{0}\"", elementString), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 76
+    await testRunner.WhenAsync("I extract the product code value", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
+                            "AI",
+                            "Value"});
+                table6.AddRow(new string[] {
+                            string.Format("{0}", aI1),
+                            string.Format("{0}", value1)});
+#line 77
+    await testRunner.ThenAsync("the EAN result should contain:", ((string)(null)), table6, "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="Parse valid ITF14 element strings")]
+        [Xunit.TraitAttribute("FeatureTitle", "Parser")]
+        [Xunit.TraitAttribute("Description", "Parse valid ITF14 element strings")]
+        [Xunit.InlineDataAttribute("05412345000013", "01", "05412345000013", new string[0])]
+        public async System.Threading.Tasks.Task ParseValidITF14ElementStrings(string elementString, string aI1, string value1, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("elementString", elementString);
+            argumentsOfScenario.Add("AI1", aI1);
+            argumentsOfScenario.Add("Value1", value1);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Parse valid ITF14 element strings", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 88
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 89
+    await testRunner.GivenAsync(string.Format("I have an ITF14 element string \"{0}\"", elementString), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 90
+    await testRunner.WhenAsync("I extract the product code value", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table7 = new global::Reqnroll.Table(new string[] {
+                            "AI",
+                            "Value"});
+                table7.AddRow(new string[] {
+                            string.Format("{0}", aI1),
+                            string.Format("{0}", value1)});
+#line 91
+    await testRunner.ThenAsync("the ITF14 result should contain:", ((string)(null)), table7, "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

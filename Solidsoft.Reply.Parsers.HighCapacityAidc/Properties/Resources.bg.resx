@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Форматът на записа на данни в баркода не е разпознат.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Не е предоставен AIM идентификатор.</value>
+  </data>
 </root>

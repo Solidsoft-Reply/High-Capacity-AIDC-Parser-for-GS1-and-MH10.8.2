@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Het formaat van een gegevensrecord in de barcode wordt niet herkend.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Geen AIM-identificatie opgegeven.</value>
+  </data>
 </root>

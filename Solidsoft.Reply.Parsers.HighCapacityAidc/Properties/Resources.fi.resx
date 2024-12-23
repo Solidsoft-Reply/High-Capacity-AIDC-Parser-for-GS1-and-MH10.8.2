@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Viivakoodin datatietueen muoto on tunnistamaton.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>AIM-tunnistetta ei annettu.</value>
+  </data>
 </root>

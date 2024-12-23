@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Formatet på en datapost i streckkoden är oigenkännligt.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Inget AIM-identifierare angivet.</value>
+  </data>
 </root>

@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Formatet på en datasekvens i stregkoden er uanerkendt.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Ingen AIM-identifikator angivet.</value>
+  </data>
 </root>

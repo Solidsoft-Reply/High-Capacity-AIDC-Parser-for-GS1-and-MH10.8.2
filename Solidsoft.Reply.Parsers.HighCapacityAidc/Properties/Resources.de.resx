@@ -201,4 +201,7 @@
     <value>Das Format eines Datensatzes im Barcode ist nicht erkennbar.</value>
     <comment>Error</comment>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Kein AIM-Identifikator angegeben.</value>
+  </data>
 </root>

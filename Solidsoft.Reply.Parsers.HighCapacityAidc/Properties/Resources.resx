@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>The format of a data record in the barcode is unrecognised.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>No AIM identifier provided.</value>
+  </data>
 </root>

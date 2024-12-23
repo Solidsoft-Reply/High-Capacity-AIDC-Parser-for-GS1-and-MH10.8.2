@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Formatul unei înregistrări de date în codul de bare este nerecunoscut.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Nu a fost furnizat niciun identificator AIM.</value>
+  </data>
 </root>

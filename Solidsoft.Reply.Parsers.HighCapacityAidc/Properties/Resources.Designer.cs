@@ -248,5 +248,14 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
                 return ResourceManager.GetString("Barcodes_Error_007", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No AIM identifier provided..
+        /// </summary>
+        internal static string Barcodes_Error_008 {
+            get {
+                return ResourceManager.GetString("Barcodes_Error_008", resourceCulture);
+            }
+        }
     }
 }

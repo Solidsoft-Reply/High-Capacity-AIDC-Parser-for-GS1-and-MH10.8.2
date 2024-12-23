@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Duomenų įrašo formatas brūkšniniame kode nepripažintas.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Nav sniegts AIM identifikators.</value>
+  </data>
 </root>

@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Format rekordu danych w kodzie kreskowym jest nierozpoznany.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Nie podano identyfikatora AIM.</value>
+  </data>
 </root>

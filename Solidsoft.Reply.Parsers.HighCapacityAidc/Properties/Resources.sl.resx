@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Format podatkovnega zapisa v črtni kodi je nespoznan.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Ni zagotovljen AIM identifikator.</value>
+  </data>
 </root>

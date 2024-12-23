@@ -201,4 +201,7 @@
     <value>Le format d'un enregistrement de données dans le code-barres est méconnu.</value>
     <comment>Error</comment>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Aucun identifiant AIM fourni.</value>
+  </data>
 </root>

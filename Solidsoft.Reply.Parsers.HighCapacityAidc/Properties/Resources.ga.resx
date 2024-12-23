@@ -180,4 +180,7 @@
   <data name="Barcodes_Error_007" xml:space="preserve">
     <value>Ní aithnítear formáid an taifid sonraí sa bharachód.</value>
   </data>
+  <data name="Barcodes_Error_008" xml:space="preserve">
+    <value>Níor soláthraíodh aitheantóir AIM.</value>
+  </data>
 </root>
