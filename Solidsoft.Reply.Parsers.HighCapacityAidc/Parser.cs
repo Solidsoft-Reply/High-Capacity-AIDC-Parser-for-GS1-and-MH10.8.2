@@ -78,7 +78,7 @@ public static class Parser {
     /// <returns>A pack identifier.</returns>
     /// <remarks>
     /// If the mode is set to ExtendedIsoIec15418 (the default) and no AIM identifier is provided, the parser first attempts to
-    /// parse the data in accordance with ISO/IEC 15418 identifiers (GS1 AIs or MH10.8.2 DIs).  If this fails, it attemots to
+    /// parse the data in accordance with ISO/IEC 15418 identifiers (GS1 AIs or MH10.8.2 DIs).  If this fails, it attempts to
     /// interpret the data as a GS1 GTIN.
     /// </remarks>
     public static IBarcode Parse(string data, Preprocessor? preProcessors = null, Mode mode = Mode.ExtendedIsoIec15418) =>
@@ -94,7 +94,7 @@ public static class Parser {
     /// <returns>A pack identifier.</returns>
     /// <remarks>
     /// If the mode is set to ExtendedIsoIec15418 (the default) and no AIM identifier is provided, the parser first attempts to
-    /// parse the data in accordance with ISO/IEC 15418 identifiers (GS1 AIs or MH10.8.2 DIs).  If this fails, it attemots to
+    /// parse the data in accordance with ISO/IEC 15418 identifiers (GS1 AIs or MH10.8.2 DIs).  If this fails, it attempts to
     /// interpret the data as a GS1 GTIN.
     /// </remarks>
     public static IBarcode Parse(string data, out string preProcessedData, Preprocessor? preProcessors = null, Mode mode = Mode.ExtendedIsoIec15418) {
@@ -207,6 +207,8 @@ public static class Parser {
                 return barcode;
             }
 
+            var gtinBarcode = new Barcode(BarcodeType.NoIdentifier);
+
             // There were exceptions. If no AIM identifier was provided, and the parser is in extended mode, we will make a
             // best-endeavours attempt to interpret the input as a GTIN (EAN, UPC or ITF-14).
             if (aimId.BarcodeType == BarcodeType.NoIdentifier &&
@@ -239,11 +241,11 @@ public static class Parser {
                             ? ProcessUpcOrEan(input)
                             : TestUpcOrEan13WithSupplement();
 
-                Gs1Ai.Parser.Parse(candidateGtinInput, ResolveGs1Entity, aimId.Id.Length > 0 ? 3 : 0);
+                Gs1Ai.Parser.Parse(candidateGtinInput, ResolveGtinEntity, 0);
 
-                if (!barcode.Exceptions.Any()) {
+                if (!gtinBarcode.Exceptions.Any()) {
                     // There were no exceptions
-                    return barcode;
+                    return gtinBarcode;
                 }
             }
 
@@ -255,6 +257,10 @@ public static class Parser {
 
             void ResolveGs1Entity(IResolvedEntity resolvedIdentity) {
                 ProcessResolvedGs1Entity(resolvedIdentity, barcode, 0);
+            }
+
+            void ResolveGtinEntity(IResolvedEntity resolvedIdentity) {
+                ProcessResolvedGs1Entity(resolvedIdentity, gtinBarcode, 0);
             }
         }
 
@@ -588,14 +594,14 @@ public static class Parser {
 #endif
 
     /// <summary>
-    /// Tranform to an element string for GTIN-14.  Thius method assumes that the length of the input is
+    /// Transform to an element string for GTIN-14.  This method assumes that the length of the input is
     /// one of the recognised UPC or EAN lengths.  This code supports UPC-A but does not support UPC-B or UPC-C.  It has limited 
-    /// support for UPC-D. EAN-8 cannot be transformed into a GTIN-14.  Neither can UPC-E, here, becaus the algorith depends on
+    /// support for UPC-D. EAN-8 cannot be transformed into a GTIN-14.  Neither can UPC-E, here, because the algorithm depends on
     /// the encoding of digits in the barcode, which is not reported by the barcode scanner.  The scanner should expand a UPC-E
     /// barcode to a GTIN-12 before reporting it.
     /// </summary>
     /// <param name="input">The input.</param>
-    /// <returns>A processsed UPC or EAN string</returns>
+    /// <returns>A processed UPC or EAN string</returns>
     private static string ProcessUpcOrEan(string? input) {
         if (input?.Length > 8) {
             return "01" + input?.PadLeft(14, '0');

@@ -109,4 +109,21 @@ public sealed class ParserStepDefinitions {
             Assert.Equal(expectedValue, ((DataElement)_barcode.DataElements.First(e => ((DataElement)e).Identifier == ai)).Data);
         }
     }
+
+    [Then(@"the following exception should be included: ""(.*)""")]
+    public void ThenTheItf14ResultShouldContain(string exceptionMessage) {
+        Assert.NotNull(_barcode);
+        Assert.True(_barcode.Exceptions.Count() > 0);
+
+        var messageExists = false;
+        foreach (var exception in _barcode.Exceptions) {
+            if (exception.Message == exceptionMessage) {
+                messageExists = true;
+                break; ;
+            }
+        }
+
+        Assert.True(messageExists);
+    }
+
 }

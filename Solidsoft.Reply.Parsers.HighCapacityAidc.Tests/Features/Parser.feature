@@ -96,3 +96,24 @@ Scenario Outline: Parse valid ITF14 element strings
 	  | elementString | AI1 | Value1          |
       | 05412345000013 | 01  | 05412345000013 |
 
+Scenario Outline: Parse invalid GS1 element strings - 3 AIs
+    Given I have a GS1 element string "<elementString>"
+    When I extract AIs and values
+    Then the result should contain:
+      | AI    | Value    |
+      | <AI1> | <Value1> |
+      | <AI2> | <Value2> |
+      | <AI3> | <Value3> |
+
+    Examples:
+      | elementString                         | AI1 | Value1         | AI2 | Value2  | AI3 | Value3 | AI4 | Value4 |
+      | 010541234500001510ABC123<GS>17290331  | 01  | 05412345000015 | 10  | ABC123  | 17  | 290331 |     |        |
+      | 010541234500001310ABC£123<GS>17290331 | 01  | 05412345000013 | 10  | ABC£123 | 17  | 290331 |     |        |
+      | 010541234500001310ABC123<GS>17294295  | 01  | 05412345000013 | 10  | ABC123  | 17  | 294295 |     |        |
+
+Scenario Outline: Parse invalid GS1 element string
+    Given I have a GS1 element string "17290366"
+    When I extract AIs and values
+    Then the following exception should be included: "The value 290366 does not match the specified pattern for the data element."
+
+

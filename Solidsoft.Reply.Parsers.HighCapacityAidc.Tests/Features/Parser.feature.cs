@@ -436,6 +436,93 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
+        [Xunit.SkippableTheoryAttribute(DisplayName="Parse invalid GS1 element strings - 3 AIs")]
+        [Xunit.TraitAttribute("FeatureTitle", "Parser")]
+        [Xunit.TraitAttribute("Description", "Parse invalid GS1 element strings - 3 AIs")]
+        [Xunit.InlineDataAttribute("010541234500001510ABC123<GS>17290331", "01", "05412345000015", "10", "ABC123", "17", "290331", "", "", new string[0])]
+        [Xunit.InlineDataAttribute("010541234500001310ABC£123<GS>17290331", "01", "05412345000013", "10", "ABC£123", "17", "290331", "", "", new string[0])]
+        [Xunit.InlineDataAttribute("010541234500001310ABC123<GS>17294295", "01", "05412345000013", "10", "ABC123", "17", "294295", "", "", new string[0])]
+        public async System.Threading.Tasks.Task ParseInvalidGS1ElementStrings_3AIs(string elementString, string aI1, string value1, string aI2, string value2, string aI3, string value3, string aI4, string value4, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("elementString", elementString);
+            argumentsOfScenario.Add("AI1", aI1);
+            argumentsOfScenario.Add("Value1", value1);
+            argumentsOfScenario.Add("AI2", aI2);
+            argumentsOfScenario.Add("Value2", value2);
+            argumentsOfScenario.Add("AI3", aI3);
+            argumentsOfScenario.Add("Value3", value3);
+            argumentsOfScenario.Add("AI4", aI4);
+            argumentsOfScenario.Add("Value4", value4);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Parse invalid GS1 element strings - 3 AIs", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 99
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 100
+    await testRunner.GivenAsync(string.Format("I have a GS1 element string \"{0}\"", elementString), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 101
+    await testRunner.WhenAsync("I extract AIs and values", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table8 = new global::Reqnroll.Table(new string[] {
+                            "AI",
+                            "Value"});
+                table8.AddRow(new string[] {
+                            string.Format("{0}", aI1),
+                            string.Format("{0}", value1)});
+                table8.AddRow(new string[] {
+                            string.Format("{0}", aI2),
+                            string.Format("{0}", value2)});
+                table8.AddRow(new string[] {
+                            string.Format("{0}", aI3),
+                            string.Format("{0}", value3)});
+#line 102
+    await testRunner.ThenAsync("the result should contain:", ((string)(null)), table8, "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Parse invalid GS1 element string")]
+        [Xunit.TraitAttribute("FeatureTitle", "Parser")]
+        [Xunit.TraitAttribute("Description", "Parse invalid GS1 element string")]
+        public async System.Threading.Tasks.Task ParseInvalidGS1ElementString()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Parse invalid GS1 element string", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 114
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 115
+    await testRunner.GivenAsync("I have a GS1 element string \"17290366\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 116
+    await testRunner.WhenAsync("I extract AIs and values", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 117
+    await testRunner.ThenAsync("the following exception should be included: \"The value 290366 does not match the " +
+                        "specified pattern for the data element.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "2.0.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : object, Xunit.IAsyncLifetime

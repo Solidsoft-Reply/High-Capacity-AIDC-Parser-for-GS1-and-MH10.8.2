@@ -14,7 +14,7 @@
 // limitations under the License.
 // </copyright>
 // <summary>
-// Pre-processor methods for ASCII control characters characters.
+// Pre-processor methods for ASCII control characters.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
