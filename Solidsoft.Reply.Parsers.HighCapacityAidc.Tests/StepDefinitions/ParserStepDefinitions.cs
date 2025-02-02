@@ -1,5 +1,3 @@
-using Solidsoft.Reply.Parsers.HighCapacityAidc;
-
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Tests.StepDefinitions;
 
 [Binding]

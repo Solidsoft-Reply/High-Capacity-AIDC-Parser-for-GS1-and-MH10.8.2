@@ -35,12 +35,12 @@ public class IsoIec15434Analyzer : IAnalyzer {
     /// <summary>
     ///   Regular expression that matches candidate format identifiers.
     /// </summary>
-    private static readonly Regex MatchCandidatesRegEx = new(@"^((01\u001d\d{2})|(02|07)|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(08\d{8})|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d)).*$", RegexOptions.None);
+    private static readonly Regex MatchCandidatesRegEx = new (@"^((01\u001d\d{2})|(02|07)|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(08\d{8})|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d)).*$", RegexOptions.None);
 
     /// <summary>
     ///   Regular expression that matches the format identifier and preamble for binary data.
     /// </summary>
-    private static readonly Regex BinaryRegEx = new(@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.None);
+    private static readonly Regex BinaryRegEx = new (@"09\u001d(?<fileName>[\w\s]{0,30})\u001d(?<compressionTechnique>[\w\s]{0,30})\u001d(?<numberOfBytes>0|\d{1,15})\u001d.*", RegexOptions.None);
 #endif
 
     /// <summary>
@@ -155,9 +155,9 @@ public class IsoIec15434Analyzer : IAnalyzer {
         IsoIec15434Format CreateFormatSpecifier(string record, int recordIndex) =>
 
 #if NET6_0_OR_GREATER
-                new(record[..2], record.Length > FormatIdentifierRecordLength(record)
+                new (record[..2], record.Length > FormatIdentifierRecordLength(record)
 #else
-                new(record.Substring(0, 2), record.Length > FormatIdentifierRecordLength(record)
+                new (record.Substring(0, 2), record.Length > FormatIdentifierRecordLength(record)
 #endif
 #if NET6_0_OR_GREATER
                     ? record[formatIdentifierRecordLength..]

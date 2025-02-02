@@ -41,12 +41,12 @@ public static class IsoIec15434Envelope
     /// <summary>
     ///   Returns a regular expression that matches candidate format identifiers.
     /// </summary>
-    private static readonly Regex MatchCandidatesEdiTextCiiRecordsRegex = new(@"(?!\u001e).((01\u001d\d{2})|(02|07)|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(08\d{8})|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d))", RegexOptions.None);
+    private static readonly Regex MatchCandidatesEdiTextCiiRecordsRegex = new (@"(?!\u001e).((01\u001d\d{2})|(02|07)|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(08\d{8})|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d))", RegexOptions.None);
 
     /// <summary>
     ///   Returns a regular expression that matches candidate format identifiers, but does not match EDI, Text or CII fields.
     /// </summary>
-    private static readonly Regex MatchCandidatesNoEdiTextCiiRecordsRegex = new(@"(?!\u001e).((01\u001d\d{2})|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d))", RegexOptions.None);
+    private static readonly Regex MatchCandidatesNoEdiTextCiiRecordsRegex = new (@"(?!\u001e).((01\u001d\d{2})|((03|04)\d{6}\u001c?\u001d\u001f?)|((05|06|12)\u001d)|(09\u001d[\w\s]{0,30}\u001d[\w\s]{0,30}\u001d(0|\d{1,15})\u001d))", RegexOptions.None);
 #endif
 
     /// <summary>
