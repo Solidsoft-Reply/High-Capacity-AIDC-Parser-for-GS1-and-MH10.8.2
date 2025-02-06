@@ -257,5 +257,23 @@ namespace Solidsoft.Reply.Parsers.HighCapacityAidc.Properties {
                 return ResourceManager.GetString("Barcodes_Error_008", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The barcode contains invalid data for value of ({0}){1}. The value should be {2} characters..
+        /// </summary>
+        internal static string Barcodes_Error_009 {
+            get {
+                return ResourceManager.GetString("Barcodes_Error_009", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The barcode data is represented using element string syntax, rather than message scan data syntax..
+        /// </summary>
+        internal static string Barcodes_Error_010 {
+            get {
+                return ResourceManager.GetString("Barcodes_Error_010", resourceCulture);
+            }
+        }
     }
 }

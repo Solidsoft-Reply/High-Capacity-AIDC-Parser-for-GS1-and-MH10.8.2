@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>No AIM identifier provided.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>The barcode contains invalid data for value of ({0}){1}. The value should be {2} characters.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>The barcode data is represented using element string syntax, rather than message scan data syntax.</value>
+  </data>
 </root>

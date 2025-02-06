@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
-	<LangVersion>12.0</LangVersion>
+    <TargetFrameworks>net9.0;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
+	<LangVersion>13.0</LangVersion>
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -17,7 +17,9 @@
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageTags>barcodes;parser;adc;aidc;15418;15434;gs1;ai;mh10;ansi;di</PackageTags>
 	<PackageReleaseNotes>
-		1) Updated to use latest version of GS1 validating parser (1.0.6).
+		1) Added ability to recognise and handle GS1 element string syntax. Although GS1 says that scanners should 
+		not output data in this syntax, some scanners (examples include certain Chinese scanners) use it to represent
+		GS1 barcode data.
 	</PackageReleaseNotes>
 	<Description>
 		A library for parsing high-capacity ADC (Automatic Data Capture) media such as two-dimensional barcodes used in Automatic Identification and Data Capture (AIDC). The library supports the following international standards: ISO/IEC 15418:2016 - Information technology — Automatic identification and data capture techniques — GS1 Application Identifiers and ASC MH10 Data Identifiers and maintenance; ISO/IEC 15434:2019 - Information technology — Automatic identification and data capture techniques — Syntax for high-capacity ADC media.
@@ -26,7 +28,7 @@
 		--------------
 		$(PackageReleaseNotes)
 	</Description>
-	<Version>1.0.13</Version>
+	<Version>1.0.14</Version>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	<NeutralLanguage>en</NeutralLanguage>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>

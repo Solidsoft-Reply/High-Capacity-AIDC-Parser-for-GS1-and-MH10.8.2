@@ -1,12 +1,12 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Parser.cs" company="Solidsoft Reply Ltd">
-// Copyright (c) 2018-2024 Solidsoft Reply Ltd. All rights reserved.
+// Copyright © 2018-2025 Solidsoft Reply Ltd. All rights reserved.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//
+
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,7 +18,6 @@
 // including barcodes that conform to ISO/IEC 15434.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 [assembly: CLSCompliant(true)]
 
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc;
@@ -33,6 +32,7 @@ using Syntax.IsoIec15434DataEntities;
 using System.Collections.Generic;
 using Common;
 using System;
+using Solidsoft.Reply.Parsers.HighCapacityAidc.ElementStrings;
 
 /// <summary>
 ///   Delegate for pre-processor functions.
@@ -108,7 +108,7 @@ public static class Parser {
             return noDataBarcode;
         }
 
-        List<PreprocessorException>? preprocessorExceptions = new List<PreprocessorException>();
+        List<PreprocessorException>? preprocessorExceptions = [];
 
         // Aggregate the results of each pre-processor.
         var input = preProcessors?.GetInvocationList().Aggregate(
@@ -183,26 +183,42 @@ public static class Parser {
                 // If the barcode type could be ITF-14,
                 input = aimId.BarcodeType == BarcodeType.Interleaved2Of5
 
-                            // Test if the barcode symbology is an ITF-14
-                            ? TestForItf14()
+                    // Test if the barcode symbology is an ITF-14
+                    ? TestForItf14()
 
-                            // otherwise, if the barcode symbology is EAN-13, UPC-A, or UPC-E 13 digits without a supplement,
-                            : aimId.Modifier switch {
-                                // process the barcode data and return the product code,
-                                '0' => ProcessUpcOrEan(input),
+                    // otherwise, if the barcode symbology is EAN-13, UPC-A, or UPC-E 13 digits without a supplement,
+                    : aimId.Modifier switch {
+                        // process the barcode data and return the product code,
+                        '0' => ProcessUpcOrEan(input),
 
-                                // process the barcode data, strip off the supplement and return the product code,
-                                '3' => ProcessUpcOrEanWithSupplement(),
+                        // process the barcode data, strip off the supplement and return the product code,
+                        '3' => ProcessUpcOrEanWithSupplement(),
 
-                                // otherwise, return the input as-is
-                                _ => input
-                            };
+                        // otherwise, return the input as-is
+                        _ => input
+                    };
+            }
+
+            // Some barcode scanners return GS1 data in bracketed notation. This is rare, but we account for it here.
+            if (input.IsBracketed()) {
+                barcode.AddException(
+                    new BarcodeException(1010, Resources.Barcodes_Error_010, false),
+                    ParseStatus.Invalid);
+                try {
+                    // Don't validate here. The parser will do that.
+                    input = input.ConvertParenthesesAIsToFnc1(false);
+                }
+                catch (BarcodeException bex) {
+                    // Add the barcode exception.
+                    barcode.AddException(bex, ParseStatus.Invalid);
+                    return barcode;
+                }
             }
 
             Gs1Ai.Parser.Parse(input, ResolveGs1Entity, aimId.Id.Length > 0 ? 3 : 0);
 
-            if (!barcode.Exceptions.Any()) {
-                // There were no exceptions
+            if (!barcode.Exceptions.Any(ex => ex.ErrorNumber != 1010)) {
+                // There were no exceptions - we treat 1010 as a warning.
                 return barcode;
             }
 
