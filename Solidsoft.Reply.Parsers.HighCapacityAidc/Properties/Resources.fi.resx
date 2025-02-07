@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>AIM-tunnistetta ei annettu.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Viivakoodi sisältää virheellisiä tietoja arvosta ({0}){1}. Arvon tulee olla {2} merkkiä pitkä.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Viivakoodin tiedot esitetään käyttämällä elementtijonosyntaksia eikä viestiskannaustietojen syntaksia.</value>
+  </data>
 </root>

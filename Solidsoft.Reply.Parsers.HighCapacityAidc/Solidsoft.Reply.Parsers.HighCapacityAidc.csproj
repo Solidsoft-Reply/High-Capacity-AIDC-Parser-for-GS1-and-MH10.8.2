@@ -17,9 +17,7 @@
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageTags>barcodes;parser;adc;aidc;15418;15434;gs1;ai;mh10;ansi;di</PackageTags>
 	<PackageReleaseNotes>
-		1) Added ability to recognise and handle GS1 element string syntax. Although GS1 says that scanners should 
-		not output data in this syntax, some scanners (examples include certain Chinese scanners) use it to represent
-		GS1 barcode data.
+		1) Provided missing translations.
 	</PackageReleaseNotes>
 	<Description>
 		A library for parsing high-capacity ADC (Automatic Data Capture) media such as two-dimensional barcodes used in Automatic Identification and Data Capture (AIDC). The library supports the following international standards: ISO/IEC 15418:2016 - Information technology — Automatic identification and data capture techniques — GS1 Application Identifiers and ASC MH10 Data Identifiers and maintenance; ISO/IEC 15434:2019 - Information technology — Automatic identification and data capture techniques — Syntax for high-capacity ADC media.
@@ -28,7 +26,7 @@
 		--------------
 		$(PackageReleaseNotes)
 	</Description>
-	<Version>1.0.14</Version>
+	<Version>1.0.15</Version>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	<NeutralLanguage>en</NeutralLanguage>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>

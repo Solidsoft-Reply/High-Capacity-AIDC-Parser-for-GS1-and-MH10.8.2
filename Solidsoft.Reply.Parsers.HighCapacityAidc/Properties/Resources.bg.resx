@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Не е предоставен AIM идентификатор.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Баркодът съдържа невалидни данни за стойността на ({0}){1}. Стойността трябва да бъде {2} знака.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Данните на баркода са представени чрез синтаксиса на низовете с елементи, вместо синтаксиса на данните от сканиране на съобщения.</value>
+  </data>
 </root>

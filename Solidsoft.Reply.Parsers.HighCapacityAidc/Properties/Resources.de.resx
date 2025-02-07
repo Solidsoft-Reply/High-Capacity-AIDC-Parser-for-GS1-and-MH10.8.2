@@ -204,4 +204,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Kein AIM-Identifikator angegeben.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Der Barcode enthält ungültige Daten für den Wert von ({0}){1}. Der Wert sollte {2} Zeichen lang sein.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Die Barcode-Daten werden mit der Element-String-Syntax dargestellt, anstelle der Nachrichten-Scan-Daten-Syntax.</value>
+  </data>
 </root>

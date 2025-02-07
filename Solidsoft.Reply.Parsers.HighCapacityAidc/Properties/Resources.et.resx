@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>AIM identifikaatorit ei ole esitatud.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Vöötkood sisaldab vigaseid andmeid väärtuse ({0}){1} jaoks. Väärtus peaks olema {2} tähemärki pikk.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Vöötkoodi andmed on esitatud kasutades elemendistringi süntaksit, mitte sõnumiskaneerimise andmete süntaksit.</value>
+  </data>
 </root>

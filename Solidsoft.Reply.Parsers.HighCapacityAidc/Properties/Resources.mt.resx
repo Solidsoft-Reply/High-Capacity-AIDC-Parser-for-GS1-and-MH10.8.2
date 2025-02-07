@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Ma ngħatatx identifikatur AIM.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Il-kodiċi tal-barra fih data invalida għall-valur ta’ ({0}){1}. Il-valur għandu jkun {2} karattri.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Id-dejta tal-kodiċi tal-barra hija rappreżentata billi tuża s-sintassi tal-katina ta’ elementi minflok is-sintassi tad-dejta tal-iskannjar tal-messaġġi.</value>
+  </data>
 </root>

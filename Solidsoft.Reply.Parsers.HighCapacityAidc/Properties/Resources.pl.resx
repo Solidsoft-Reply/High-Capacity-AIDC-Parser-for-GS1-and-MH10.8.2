@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Nie podano identyfikatora AIM.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Kod kreskowy zawiera nieprawidłowe dane dla wartości ({0}){1}. Wartość powinna mieć {2} znaków.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Dane kodu kreskowego są przedstawione przy użyciu składni ciągu elementów, a nie składni danych skanowania wiadomości.</value>
+  </data>
 </root>

@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Nem biztosított AIM azonosítót.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>A vonalkód érvénytelen adatokat tartalmaz a ({0}){1} értékhez. Az értéknek {2} karakter hosszúnak kell lennie.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>A vonalkód adatai az elemkarakterlánc-szintaxist használják, nem pedig az üzenetszkennelési adatszintaxist.</value>
+  </data>
 </root>

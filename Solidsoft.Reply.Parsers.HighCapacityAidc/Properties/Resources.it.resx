@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Nessun identificatore AIM fornito.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Il codice a barre contiene dati non validi per il valore di ({0}){1}. Il valore dovrebbe essere di {2} caratteri.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>I dati del codice a barre sono rappresentati utilizzando la sintassi della stringa di elementi, anziché la sintassi dei dati di scansione del messaggio.</value>
+  </data>
 </root>

@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Geen AIM-identificatie opgegeven.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>De barcode bevat ongeldige gegevens voor de waarde van ({0}){1}. De waarde moet {2} tekens lang zijn.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>De barcodegegevens worden weergegeven met behulp van de elementstring-syntaxis in plaats van de berichtscan-datasyntaxis.</value>
+  </data>
 </root>

@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Nebol poskytnutý identifikátor AIM.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Čiarový kód obsahuje neplatné údaje pre hodnotu ({0}){1}. Hodnota by mala mať {2} znaky.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Údaje čiarového kódu sú reprezentované pomocou syntaxe reťazca prvkov, nie syntaxe údajov skenovania správ.</value>
+  </data>
 </root>

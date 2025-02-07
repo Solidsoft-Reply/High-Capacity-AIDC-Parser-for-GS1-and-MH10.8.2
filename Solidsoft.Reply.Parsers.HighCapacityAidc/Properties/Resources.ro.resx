@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Nu a fost furnizat niciun identificator AIM.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Codul de bare conține date nevalide pentru valoarea ({0}){1}. Valoarea ar trebui să aibă {2} caractere.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Datele codului de bare sunt reprezentate utilizând sintaxa șirului de elemente, în loc de sintaxa datelor de scanare a mesajului.</value>
+  </data>
 </root>

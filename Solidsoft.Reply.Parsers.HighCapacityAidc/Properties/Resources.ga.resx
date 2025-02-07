@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Níor soláthraíodh aitheantóir AIM.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Tá sonraí neamhbhailí sa chód barra do luach ({0}){1}. Ba chóir go mbeadh {2} carachtair sa luach.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Tá sonraí an chóid barra léirithe ag baint úsáide as comhréir sreinge eiliminte seachas comhréir sonraí scanadh teachtaireachta.</value>
+  </data>
 </root>

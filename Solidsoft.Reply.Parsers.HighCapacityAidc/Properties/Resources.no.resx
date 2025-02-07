@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Ingen AIM-identifikator oppgitt.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Strekkoden inneholder ugyldige data for verdien av ({0}){1}. Verdien skal være {2} tegn lang.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Strekkodedataene er representert ved hjelp av elementstrengsyntaks i stedet for meldingsskanningsdatasyntaks.</value>
+  </data>
 </root>

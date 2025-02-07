@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Δεν παρέχεται αναγνωριστικό AIM.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Ο γραμμωτός κώδικας περιέχει μη έγκυρα δεδομένα για την τιμή ({0}){1}. Η τιμή πρέπει να έχει {2} χαρακτήρες.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Τα δεδομένα του γραμμωτού κώδικα αναπαρίστανται χρησιμοποιώντας τη σύνταξη συμβολοσειράς στοιχείων αντί για τη σύνταξη δεδομένων σάρωσης μηνύματος.</value>
+  </data>
 </root>

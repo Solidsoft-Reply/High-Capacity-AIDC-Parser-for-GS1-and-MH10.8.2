@@ -204,4 +204,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Aucun identifiant AIM fourni.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Le code-barres contient des données invalides pour la valeur de ({0}){1}. La valeur doit contenir {2} caractères.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Les données du code-barres sont représentées en utilisant la syntaxe des chaînes d’éléments, plutôt que la syntaxe des données de balayage de message.</value>
+  </data>
 </root>

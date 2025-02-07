@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Não foi fornecido identificador AIM.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>O código de barras contém dados inválidos para o valor de ({0}){1}. O valor deve ter {2} caracteres.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Os dados do código de barras são representados usando a sintaxe da string de elementos, em vez da sintaxe dos dados de digitalização de mensagens.</value>
+  </data>
 </root>

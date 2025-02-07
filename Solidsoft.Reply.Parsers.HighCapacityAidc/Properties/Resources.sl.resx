@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Ni zagotovljen AIM identifikator.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Črtna koda vsebuje neveljavne podatke za vrednost ({0}){1}. Vrednost mora imeti {2} znakov.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Podatki črtne kode so predstavljeni z uporabo sintakse niza elementov namesto sintakse podatkov skeniranja sporočil.</value>
+  </data>
 </root>

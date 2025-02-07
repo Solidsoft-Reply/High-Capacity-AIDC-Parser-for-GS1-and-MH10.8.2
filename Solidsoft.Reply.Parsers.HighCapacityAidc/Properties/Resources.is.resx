@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Engin AIM auðkenni veitt.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Strikamerkið inniheldur ógild gögn fyrir gildið ({0}){1}. Gildið ætti að vera {2} stafir að lengd.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Strikamerkisgögnin eru táknuð með því að nota þáttastrengjaskipan í stað skilaboðaskönnunargagnaskipanar.</value>
+  </data>
 </root>

@@ -183,4 +183,10 @@
   <data name="Barcodes_Error_008" xml:space="preserve">
     <value>Nav sniegts AIM identifikators.</value>
   </data>
+  <data name="Barcodes_Error_009" xml:space="preserve">
+    <value>Brūkšninis kodas turi neteisingus duomenis reikšmei ({0}){1}. Reikšmė turėtų būti {2} simbolių ilgio.</value>
+  </data>
+  <data name="Barcodes_Error_010" xml:space="preserve">
+    <value>Brūkšninio kodo duomenys pateikiami naudojant elemento eilutės sintaksę, o ne pranešimų nuskaitymo duomenų sintaksę.</value>
+  </data>
 </root>
