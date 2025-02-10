@@ -121,6 +121,22 @@ public static class Parser {
                 return processedData;
             }) ?? data;
 
+        // Remove any trailing CR or LF
+        while (true) {
+            if (!string.IsNullOrEmpty(input) &&
+#if NETCOREAPP
+                (input.EndsWith('\r') || input.EndsWith('\n'))) {
+                input = input[..^1];
+#else
+                (input.EndsWith("\r") || input.EndsWith("\n"))) {
+                input = input.Substring(0, input.Length - 1);
+#endif
+                continue;
+            }
+
+            break;
+        }
+
         // Determine the symbology and create the barcode record.
         var aimId = new AimDetector().Detect(input ?? string.Empty);
         var barcodeExceptions = preprocessorExceptions.ConvertToBarcodeExceptions();

@@ -17,7 +17,7 @@
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageTags>barcodes;parser;adc;aidc;15418;15434;gs1;ai;mh10;ansi;di</PackageTags>
 	<PackageReleaseNotes>
-		1) Amended DOM3 pre-processor to prevent stripping of CRLF characters.
+		1) Amended parser to strip off additional CRLF characters after pre-processing.
 	</PackageReleaseNotes>
 	<Description>
 		A library for parsing high-capacity ADC (Automatic Data Capture) media such as two-dimensional barcodes used in Automatic Identification and Data Capture (AIDC). The library supports the following international standards: ISO/IEC 15418:2016 - Information technology — Automatic identification and data capture techniques — GS1 Application Identifiers and ASC MH10 Data Identifiers and maintenance; ISO/IEC 15434:2019 - Information technology — Automatic identification and data capture techniques — Syntax for high-capacity ADC media.
@@ -26,7 +26,7 @@
 		--------------
 		$(PackageReleaseNotes)
 	</Description>
-	<Version>1.0.16</Version>
+	<Version>1.0.17</Version>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	<NeutralLanguage>en</NeutralLanguage>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>
