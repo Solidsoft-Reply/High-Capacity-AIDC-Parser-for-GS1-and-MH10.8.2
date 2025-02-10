@@ -25,6 +25,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 using Common;
+using System.Diagnostics;
 
 /// <summary>
 ///   Pre-processor methods for DOM3 KeyboardEvent Code property values.
@@ -1113,7 +1114,6 @@ public static class Dom3KeyboardEventCodes {
 
 #pragma warning disable SA1010 // Opening square brackets should be spaced correctly
         foreach (var eventCode in scannedData ?? []) {
-
             // Mask the upper bits representing NumLock, ScrollLock and Meta/OS
             var modifiers = eventCode.Modifiers & 31;
 
@@ -1238,20 +1238,6 @@ public static class Dom3KeyboardEventCodes {
         exceptions = new List<PreprocessorException>();
 #pragma warning restore IDE0028 // Simplify collection initialization
         var output = sb.ToString();
-        int idx;
-
-        for (idx = output.Length - 1; idx >= 0; idx--) {
-            if (output[idx] == '\n' || output[idx] == '\r') {
-                continue;
-            }
-
-            break;
-        }
-
-#if NET6_0_OR_GREATER
-        return output[..(idx + 1)];
-#else
-        return output.Substring(0, idx + 1);
-#endif
+        return output;
     }
 }
