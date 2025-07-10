@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net9.0;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
-	<LangVersion>13.0</LangVersion>
+    <TargetFrameworks>net7.0;net6.0;netstandard2.0</TargetFrameworks>
+    <LangVersion>13.0</LangVersion>
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -17,7 +17,9 @@
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageTags>barcodes;parser;adc;aidc;15418;15434;gs1;ai;mh10;ansi;di</PackageTags>
 	<PackageReleaseNotes>
-		1) Amended parser to strip off additional CRLF characters after pre-processing.
+		The following changes were made in this release.
+
+		1) Fixed incompatible JSON processing in older versions of .NET (prior to .NET 6.0).
 	</PackageReleaseNotes>
 	<Description>
 		A library for parsing high-capacity ADC (Automatic Data Capture) media such as two-dimensional barcodes used in Automatic Identification and Data Capture (AIDC). The library supports the following international standards: ISO/IEC 15418:2016 - Information technology — Automatic identification and data capture techniques — GS1 Application Identifiers and ASC MH10 Data Identifiers and maintenance; ISO/IEC 15434:2019 - Information technology — Automatic identification and data capture techniques — Syntax for high-capacity ADC media.
@@ -26,7 +28,7 @@
 		--------------
 		$(PackageReleaseNotes)
 	</Description>
-	<Version>1.0.17</Version>
+	<Version>1.0.18</Version>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	<NeutralLanguage>en</NeutralLanguage>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>

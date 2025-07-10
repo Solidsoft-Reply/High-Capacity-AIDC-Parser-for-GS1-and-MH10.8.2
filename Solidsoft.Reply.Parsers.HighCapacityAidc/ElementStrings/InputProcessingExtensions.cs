@@ -102,7 +102,7 @@ internal static partial class InputProcessingExtensions
                 dataEnd = input.Length;
             }
 
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
             var rawDataSection = input[dataStart..dataEnd];
 #else
             var rawDataSection = input.Substring(dataStart, dataEnd - dataStart);
@@ -128,7 +128,7 @@ internal static partial class InputProcessingExtensions
                     var message = string.Format(Resources.Barcodes_009, ai, rawDataSection, length);
                     throw new BarcodeException(1009, message, false);
                 }
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
                 dataForThisAI = rawDataSection[..length];
 #else
                 dataForThisAI = rawDataSection.Substring(0, length);

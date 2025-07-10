@@ -131,7 +131,7 @@ internal class PredefinedLengthTable : IReadOnlyDictionary<string, int> {
     /// <param name="key">The AI key.</param>
     /// <param name="value">The length of the AI value.</param>
     /// <returns>True, if the key was found; otherwise false.</returns>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     public bool TryGetValue(string key, [MaybeNullWhen(false)] out int value) => _predefinedLengthTable.TryGetValue(key, out value);
 #else
     public bool TryGetValue(string key, out int value) => _predefinedLengthTable.TryGetValue(key, out value);

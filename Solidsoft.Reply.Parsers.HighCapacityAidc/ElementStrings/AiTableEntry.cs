@@ -19,7 +19,7 @@
 // --------------------------------------------------------------------------
 namespace Solidsoft.Reply.Parsers.HighCapacityAidc.ElementStrings;
 
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
 using System.Text.Json.Serialization;
 #endif
 
@@ -74,130 +74,120 @@ public record AiTableEntry() {
     /// <summary>
     ///   Gets the AI description.
     /// </summary>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     [JsonPropertyName("description")]
-#endif
     [JsonProperty("description")]
-#if NETCOREAPP
     public string Description { get; init; } = string.Empty;
 #else
+    [JsonProperty("description")]
     public string Description { get; private set; } = string.Empty;
 #endif
 
     /// <summary>
     /// Gets the AI.
     /// </summary>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     [JsonPropertyName("ai")]
-#endif
     [JsonProperty("ai")]
-#if NETCOREAPP
     public string Ai { get; init; } = string.Empty;
 #else
+    [JsonProperty("ai")]
     public string Ai { get; private set; } = string.Empty;
 #endif
 
     /// <summary>
     /// Gets the format specifier for the AI.
     /// </summary>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     [JsonPropertyName("format")]
-#endif
     [JsonProperty("format")]
-#if NETCOREAPP
     public string Format { get; init; } = string.Empty;
 #else
+    [JsonProperty("format")]
     public string Format { get; private set; } = string.Empty;
 #endif
 
     /// <summary>
     /// Gets the AI type, in the context of a Digital Link.
     /// </summary>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     [JsonPropertyName("type")]
-#endif
     [JsonProperty("type")]
-#if NETCOREAPP
     public AiTypes Type { get; init; } = AiTypes.Identifier;
 #else
+    [JsonProperty("type")]
     public AiTypes Type { get; private set; } = AiTypes.Identifier;
 #endif
 
     /// <summary>
     /// Gets a value indicating whether the AI has a predefined length.
     /// </summary>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     [JsonPropertyName("predefinedLength")]
-#endif
     [JsonProperty("predefinedLength")]
-#if NETCOREAPP
     public bool PredefinedLength { get; init; } = false;
 #else
+    [JsonProperty("predefinedLength")]
     public bool PredefinedLength { get; private set; } = false;
 #endif
 
     /// <summary>
     /// Gets a regular expression for validating the AI value.
     /// </summary>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     [JsonPropertyName("regex")]
-#endif
     [JsonProperty("regex")]
-#if NETCOREAPP
     public string Regex { get; init; } = string.Empty;
 #else
+    [JsonProperty("regex")]
     public string Regex { get; private set; } = string.Empty;
 #endif
 
     /// <summary>
     /// Gets the AI data title.
     /// </summary>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     [JsonPropertyName("title")]
-#endif
     [JsonProperty("title")]
-#if NETCOREAPP
     public string? Title { get; init; } = null;
 #else
+    [JsonProperty("title")]
     public string? Title { get; private set; }
 #endif
 
     /// <summary>
     /// Gets the short name for the AI (legacy feature).
     /// </summary>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     [JsonPropertyName("shortName")]
-#endif
     [JsonProperty("shortName")]
-#if NETCOREAPP
     public string? ShortName { get; init; } = null;
 #else
+    [JsonProperty("shortName")]
     public string? ShortName { get; private set; }
 #endif
 
     /// <summary>
     /// Gets the position of the check digit.
     /// </summary>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     [JsonPropertyName("checkDigitPosition")]
-#endif
     [JsonProperty("checkDigitPosition")]
-#if NETCOREAPP
     public CheckDigitPosition? CheckDigitPosition { get; init; } = null;
 #else
+    [JsonProperty("checkDigitPosition")]
     public CheckDigitPosition? CheckDigitPosition { get; private set; }
 #endif
 
     /// <summary>
     /// Gets a list of qualifier AIs (applies only to identifier AIs).
     /// </summary>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
     [JsonPropertyName("qualifiers")]
-#endif
     [JsonProperty("qualifiers")]
-#if NETCOREAPP
     public List<string>? Qualifiers { get; init; } = null;
 #else
+    [JsonProperty("qualifiers")]
     public List<string>? Qualifiers { get; private set; }
 #endif
 
@@ -207,7 +197,7 @@ public record AiTableEntry() {
     /// <returns>The AI table entry as JSON.</returns>
 #pragma warning disable VSSpell001 // Spell Check
     public string ToJson() =>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
         System.Text.Json.JsonSerializer.Serialize(this);
 #else
         JsonConvert.SerializeObject(this);

@@ -124,7 +124,7 @@ public static class Parser {
         // Remove any trailing CR or LF
         while (true) {
             if (!string.IsNullOrEmpty(input) &&
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
                 (input.EndsWith('\r') || input.EndsWith('\n'))) {
                 input = input[..^1];
 #else

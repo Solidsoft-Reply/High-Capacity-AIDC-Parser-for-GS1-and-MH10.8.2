@@ -632,7 +632,7 @@ public class AiTable : IReadOnlyList<AiTableEntry> {
     /// <returns>The AI table as JSON.</returns>
 #pragma warning disable VSSpell001 // Spell Check
     public virtual string ToJson() =>
-#if NETCOREAPP
+#if NET6_0_OR_GREATER
         System.Text.Json.JsonSerializer.Serialize(_aiTableEntries);
 #else
         Newtonsoft.Json.JsonConvert.SerializeObject(_aiTableEntries);
