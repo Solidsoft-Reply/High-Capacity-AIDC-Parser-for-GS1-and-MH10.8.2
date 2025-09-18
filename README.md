@@ -1,4 +1,9 @@
-﻿This library provides a parser for high-capacity ADC (Automatic Data Capture) media such as two-dimensional barcodes used in Automatic Identification and Data Capture (AIDC).
+**NuGet Package**
+
+dotnet add package Solidsoft.Reply.Parsers.HighCapacityAidc
+
+---
+This library provides a parser for high-capacity ADC (Automatic Data Capture) media such as two-dimensional barcodes used in Automatic Identification and Data Capture (AIDC).
 
 The library supports the following international standards:
 
